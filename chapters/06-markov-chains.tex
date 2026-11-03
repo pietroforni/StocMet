@@ -1,0 +1,1988 @@
+\section{Markov Chains}
+\label{sec:markov-chains}
+
+\textbf{Notation and Setup}
+Throughout, $P = (P_{ij})$ denotes a transition probability matrix,
+$\pi = (\pi_j)$ the stationary distribution, and $P^{(n)}_{ij}$ the
+$n$-step transition probability.  The following models and state orderings are used in this chapter:
+\begin{itemize}
+  \item \textbf{Gary's mood:} States $0=C$ (cheerful),
+    $1=S$ (so-so), $2=G$ (glum).
+    \[
+      P=\begin{pmatrix}0.5&0.4&0.1\\0.3&0.4&0.3\\0.2&0.3&0.5\end{pmatrix}.
+    \]
+  \item \textbf{Rain depends on the last two days:} States
+    $0=(RR)$, $1=(RN)$, $2=(NR)$, $3=(NN)$ (R = rain, N = no rain,
+    ordered today/yesterday).
+    \[
+      P=\begin{pmatrix}0.7&0&0.3&0\\0.5&0&0.5&0\\0&0.4&0&0.6\\0&0.2&0&0.8\end{pmatrix}.
+    \]
+  \item \textbf{Two-ball urn in Exercise 9:} State = \# red balls.
+    \[
+      P=\begin{pmatrix}0.8&0.2&0\\0.1&0.8&0.1\\0&0.2&0.8\end{pmatrix}.
+    \]
+  \item \textbf{Random walk:}
+    $P_{i,i+1}=p=1-P_{i,i-1}$, $i\in\mathbb{Z}$.
+\end{itemize}
+
+\setcounter{exercise}{0}
+
+\begin{exercise}
+\label{ex:markov-chains-1}
+Three white and three black balls are distributed in two urns so that
+each contains three balls.  The system is in state $i$, $i=0,1,2,3$, if
+the first urn contains $i$ white balls.  At each step, one ball is drawn
+from each urn and the two balls are swapped.  Let $X_n$ be the state after
+the $n$-th step.  Explain why $\{X_n\}$ is a Markov chain and calculate
+its transition probability matrix.
+\end{exercise}
+\solution{
+\textbf{Markov property.} The state $X_n = i$ fully determines the
+composition of both urns (urn~1 has $i$ white and $3-i$ black; urn~2 has
+$3-i$ white and $i$ black).  Because the draw at step $n+1$ depends only
+on the current ball counts, the future evolution depends only on $X_n$,
+not on the earlier history.
+
+\textbf{Transition probabilities.} From state $i$:
+\begin{itemize}
+  \item \emph{State decreases by 1} ($i \to i-1$): we draw a white ball
+    from urn~1 (prob $i/3$) and a black ball from urn~2 (prob $i/3$):
+    \[P_{i,i-1}=\frac{i^2}{9},\qquad i=1,2,3.\]
+  \item \emph{State increases by 1} ($i \to i+1$): we draw black from
+    urn~1 (prob $(3-i)/3$) and white from urn~2 (prob $(3-i)/3$):
+    \[P_{i,i+1}=\frac{(3-i)^2}{9},\qquad i=0,1,2.\]
+  \item \emph{State unchanged}: same colour drawn from both urns:
+    $P_{i,i}=1-P_{i,i-1}-P_{i,i+1}=\dfrac{2i(3-i)}{9}$.
+\end{itemize}
+The transition matrix (states $0,1,2,3$) is therefore
+\[
+P=\begin{pmatrix}
+0 & 1 & 0 & 0 \\[2pt]
+\tfrac{1}{9} & \tfrac{4}{9} & \tfrac{4}{9} & 0 \\[2pt]
+0 & \tfrac{4}{9} & \tfrac{4}{9} & \tfrac{1}{9} \\[2pt]
+0 & 0 & 1 & 0
+\end{pmatrix}.
+\]
+(Boundary check: from state $0$ all balls in urn~1 are black so we
+necessarily draw black from urn~1 and white from urn~2, giving $P_{0,1}=1$;
+similarly $P_{3,2}=1$.)
+}
+
+\begin{exercise}
+\label{ex:markov-chains-2}
+Suppose that whether or not it rains today depends on previous weather
+conditions through the \emph{last three days}.  Show how this system may
+be analysed by a Markov chain.  How many states are needed?
+\end{exercise}
+\solution{
+Define the state at time $n$ as the triple
+$(W_{n-2},W_{n-1},W_n)\in\{0,1\}^3$, where $1$ = rain and $0$ = no rain.
+Because today's weather depends only on the last three days, and the
+triple encodes exactly that information, the process on these triples
+satisfies the Markov property.
+
+There are $2^3 = \mathbf{8}$ states needed.
+}
+
+\begin{exercise}
+\label{ex:markov-chains-3}
+In Exercise~2, suppose: if it has rained for the past three days, it
+will rain today with probability $0.8$; if it did not rain for any of the
+past three days, it will rain today with probability $0.2$; in any other
+case, the weather today will with probability $0.6$ be the same as
+yesterday.  Determine $P$ for this Markov chain.
+\end{exercise}
+\solution{
+Label states as binary triples $(a,b,c)$ ($a$ = two days ago, $b$ =
+yesterday, $c$ = today) ordered $000,001,010,011,100,101,110,111$.
+From state $(a,b,c)$ the chain moves to $(b,c,X)$ where
+\[
+P(X=1)=\begin{cases}0.8 & \text{if }a=b=c=1,\\0.2&\text{if }a=b=c=0,\\
+0.6\cdot c + 0.4\cdot(1-c)&\text{otherwise.}\end{cases}
+\]
+Denoting $p_{abc}:=P(X=1\mid \text{state }(a,b,c))$:
+\begin{align*}
+p_{000}&=0.2,\quad p_{001}=0.6,\quad p_{010}=0.4,\quad p_{011}=0.6,\\
+p_{100}&=0.4,\quad p_{101}=0.6,\quad p_{110}=0.4,\quad p_{111}=0.8.
+\end{align*}
+Each row of $P$ has exactly two non-zero entries (to states $(b,c,0)$ and
+$(b,c,1)$).  The full $8\times 8$ matrix is ($q_{abc}=1-p_{abc}$):
+\[
+P=\bordermatrix{
+ &000&001&010&011&100&101&110&111\cr
+000&0.8&0.2&0&0&0&0&0&0\cr
+001&0&0&0.4&0.6&0&0&0&0\cr
+010&0&0&0&0&0.6&0.4&0&0\cr
+011&0&0&0&0&0&0&0.4&0.6\cr
+100&0.6&0.4&0&0&0&0&0&0\cr
+101&0&0&0.4&0.6&0&0&0&0\cr
+110&0&0&0&0&0.6&0.4&0&0\cr
+111&0&0&0&0&0&0&0.2&0.8\cr
+}.
+\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-4}
+Consider $\{X_n,n\ge0\}$ taking values $0,1,2$, with
+\[
+P\{X_{n+1}=j\mid X_n=i,\ldots\}=
+\begin{cases}P^{\mathrm{I}}_{ij},&n\text{ even},\\
+             P^{\mathrm{II}}_{ij},&n\text{ odd,}\end{cases}
+\]
+where $\sum_j P^{\mathrm{I}}_{ij}=\sum_j P^{\mathrm{II}}_{ij}=1$.
+Is $\{X_n\}$ a Markov chain? If not, show how to transform it into one
+by enlarging the state space.
+\end{exercise}
+\solution{
+The process satisfies the Markov property: conditional on $X_n$, the
+next state is independent of earlier states. Its transition law depends
+on $n$, so it is a \emph{time-inhomogeneous} Markov chain (unless the two
+matrices coincide).
+
+To obtain a time-homogeneous chain, define $Y_n=(X_n,n\bmod 2)$ on
+$\{0,1,2\}\times\{0,1\}$. Its transitions are
+\[
+P\{Y_{n+1}=(j,1)\mid Y_n=(i,0)\}=P^{\mathrm I}_{ij},
+\]
+\[
+P\{Y_{n+1}=(j,0)\mid Y_n=(i,1)\}=P^{\mathrm {II}}_{ij},
+\]
+with all other transitions zero. These probabilities do not depend on $n$.
+}
+
+\begin{exercise}
+\label{ex:markov-chains-5}
+A Markov chain $\{X_n,n\ge0\}$ with states $0,1,2$ has transition matrix
+\[
+P=\begin{pmatrix}\tfrac{1}{2}&\tfrac{1}{3}&\tfrac{1}{6}\\[2pt]
+                  0&\tfrac{1}{3}&\tfrac{2}{3}\\[2pt]
+                  \tfrac{1}{2}&0&\tfrac{1}{2}\end{pmatrix}.
+\]
+If $P\{X_0=0\}=P\{X_0=1\}=\tfrac{1}{4}$, find $\E[X_3]$.
+\end{exercise}
+\solution{
+Compute $P^2$ then $P^3$ by matrix multiplication.
+
+\textbf{$P^2$:}
+\[
+P^2=\begin{pmatrix}\tfrac{1}{3}&\tfrac{5}{18}&\tfrac{7}{18}\\[2pt]
+     \tfrac{1}{3}&\tfrac{1}{9}&\tfrac{5}{9}\\[2pt]
+     \tfrac{1}{2}&\tfrac{1}{6}&\tfrac{1}{3}\end{pmatrix}.
+\]
+
+\textbf{$P^3=P^2 P$:}
+\[
+P^3=\begin{pmatrix}
+     \tfrac{39}{108}&\tfrac{22}{108}&\tfrac{47}{108}\\[4pt]
+     \tfrac{4}{9}&\tfrac{4}{27}&\tfrac{11}{27}\\[4pt]
+     \tfrac{5}{12}&\tfrac{2}{9}&\tfrac{13}{36}
+     \end{pmatrix}.
+\]
+
+Since $P\{X_0=2\}=\tfrac{1}{2}$,
+\begin{align*}
+\E[X_3]
+&=\tfrac{1}{4}\E[X_3\mid X_0=0]+\tfrac{1}{4}\E[X_3\mid X_0=1]
+  +\tfrac{1}{2}\E[X_3\mid X_0=2]\\
+&=\tfrac{1}{4}\!\cdot\!\frac{0\cdot39+1\cdot22+2\cdot47}{108}
+ +\tfrac{1}{4}\!\cdot\!\frac{0\cdot4/9+1\cdot4+2\cdot11}{27}
+ +\tfrac{1}{2}\!\cdot\!\frac{0\cdot5+1\cdot8+2\cdot13}{36}\\
+&=\tfrac{1}{4}\cdot\frac{116}{108}
+ +\tfrac{1}{4}\cdot\frac{26}{27}
+ +\tfrac{1}{2}\cdot\frac{34}{36}\\
+&=\frac{116}{432}+\frac{26}{108}+\frac{17}{36}
+ =\frac{116}{432}+\frac{104}{432}+\frac{204}{432}
+ =\frac{424}{432}
+ ={\dfrac{53}{54}}.
+\end{align*}
+}
+
+\begin{exercise}
+\label{ex:markov-chains-6}
+Let the transition matrix of a two-state Markov chain be
+\[
+\mathbf{P}=\begin{Vmatrix}p & 1-p \\ 1-p & p\end{Vmatrix}.
+\]
+Show by induction that
+\[
+\mathbf{P}^{(n)}=
+\begin{Vmatrix}
+\tfrac{1}{2}+\tfrac{1}{2}(2p-1)^n & \tfrac{1}{2}-\tfrac{1}{2}(2p-1)^n \\[4pt]
+\tfrac{1}{2}-\tfrac{1}{2}(2p-1)^n & \tfrac{1}{2}+\tfrac{1}{2}(2p-1)^n
+\end{Vmatrix}.
+\]
+\end{exercise}
+\solution{
+Let $c:=2p-1$.
+
+\textbf{Base case $n=1$.} $P^{(1)}_{00}=p=\tfrac{1}{2}+\tfrac{c}{2}$ and
+$P^{(1)}_{01}=1-p=\tfrac{1}{2}-\tfrac{c}{2}$. 
+
+\textbf{Inductive step.} Assume the formula holds for $n$.  Then
+\begin{align*}
+P^{(n+1)}_{00}
+&=P^{(n)}_{00}\cdot p + P^{(n)}_{01}\cdot(1-p)\\
+&=\bigl(\tfrac{1}{2}+\tfrac{c^n}{2}\bigr)p
+  +\bigl(\tfrac{1}{2}-\tfrac{c^n}{2}\bigr)(1-p)\\
+&=\tfrac{1}{2}+c^n\!\left(\tfrac{p}{2}-\tfrac{1-p}{2}\right)
+ =\tfrac{1}{2}+c^n\cdot\tfrac{c}{2}=\tfrac{1}{2}+\tfrac{c^{n+1}}{2}.
+\end{align*}
+The other three entries follow by an identical argument (or by symmetry),
+completing the induction. 
+}
+
+\begin{exercise}
+\label{ex:markov-chains-7}
+In the rain model given in the chapter setup, suppose it has rained neither yesterday nor the day before
+yesterday.  What is the probability that it will rain tomorrow?
+\end{exercise}
+\solution{
+Use the state ordering in the setup: the first component is the more
+recent day's weather. At the end of yesterday, the state was $NN$,
+because both yesterday and the preceding day were dry. Tomorrow is
+\emph{two} transitions later. Thus
+\[
+P(\text{rain tomorrow}\mid\text{last two days dry})
+=(P^2)_{3,0}+(P^2)_{3,1}
+=0.2(0.5)+0.8(0.2)=0.26.
+\]
+Here, today's weather has been averaged out rather than assumed known.
+}
+
+\begin{exercise}
+\label{ex:markov-chains-8}
+Coin~1 has $P(H)=0.7$ and coin~2 has $P(H)=0.6$.  If today's flip is
+heads we use coin~1 tomorrow; if tails we use coin~2 tomorrow.  The
+initial coin is equally likely to be coin~1 or coin~2.
+\begin{enumerate}
+  \item[(a)] What is the probability that the coin flipped on the third
+    day after the initial flip is coin~1?
+  \item[(b)] Suppose the coin flipped on Monday comes up heads.  What is
+    the probability that the coin flipped on Friday of the same week also
+    comes up heads?
+\end{enumerate}
+\end{exercise}
+\solution{
+Model the coin in use as a Markov chain with states $C_1,C_2$ and
+transition matrix
+\[
+P=\begin{pmatrix}0.7&0.3\\0.6&0.4\end{pmatrix}.
+\]
+The stationary distribution satisfies $0.3\pi_1=0.6\pi_2$, giving
+$\pi_1=\tfrac{2}{3}$, $\pi_2=\tfrac{1}{3}$.  The non-unit eigenvalue is $1-0.3-0.6=0.1$.
+
+Hence
+\[
+P^n_{11}=\pi_1+(1-\pi_1)\cdot0.1^n=\tfrac{2}{3}+\tfrac{1}{3}\cdot0.1^n,
+\quad
+P^n_{21}=\pi_1-\pi_1\cdot0.1^n=\tfrac{2}{3}(1-0.1^n).
+\]
+
+\textbf{(a)} Three days after the initial flip ($n=3$):
+\begin{align*}
+P(X_3=C_1)
+&=\tfrac{1}{2}P^3_{11}+\tfrac{1}{2}P^3_{21}
+ =\tfrac{1}{2}\!\left[\tfrac{2}{3}+\tfrac{1}{3}(0.1)^3\right]
+ +\tfrac{1}{2}\!\left[\tfrac{2}{3}(1-(0.1)^3)\right]\\
+&=\tfrac{2}{3}+\tfrac{1}{6}(0.1)^3-\tfrac{1}{3}(0.1)^3
+ =\tfrac{2}{3}-\tfrac{1}{6000}
+ \approx 0.6665.
+\end{align*}
+
+\textbf{(b)} Monday heads $\Rightarrow$ Tuesday coin is $C_1$
+(deterministically, since heads always selects $C_1$ next).  From Tuesday
+to Friday is $3$ flips (Wed, Thu, Fri).  Let $X_{\mathrm{Tue}}=C_1$.
+\begin{align*}
+P(\text{Fri heads}\mid\text{Mon heads})
+&=P^3_{11}\cdot0.7+P^3_{12}\cdot0.6\\
+&=\!\left[\tfrac{2}{3}+\tfrac{1}{3}(0.1)^3\right]\!0.7
+ +\!\left[\tfrac{1}{3}-\tfrac{1}{3}(0.1)^3\right]\!0.6\\
+&=\tfrac{2}{3}\cdot0.7+\tfrac{1}{3}\cdot0.6+(0.1)^3\tfrac{0.1}{3}
+ =\tfrac{14}{30}+\tfrac{6}{30}+\varepsilon
+ =\tfrac{2}{3}+\frac{(0.1)^3}{30}\approx0.6667.
+\end{align*}
+}
+
+\begin{exercise}
+\label{ex:markov-chains-9}
+An urn initially contains one red and one blue ball. At each step, select
+one of its two balls uniformly, record its colour, and replace it. With
+probability $0.8$ the replacement has the same colour; with probability
+$0.2$ replace it by a ball of the opposite colour. These random choices
+are independent between steps. Let $X_n=1$ if the $n$th selected ball is
+red, and $X_n=0$ otherwise. Is $\{X_n:n\ge1\}$ a Markov chain?
+\end{exercise}
+\solution{
+No. Let $C_n$ be the number of red balls after step $n$, with $C_0=1$.
+Although $C_n$ is Markov, the observed colours retain information from
+more than the most recent observation.
+
+If $X_1=X_2=1$, the first red ball must have been returned red;
+otherwise the second red selection would be impossible. Immediately
+before step $2$ there is therefore one red ball. After observing that
+red selection, the expected red count after replacement is $1-0.2$.
+Consequently
+\[
+P(X_3=1\mid X_2=1,X_1=1)=\frac{1-0.2}{2}=\frac25.
+\]
+If $X_1=0$, then $C_1=1$ with probability $0.8$ and $C_1=2$ with
+probability $0.2$. Conditioning further on $X_2=1$ gives
+\[
+P(C_1=1\mid X_1=0,X_2=1)=\frac{0.8(1/2)}{0.8(1/2)+0.2}=\frac23,
+\]
+and the complementary probability is $1/3$. Given $C_1=i$ and a red
+selection, the next-red probability is $(i-0.2)/2$. Thus
+\[
+P(X_3=1\mid X_2=1,X_1=0)
+=\frac23\frac25+\frac13\frac9{10}=\frac{17}{30}.
+\]
+Both conditioning histories have positive probability. They end in the
+same current observation but give different next-step probabilities,
+which disproves the Markov property for $X_n$.
+}
+
+\begin{exercise}
+\label{ex:markov-chains-10}
+In the mood model given in the chapter setup, Gary is currently in a cheerful mood.  What is the
+probability that he is \emph{not} in a glum mood on any of the following
+three days?
+\end{exercise}
+\solution{
+We restrict attention to the sub-matrix $Q$ of states $\{C,S\}$ (avoiding
+state $G$):
+\[
+Q=\begin{pmatrix}0.5&0.4\\0.3&0.4\end{pmatrix}.
+\]
+The desired probability equals the sum of the entries in row $C$ of $Q^3$
+(probability of remaining in $\{C,S\}$ for three steps).
+
+\textbf{$Q^2$:}
+\[
+Q^2=\begin{pmatrix}0.37&0.36\\0.27&0.28\end{pmatrix}.
+\]
+
+\textbf{$Q^3=Q^2Q$:}
+\[
+Q^3[C,C]=0.37\times0.5+0.36\times0.3=0.293,\quad
+Q^3[C,S]=0.37\times0.4+0.36\times0.4=0.292.
+\]
+
+Therefore
+\[
+P(\text{not glum on days }1,2,3\mid X_0=C)=0.293+0.292={0.585}.
+\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-11}
+In the mood model given in the chapter setup, Gary was in a glum mood four days ago.  Given that he
+hasn't felt cheerful in a week, what is the probability he is feeling
+glum today?
+\end{exercise}
+\solution{
+``Hasn't felt cheerful in a week'' means the chain has stayed in
+$\{S,G\}$ for the past four steps.  Define the restricted sub-matrix
+\[
+R=\begin{pmatrix}P_{SS}&P_{SG}\\P_{GS}&P_{GG}\end{pmatrix}
+ =\begin{pmatrix}0.4&0.3\\0.3&0.5\end{pmatrix}.
+\]
+We need
+\[
+P(X_0=G\mid X_{-4}=G,\,X_{-3},\ldots,X_0\in\{S,G\})
+=\frac{R^4_{G,G}}{R^4_{G,S}+R^4_{G,G}}.
+\]
+
+Compute $R^2=(R_{ij}^2)$:
+\[R^2=\begin{pmatrix}0.25&0.27\\0.27&0.34\end{pmatrix}.\]
+
+Then $R^4=(R^2)^2$:
+\begin{align*}
+R^4_{G,S}&=0.27\times0.25+0.34\times0.27=0.0675+0.0918=0.1593,\\
+R^4_{G,G}&=0.27\times0.27+0.34\times0.34=0.0729+0.1156=0.1885.
+\end{align*}
+
+Therefore
+\[
+P(\text{glum today})=\frac{0.1885}{0.1593+0.1885}=\frac{0.1885}{0.3478}
+\approx {0.542}.
+\]
+}
+
+\setcounter{exercise}{13}
+\begin{exercise}
+\label{ex:markov-chains-14}
+Specify the classes of the following Markov chains, and determine whether
+they are transient or recurrent:
+\[
+P_1=\begin{Vmatrix}0&\tfrac{1}{2}&\tfrac{1}{2}\\\tfrac{1}{2}&0&\tfrac{1}{2}\\\tfrac{1}{2}&\tfrac{1}{2}&0\end{Vmatrix},\quad
+P_2=\begin{Vmatrix}0&0&0&1\\0&0&0&1\\\tfrac{1}{2}&\tfrac{1}{2}&0&0\\0&0&1&0\end{Vmatrix},
+\]
+\[
+P_3=\begin{Vmatrix}\tfrac{1}{2}&0&\tfrac{1}{2}&0&0\\\tfrac{1}{4}&\tfrac{1}{2}&\tfrac{1}{4}&0&0\\\tfrac{1}{2}&0&\tfrac{1}{2}&0&0\\0&0&0&\tfrac{1}{2}&\tfrac{1}{2}\\0&0&0&\tfrac{1}{2}&\tfrac{1}{2}\end{Vmatrix},\quad
+P_4=\begin{Vmatrix}\tfrac{1}{4}&\tfrac{3}{4}&0&0&0\\\tfrac{1}{2}&\tfrac{1}{2}&0&0&0\\0&0&1&0&0\\0&0&\tfrac{1}{3}&\tfrac{2}{3}&0\\1&0&0&0&0\end{Vmatrix}.
+\]
+\end{exercise}
+\solution{
+Use states numbered from $0$.
+\begin{itemize}
+\item $P_1$: a single closed communicating class $\{0,1,2\}$.
+All states are recurrent. Return paths of lengths $2$ and $3$ give
+period $1$.
+\item $P_2$: a single closed communicating class $\{0,1,2,3\}$.
+All states are recurrent. Transitions cycle through the three groups
+$\{0,1\}\to\{3\}\to\{2\}\to\{0,1\}$. Every return time is a
+multiple of $3$, and a return in $3$ steps is possible, so the period is $3$.
+\item $P_3$: the closed classes are $\{0,2\}$ and $\{3,4\}$,
+and all their states are recurrent. The singleton class $\{1\}$ is
+transient: it leaves for $\{0,2\}$ with probability $1/2$ per step,
+and neither $0$ nor $2$ can reach it. In particular, $0$ and $1$
+do not communicate.
+\item $P_4$: $\{0,1\}$ and $\{2\}$ are closed recurrent classes.
+The singleton classes $\{3\}$ and $\{4\}$ are transient, since they
+can enter a closed class that cannot reach them again.
+\end{itemize}
+}
+
+\setcounter{exercise}{15}
+\begin{exercise}
+\label{ex:markov-chains-16}
+Show that if state $i$ is recurrent and state $i$ does not communicate
+with state $j$, then $P_{ij}=0$.
+\end{exercise}
+\solution{
+Since $i$ and $j$ do not communicate, either $i$ cannot reach $j$ or $j$
+cannot reach $i$.  Suppose for contradiction that $P_{ij}>0$ (so $i$ can
+reach $j$ in one step).  Then $j$ can be visited starting from $i$.
+Because $i$ and $j$ do not communicate, $j$ cannot reach $i$.  Therefore,
+once the chain visits $j$ it can never return to $i$.
+
+Formally, let $f_{ii}=P(\text{ever return to }i\mid X_0=i)$.  By first-step
+analysis
+\[
+f_{ii} \le 1 - P_{ij}\cdot P(\text{never reach }i\mid X_1=j)
+       = 1 - P_{ij}\cdot 1 = 1 - P_{ij} < 1,
+\]
+where the last equality uses the fact that $j$ cannot reach $i$.  This
+contradicts the recurrence of $i$ ($f_{ii}=1$).  Hence $P_{ij}=0$. 
+
+\textit{Corollary.} Once a process enters a recurrent class it cannot
+leave: for any $i$ in the class and any $j$ outside, $P_{ij}=0$.
+}
+
+\setcounter{exercise}{17}
+\begin{exercise}
+\label{ex:markov-chains-18}
+Coin~1 comes up heads with probability $0.6$ and coin~2 with probability
+$0.5$.  A coin is continually flipped until it comes up tails, at which
+time that coin is put aside and we start flipping the other one.
+\begin{enumerate}
+\item[(a)] What proportion of flips use coin~1?
+\item[(b)] If we start with coin~1, what is the probability that coin~2
+  is used on the fifth flip?
+\end{enumerate}
+\end{exercise}
+\solution{
+Model the coin in use on each individual flip as a Markov chain with
+states $\{C_1,C_2\}$.  On each flip with coin $i$:
+\begin{itemize}
+  \item Heads (coin unchanged): $P(C_1\!\to\!C_1)=0.6$, $P(C_2\!\to\!C_2)=0.5$.
+  \item Tails (switch coin): $P(C_1\!\to\!C_2)=0.4$, $P(C_2\!\to\!C_1)=0.5$.
+\end{itemize}
+
+\textbf{(a)} Stationary distribution: $0.4\pi_1=0.5\pi_2$.  With
+$\pi_1+\pi_2=1$: $\pi_1=\dfrac{5}{9}$, $\pi_2=\dfrac{4}{9}$.
+
+The proportion of flips using coin~1 is ${\tfrac{5}{9}\approx55.6\%}$.
+
+\textbf{(b)} Starting from $C_1$, the second eigenvalue is
+$\lambda_2=1-0.4-0.5=0.1$.  Hence
+\[
+P^n_{C_1,C_2}=\pi_2\bigl(1-0.1^n\bigr)=\tfrac{4}{9}\bigl(1-0.1^n\bigr).
+\]
+For the fifth flip ($n=4$ transitions from the first flip):
+\[
+P(\text{5th flip uses }C_2\mid\text{start }C_1)
+=\tfrac{4}{9}\!\left(1-(0.1)^4\right)
+=\tfrac{4}{9}\cdot\tfrac{9999}{10000}
+=\frac{4\times9999}{90000}\approx{0.4444}.
+\]
+}
+
+\setcounter{exercise}{20}
+\begin{exercise}
+\label{ex:markov-chains-21}
+A DNA nucleotide has any of four values.  In the standard mutation model,
+from period to period a nucleotide at a specific location does not change
+with probability $1-3\alpha$, and if it changes it is equally likely to
+become any of the other three values ($0<\alpha<\tfrac{1}{3}$).
+\begin{enumerate}
+\item[(a)] Show that $P^n_{1,1}=\tfrac{1}{4}+\tfrac{3}{4}(1-4\alpha)^n$.
+\item[(b)] What is the long-run proportion of time the chain is in each state?
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} Let $J$ be the $4\times4$ all-ones matrix and put
+$\Pi=J/4$. The transition matrix is
+\[
+P=\Pi+(1-4\alpha)(I-\Pi).
+\]
+Since $\Pi^2=\Pi$, $(I-\Pi)^2=I-\Pi$, and the two projections have
+zero product,
+\[
+P^n=\Pi+(1-4\alpha)^n(I-\Pi).
+\]
+Taking the $(1,1)$ entry gives
+\[
+P^n_{1,1}=\frac14+\frac34(1-4\alpha)^n.
+\]
+\textbf{(b)} Because $0<\alpha<1/3$, we have $|1-4\alpha|<1$.
+Thus $P^n\to\Pi$, and each state has long-run proportion $1/4$.
+}
+
+\setcounter{exercise}{22}
+\begin{exercise}
+\label{ex:markov-chains-23}
+In a good year, storms are Poisson with mean $1$; in a bad year, Poisson
+with mean $3$.  A good year is equally likely to be followed by a good or
+bad year; a bad year is twice as likely to be followed by a bad year as by
+a good year.  Last year (year~$0$) was good.
+\begin{enumerate}
+\item[(a)] Find the expected total number of storms in years $1$ and $2$.
+\item[(b)] Find the probability of no storms in year~$3$.
+\item[(c)] Find the long-run average storms per year.
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{Weather Markov chain.} States: $G$ (good), $B$ (bad).
+\[
+P=\begin{pmatrix}1/2&1/2\\1/3&2/3\end{pmatrix}.
+\]
+Let $\mu(G)=1$, $\mu(B)=3$ denote expected storms.
+
+\textbf{(a)} Given $X_0=G$: $P(X_1=G)=1/2$, $P(X_1=B)=1/2$, so
+\[\E[\text{storms yr 1}]=\tfrac{1}{2}\cdot1+\tfrac{1}{2}\cdot3=2.\]
+\[P^2_{G,G}=\tfrac{1}{2}\cdot\tfrac{1}{2}+\tfrac{1}{2}\cdot\tfrac{1}{3}=\tfrac{5}{12},\quad
+P^2_{G,B}=\tfrac{7}{12}.\]
+\[\E[\text{storms yr 2}]=\tfrac{5}{12}\cdot1+\tfrac{7}{12}\cdot3=\tfrac{5+21}{12}=\tfrac{26}{12}=\tfrac{13}{6}.\]
+\[\E[\text{total storms yrs 1--2}]=2+\tfrac{13}{6}={\tfrac{25}{6}\approx4.17}.\]
+
+\textbf{(b)} $P(N=0\mid\text{good})=e^{-1}$, $P(N=0\mid\text{bad})=e^{-3}$.
+\[P^3_{G,G}=P^2_{G,G}\cdot\tfrac{1}{2}+P^2_{G,B}\cdot\tfrac{1}{3}
+=\tfrac{5}{24}+\tfrac{7}{36}=\tfrac{15+14}{72}=\tfrac{29}{72},\quad
+P^3_{G,B}=\tfrac{43}{72}.\]
+\[P(\text{no storms yr 3})=\tfrac{29}{72}e^{-1}+\tfrac{43}{72}e^{-3}.\]
+
+\textbf{(c)} Stationary distribution: $\tfrac{1}{2}\pi_G=\tfrac{1}{3}\pi_B$,
+so $\pi_B=\tfrac{3}{2}\pi_G$; normalising gives $\pi_G=\tfrac{2}{5}$,
+$\pi_B=\tfrac{3}{5}$.  Long-run average:
+\[{\pi_G\cdot1+\pi_B\cdot3=\tfrac{2}{5}+\tfrac{9}{5}=\tfrac{11}{5}=2.2 \text{ storms/year.}}\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-24}
+Consider three urns: red ($1$ red, $4$ blue), white ($3$ white, $2$ red,
+$2$ blue), blue ($4$ white, $3$ red, $2$ blue).  At each stage a ball is
+selected from the urn whose colour matches the previously selected ball.
+In the long run, what proportion of the selected balls are red / white /
+blue?
+\end{exercise}
+\solution{
+The state is the colour of the urn currently in use
+($R$, $W$, $B$).  Transition matrix:
+\[
+P=\bordermatrix{&R&W&B\cr
+  R&\tfrac{1}{5}&0&\tfrac{4}{5}\cr
+  W&\tfrac{2}{7}&\tfrac{3}{7}&\tfrac{2}{7}\cr
+  B&\tfrac{3}{9}&\tfrac{4}{9}&\tfrac{2}{9}\cr}.
+\]
+Stationary equations $\pi P=\pi$:
+
+From column $W$: $(3/7)\pi_W+(4/9)\pi_B=\pi_W \;\Rightarrow\;
+\pi_W=\tfrac{7}{9}\pi_B$.
+
+From column $R$: $(1/5)\pi_R+(2/7)\pi_W+(1/3)\pi_B=\pi_R \;\Rightarrow\;
+(4/5)\pi_R=(2/7)\cdot(7/9)\pi_B+(1/3)\pi_B=(2/9+3/9)\pi_B=(5/9)\pi_B
+\;\Rightarrow\;\pi_R=\tfrac{25}{36}\pi_B$.
+
+Normalising ($\pi_R+\pi_W+\pi_B=1$):
+\[\tfrac{25}{36}\pi_B+\tfrac{7}{9}\pi_B+\pi_B
+=\tfrac{25+28+36}{36}\pi_B=\tfrac{89}{36}\pi_B=1
+\;\Rightarrow\;\pi_B=\tfrac{36}{89}.\]
+
+\[{\pi_R=\frac{25}{89},\quad\pi_W=\frac{28}{89},\quad\pi_B=\frac{36}{89}.}\]
+
+The long-run proportion of balls that are red is $25/89\approx28.1\%$,
+white is $28/89\approx31.5\%$, and blue is $36/89\approx40.4\%$.
+}
+
+\begin{exercise}
+\label{ex:markov-chains-25}
+An individual owns $k$ pairs of running shoes.  Each morning he leaves by
+either door (front or back) with equal probability $1/2$, taking shoes if
+available; on return he enters by either door with equal probability $1/2$,
+leaving shoes there.  What proportion of the time does he run barefooted?
+\end{exercise}
+\solution{
+State $i=$ number of pairs at the front door, $i=0,1,\ldots,k$.
+
+Each morning the individual:
+\begin{itemize}
+  \item Leaves front (prob $1/2$): if $i>0$, takes a pair (later
+    returns it to front w.p.\ $1/2$ or back w.p.\ $1/2$); if $i=0$,
+    goes barefoot (no shoes move).
+  \item Leaves back (prob $1/2$): if $k-i>0$, takes a pair; if $k-i=0$,
+    goes barefoot.
+\end{itemize}
+
+For $0<i<k$:
+$P_{i,i-1}=\tfrac{1}{4}$, $P_{i,i}=\tfrac{1}{2}$, $P_{i,i+1}=\tfrac{1}{4}$.
+At boundaries: $P_{0,0}=\tfrac{3}{4}$, $P_{0,1}=\tfrac{1}{4}$;
+$P_{k,k-1}=\tfrac{1}{4}$, $P_{k,k}=\tfrac{3}{4}$.
+
+This is a birth--death chain with equal birth and death rates
+$\tfrac{1}{4}$ for interior states.  By detailed balance the stationary
+distribution is \emph{uniform}:
+\[\pi_i=\frac{1}{k+1},\quad i=0,1,\ldots,k.\]
+
+Barefoot occurs if and only if he leaves front with $i=0$ shoes there, or
+leaves back with $k-i=0$ shoes there:
+\[
+P(\text{barefoot})
+=\pi_0\cdot\tfrac{1}{2}+\pi_k\cdot\tfrac{1}{2}
+=\frac{1}{k+1}\cdot\frac{1}{2}+\frac{1}{k+1}\cdot\frac{1}{2}
+={\frac{1}{k+1}}.
+\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-26}
+Consider the following approach to shuffling a deck of $n$ cards: choose
+one of the positions $1,2,\ldots,n$ uniformly at random and move the card
+in that position to the top of the deck (``move to front'').  Show that
+in the limit the deck is perfectly shuffled, i.e.\ every ordering is
+equally likely.
+\end{exercise}
+\solution{
+\textbf{Irreducibility.}  Starting from any permutation, we can reach any
+target permutation $\sigma=(\sigma_1,\ldots,\sigma_n)$ by performing at
+most $n$ MTF moves: first move $\sigma_n$ to position~1, then move
+$\sigma_{n-1}$ to position~1 (pushing $\sigma_n$ down), and so on.
+Hence the chain is irreducible over all $n!$ orderings.
+
+\textbf{Uniform stationary distribution.}  We verify that the uniform
+distribution $\pi(\sigma)=1/n!$ is stationary.  For any target ordering
+$\tau$, the number of orderings $\sigma$ that can produce $\tau$ in one
+MTF step equals $n$ (move any of the $n$ cards to front); each such
+$\sigma$ is reached with probability $1/n$ from a uniform starting
+distribution.  Since there are exactly $n$ orderings mapping to $\tau$
+in one step, and each contributes $\frac{1}{n!}\cdot\frac{1}{n}$:
+\[\sum_\sigma\pi(\sigma)P_{\sigma,\tau}=n\cdot\frac{1}{n!}\cdot\frac{1}{n}=\frac{1}{n!}=\pi(\tau).\]
+
+The self-loop obtained by selecting the top card makes the chain aperiodic. By irreducibility and finiteness, the unique stationary distribution is
+the uniform distribution, so every ordering becomes equally likely in the
+limit. 
+}
+
+\begin{exercise}
+\label{ex:markov-chains-27}
+Each of $N$ individuals is either active or inactive each period.
+An active individual stays active w.p.\ $\alpha$; an inactive individual
+stays inactive w.p.\ $\beta$.  Let $X_n=$ number of active individuals in
+period $n$.
+\begin{enumerate}
+\item[(a)] Argue that $X_n$ is a Markov chain.
+\item[(b)] Find $\E[X_n\mid X_0=i]$.
+\item[(c)] Derive an expression for the transition probabilities.
+\item[(d)] Find the long-run proportion of time that exactly $j$ individuals
+  are active.
+\end{enumerate}
+\end{exercise}
+\solution{
+Assume individuals evolve independently and $0<\alpha,\beta<1$.\par
+\textbf{(a)}  Given $X_n=i$, the next-period count $X_{n+1}$ is the sum
+of $i$ independent Bernoulli($\alpha$) variables (one per active
+individual) plus $N-i$ independent Bernoulli($1-\beta$) variables (one
+per inactive individual).  The distribution of $X_{n+1}$ depends only on
+$i=X_n$, not on the history, so $\{X_n\}$ is a Markov chain.
+
+\textbf{(b)}  Let $\mu_n=\E[X_n\mid X_0=i]$.  Since
+$\E[X_{n+1}\mid X_n]=\alpha X_n+(1-\beta)(N-X_n)$, taking expectations:
+\[\mu_{n+1}=(\alpha+\beta-1)\mu_n+(1-\beta)N.\]
+This linear recurrence (with $r=\alpha+\beta-1$) solves to
+\[
+\E[X_n\mid X_0=i]=\frac{(1-\beta)N}{2-\alpha-\beta}
++\left(i-\frac{(1-\beta)N}{2-\alpha-\beta}\right)(\alpha+\beta-1)^n.
+\]
+
+\textbf{(c)}  From state $i$, the next state $j$ is the sum of
+$\mathrm{Bin}(i,\alpha)$ and $\mathrm{Bin}(N-i,1-\beta)$ random
+variables, so
+\[P_{ij}=\sum_{k=\max(0,j-N+i)}^{\min(i,j)}\binom{i}{k}\alpha^k(1-\alpha)^{i-k}
+\binom{N-i}{j-k}(1-\beta)^{j-k}\beta^{N-i-(j-k)}.\]
+
+\textbf{(d)}  Consider the $N=1$ case: a single individual has stationary
+active probability $\pi_{\mathrm{act}}=(1-\beta)/(2-\alpha-\beta)$.  For
+general $N$, because each individual evolves independently with the same
+stationary distribution, in the steady state the number of active
+individuals is $\mathrm{Binomial}(N,p^*)$ where
+$p^*=(1-\beta)/(2-\alpha-\beta)$.  Hence
+\[
+\pi_j=\binom{N}{j}(p^*)^j(1-p^*)^{N-j},\quad j=0,1,\ldots,N.
+\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-28}
+Every time the team wins a game it wins the next with probability $0.8$;
+every time it loses it wins the next with probability $0.3$.  If it wins
+it has dinner with probability $0.7$; if it loses, with probability $0.2$.
+What proportion of games result in a team dinner?
+\end{exercise}
+\solution{
+States are $W$ (win) and $L$ (loss). The stationary equation is
+\[
+0.2\pi_W=0.3\pi_L,\qquad \pi_W+\pi_L=1,
+\]
+so $\pi_W=3/5$ and $\pi_L=2/5$. Hence the long-run dinner proportion is
+\[
+\pi_W(0.7)+\pi_L(0.2)=\frac35(0.7)+\frac25(0.2)=0.50.
+\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-29}
+An organisation has $N$ employees with three job classifications, changing
+independently according to $P=\begin{pmatrix}0.7&0.2&0.1\\0.2&0.6&0.2\\0.1&0.4&0.5\end{pmatrix}$.
+What percentage of employees are in each classification?
+\end{exercise}
+\solution{
+Let $\pi_1,\pi_2,\pi_3$ be the stationary proportions. The first and
+third balance equations give
+\[
+3\pi_1=2\pi_2+\pi_3,\qquad
+5\pi_3=\pi_1+2\pi_2.
+\]
+Substituting the first into the second yields
+$\pi_3=4\pi_2/7$, and then $\pi_1=6\pi_2/7$.
+Normalizing gives
+\[
+(\pi_1,\pi_2,\pi_3)=\left(\frac6{17},\frac7{17},\frac4{17}\right).
+\]
+All entries of $P$ are positive, so these are also the limiting
+proportions: approximately $35.3\%$, $41.2\%$, and $23.5\%$.
+}
+
+\begin{exercise}
+\label{ex:markov-chains-30}
+Three out of every four trucks are followed by a car; one out of every
+five cars is followed by a truck.  What fraction of vehicles on the road
+are trucks?
+\end{exercise}
+\solution{
+States: $T$ (truck), $C$ (car).
+$P_{T,C}=3/4$, $P_{T,T}=1/4$, $P_{C,T}=1/5$, $P_{C,C}=4/5$.
+
+Stationary: $(3/4)\pi_T=(1/5)\pi_C \Rightarrow\pi_T/\pi_C=4/15$.
+With $\pi_T+\pi_C=1$:
+\[\pi_T=\frac{4}{4+15}={\frac{4}{19}\approx21.1\%}.\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-31}
+A town never has two sunny days in a row.  Days are sunny ($S$), cloudy
+($C$), or rainy ($R$).  If sunny, next day is equally likely $C$ or $R$.
+If rainy or cloudy, probability $1/2$ of staying the same; if it changes,
+it is equally likely to be either of the other two.  What proportion of
+days are sunny / cloudy?
+\end{exercise}
+\solution{
+Transition matrix:
+\[
+P=\bordermatrix{&S&C&R\cr
+  S&0&\tfrac{1}{2}&\tfrac{1}{2}\cr
+  C&\tfrac{1}{4}&\tfrac{1}{2}&\tfrac{1}{4}\cr
+  R&\tfrac{1}{4}&\tfrac{1}{4}&\tfrac{1}{2}\cr}.
+\]
+Stationary equations:
+$\pi_S=(1/4)\pi_C+(1/4)\pi_R$;
+$\pi_C=(1/2)\pi_S+(1/2)\pi_C+(1/4)\pi_R \Rightarrow (1/2)\pi_C=(1/2)\pi_S+(1/4)\pi_R$;
+$\pi_R=(1/2)\pi_S+(1/4)\pi_C+(1/2)\pi_R$.
+
+From eq.~2: $\pi_C=\pi_S+(1/2)\pi_R$.
+From eq.~3: $(1/2)\pi_R=(1/2)\pi_S+(1/4)\pi_C=(1/2)\pi_S+(1/4)(\pi_S+(1/2)\pi_R)
+\Rightarrow(3/8)\pi_R=(3/4)\pi_S \Rightarrow\pi_R=2\pi_S$.
+Then $\pi_C=\pi_S+\pi_S=2\pi_S$.
+
+Normalising: $\pi_S+2\pi_S+2\pi_S=5\pi_S=1\Rightarrow\pi_S=1/5$.
+\[{\pi_S=\frac{1}{5},\quad\pi_C=\frac{2}{5},\quad\pi_R=\frac{2}{5}.}\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-32}
+Each of two switches is either on or off each day.  On day $n$, each
+switch independently is on with probability
+$[1+\text{(number on during day }n-1)]/4$.
+What fraction of days are both switches on? Both off?
+\end{exercise}
+\solution{
+State $k=$ number of switches on ($k=0,1,2$).  Conditional on $k$
+switches being on, each switch on day $n$ is on independently with prob
+$p=(1+k)/4$.
+
+\[
+P_{0\to j}=\binom{2}{j}\!\left(\tfrac{1}{4}\right)^j\!\left(\tfrac{3}{4}\right)^{2-j},\;
+P_{1\to j}=\binom{2}{j}\!\left(\tfrac{1}{2}\right)^2,\;
+P_{2\to j}=\binom{2}{j}\!\left(\tfrac{3}{4}\right)^j\!\left(\tfrac{1}{4}\right)^{2-j}.
+\]
+\[
+P=\begin{pmatrix}\tfrac{9}{16}&\tfrac{6}{16}&\tfrac{1}{16}\\[3pt]
+  \tfrac{1}{4}&\tfrac{1}{2}&\tfrac{1}{4}\\[3pt]
+  \tfrac{1}{16}&\tfrac{6}{16}&\tfrac{9}{16}\end{pmatrix}.
+\]
+By the symmetry $P_{0\to j}=P_{2\to2-j}$, we have $\pi_0=\pi_2$.
+
+From the balance equation for state $1$: $\pi_1=(6/16)\pi_0+(1/2)\pi_1+(6/16)\pi_2=(3/4)\pi_0+(1/2)\pi_1$
+$\Rightarrow (1/2)\pi_1=(3/4)\pi_0\Rightarrow\pi_1=(3/2)\pi_0$.
+
+Normalising: $\pi_0+(3/2)\pi_0+\pi_0=(7/2)\pi_0=1\Rightarrow\pi_0=2/7$.
+\[{\text{Both on}: \pi_2=\frac{2}{7},\quad\text{Both off}: \pi_0=\frac{2}{7}.}\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-33}
+A professor gives three types of exams.  $p_i=$ probability of doing
+well on type $i$ ($p_1=0.3,\,p_2=0.6,\,p_3=0.9$).  If the class does
+well, the next exam is equally likely to be any type; if the class does
+badly, the next exam is always type~1.  What proportion of exams are of
+type $i$, $i=1,2,3$?
+\end{exercise}
+\solution{
+Let the state be the type of the current exam. A successful exam leads
+to each type with probability $1/3$, while failure leads to type $1$.
+Thus $P_{ij}=p_i/3+(1-p_i)\mathbf{1}_{\{j=1\}}$, giving
+\[
+P=\begin{pmatrix}0.8&0.1&0.1\\0.6&0.2&0.2\\0.4&0.3&0.3\end{pmatrix}.
+\]
+The second and third columns are identical, so $\pi_2=\pi_3$.
+The balance equation for state $2$ is then
+\[
+\pi_2=0.1\pi_1+0.2\pi_2+0.3\pi_2,
+\]
+which gives $\pi_1=5\pi_2$. Normalizing yields
+\[
+(\pi_1,\pi_2,\pi_3)=\left(\frac57,\frac17,\frac17\right).
+\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-34}
+A flea moves on a triangle with vertices $1,2,3$.  At vertex $i$ it moves
+clockwise (CW) w.p.\ $p_i$ and counterclockwise (CCW) w.p.\ $q_i=1-p_i$.
+\begin{enumerate}
+\item[(a)] Find the proportion of time at each vertex.
+\item[(b)] How often does a CCW move immediately precede five consecutive
+  CW moves?
+\end{enumerate}
+\end{exercise}
+\solution{
+Assume $0<p_i<1$ so the chain is irreducible. Label clockwise
+neighbours $1\to2\to3\to1$. The balance equations are
+\[
+\pi_1=q_2\pi_2+p_3\pi_3,\quad
+\pi_2=p_1\pi_1+q_3\pi_3,\quad
+\pi_3=q_1\pi_1+p_2\pi_2.
+\]
+\textbf{(a)} Define
+\[
+w_1=q_2p_3+q_2q_3+p_2p_3,\qquad
+w_2=p_1q_3+p_1p_3+q_1q_3,
+\]
+\[
+w_3=q_1p_2+p_1p_2+q_1q_2.
+\]
+Direct substitution into the balance equations verifies that
+\[
+\pi_i=\frac{w_i}{w_1+w_2+w_3}.
+\]
+For example, $w_1$ is the sum of the weights of the three directed
+spanning trees pointing toward vertex $1$.
+
+\textbf{(b)} Count a six-move window consisting of one counterclockwise
+move followed by five clockwise moves. Its long-run frequency is
+\[
+\pi_1q_1p_3p_1p_2p_3p_1
++\pi_2q_2p_1p_2p_3p_1p_2
++\pi_3q_3p_2p_3p_1p_2p_3.
+\]
+No condition is imposed on the move after these five clockwise moves.
+}
+
+\begin{exercise}
+\label{ex:markov-chains-35}
+Consider a Markov chain with states $\{0,1,2,3,4\}$, where $P_{0,4}=1$
+and from state $i>0$ the next state is equally likely to be any of
+$0,1,\ldots,i-1$.  Find the limiting probabilities.
+\end{exercise}
+\solution{
+Stationary equations $\pi=\pi P$:
+\begin{align*}
+\pi_0 &= \pi_1+\tfrac{1}{2}\pi_2+\tfrac{1}{3}\pi_3+\tfrac{1}{4}\pi_4,\\
+\pi_1 &= \tfrac{1}{2}\pi_2+\tfrac{1}{3}\pi_3+\tfrac{1}{4}\pi_4,\\
+\pi_2 &= \tfrac{1}{3}\pi_3+\tfrac{1}{4}\pi_4,\\
+\pi_3 &= \tfrac{1}{4}\pi_4,\\
+\pi_4 &= \pi_0.
+\end{align*}
+
+Set $\pi_0=a$.  Then $\pi_4=a$, $\pi_3=a/4$, $\pi_2=a/12+a/4=a/3$,
+$\pi_1=a/6+a/12+a/4=a/2$.  (Verify: $\pi_0=a/2+a/6+a/12+a/4=a$. )
+
+Normalising:
+$a+\tfrac{a}{2}+\tfrac{a}{3}+\tfrac{a}{4}+a
+=a\bigl(2+\tfrac{1}{2}+\tfrac{1}{3}+\tfrac{1}{4}\bigr)
+=a\cdot\tfrac{37}{12}=1\Rightarrow a=\tfrac{12}{37}$.
+
+\[{\pi_0=\frac{12}{37},\;\pi_1=\frac{6}{37},\;\pi_2=\frac{4}{37},\;\pi_3=\frac{3}{37},\;\pi_4=\frac{12}{37}.}\]
+}
+
+\begin{exercise}
+\label{ex:markov-chains-36}
+A process changes state daily according to the two-state Markov chain
+with $P_{0,0}=0.4$, $P_{0,1}=0.6$, $P_{1,0}=0.2$, $P_{1,1}=0.8$.  Each
+day a message is sent: ``good'' w.p.\ $p_i$ or ``bad'' w.p.\ $q_i=1-p_i$
+if the chain is in state $i$.
+\begin{enumerate}
+\item[(a)] State~$0$ on Monday: probability of a good message on Tuesday?
+\item[(b)] State~$0$ on Monday: probability of a good message on Friday?
+\item[(c)] In the long run, what proportion of messages are good?
+\item[(d)] Let $Y_n=1$ if a good message is sent on day $n$, $Y_n=2$
+  otherwise.  Is $\{Y_n\}$ a Markov chain?
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{Stationary distribution.}  $0.6\pi_0=0.2\pi_1\Rightarrow
+\pi_0=1/4$, $\pi_1=3/4$.  Second eigenvalue: $\lambda_2=1-0.6-0.2=0.2$.
+
+\[
+P^n_{0,0}=\tfrac{1}{4}+\tfrac{3}{4}(0.2)^n,\quad
+P^n_{0,1}=\tfrac{3}{4}-\tfrac{3}{4}(0.2)^n=\tfrac{3}{4}[1-(0.2)^n].
+\]
+
+\textbf{(a)} (Tuesday, $n=1$):
+\[P(\text{good Tue})=P_{0,0}\cdot p_0+P_{0,1}\cdot p_1=0.4p_0+0.6p_1.\]
+
+\textbf{(b)} (Friday, $n=4$ days after Monday):
+\begin{align*}
+P(\text{good Fri})
+&=P^4_{0,0}\cdot p_0+P^4_{0,1}\cdot p_1\\
+&=\bigl(\tfrac{1}{4}+\tfrac{3}{4}(0.2)^4\bigr)p_0
+ +\tfrac{3}{4}\bigl(1-(0.2)^4\bigr)p_1.
+\end{align*}
+Numerically $(0.2)^4=0.0016$:
+$P(\text{good Fri})\approx0.2512\,p_0+0.7488\,p_1$.
+
+\textbf{(c)} Long-run:
+$\pi_0 p_0+\pi_1 p_1=\dfrac{p_0}{4}+\dfrac{3p_1}{4}$.
+
+\textbf{(d)}  In general, $\{Y_n\}$ is \textbf{not} a Markov chain. Special choices, such as $p_0=p_1$ with independent message draws, give a Markov output process.  Knowing $Y_n=1$
+(good message) does not determine the underlying state: both states can
+produce a good message, with different probabilities.  Hence $P(Y_{n+1}=1
+\mid Y_n=1)$ depends on the probability of being in each underlying state
+given the history, which is not determined by $Y_n$ alone.
+}
+
+\setcounter{exercise}{37}
+
+\begin{exercise}%[Exercise 38]
+\label{ex:markov-chains-38}
+Recall that state $i$ is said to be positive recurrent if $m_{i,i} < \infty$, where $m_{i,i}$ is the expected number of transitions until the Markov chain, starting in state $i$, makes a transition back into that state. Because $\pi_i$, the long-run proportion of time the Markov chain, starting in state $i$, spends in state $i$, satisfies
+\[
+\pi_i = \frac{1}{m_{i,i}}
+\]
+it follows that state $i$ is positive recurrent if and only if $\pi_i > 0$. Suppose that state $i$ is positive recurrent and that state $i$ communicates with state $j$. Show that state $j$ is also positive recurrent by arguing that there is an integer $n$ such that
+\[
+\pi_j \ge \pi_i P_{i,j}^n > 0
+\]
+\end{exercise}
+\solution{
+Since state $i$ and state $j$ communicate ($i \leftrightarrow j$), there exists an integer $n \ge 0$ such that the $n$-step transition probability from $i$ to $j$ is strictly positive, i.e., $P_{i,j}^n > 0$.
+
+By the properties of stationary distributions and the law of total probability applied over $n$ steps, we have:
+\[
+\pi_j = \sum_{k} \pi_k P_{k,j}^n
+\]
+Since all terms in the summation are non-negative, we can lower-bound $\pi_j$ by keeping only the single term corresponding to $k = i$:
+\[
+\pi_j \ge \pi_i P_{i,j}^n
+\]
+We are given that state $i$ is positive recurrent, which implies $\pi_i > 0$. Since we also established that $P_{i,j}^n > 0$, their product must be strictly greater than zero:
+\[
+\pi_j \ge \pi_i P_{i,j}^n > 0
+\]
+Since $\pi_j > 0$, it follows directly from the given definition that state $j$ is also positive recurrent.
+}
+
+\begin{exercise}%[Exercise 39]
+\label{ex:markov-chains-39}
+Recall that a recurrent state that is not positive recurrent is called null recurrent. Use the result of Exercise 38 to prove that null recurrence is a class property. That is, if state $i$ is null recurrent and state $i$ communicates with state $j$, show that state $j$ is also null recurrent.
+\end{exercise}
+\solution{
+We are given that state $i$ is null recurrent and communicates with state $j$ ($i \leftrightarrow j$). Since recurrence is a class property and state $i$ is recurrent, state $j$ must also be recurrent.
+
+Now, we proceed by contradiction to show that state $j$ must be null recurrent. Suppose that state $j$ is \emph{not} null recurrent. Since it is recurrent, it would therefore have to be positive recurrent.
+
+However, since $i \leftrightarrow j$, we can apply the result from Exercise 38: if state $j$ is positive recurrent, then state $i$ must also be positive recurrent. This directly contradicts our initial assumption that state $i$ is null recurrent.
+
+Thus, state $j$ cannot be positive recurrent, meaning it must be null recurrent. Therefore, null recurrence is a class property.
+}
+
+\begin{exercise}%[Exercise 40]
+\label{ex:markov-chains-40}
+It follows from the argument made in Exercise 38 that state $i$ is null recurrent if it is recurrent and $\pi_i = 0$. Consider the symmetric random walk on $\mathbb Z$, with independent steps $+1$ and $-1$ of probability $1/2$ each.
+\begin{enumerate}
+\item[(a)] Argue that $\pi_i = \pi_0$ for all $i$.
+\item[(b)] Argue that all states are null recurrent.
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} All states communicate, and the symmetric random walk is
+recurrent. If it were positive recurrent, its stationary probability
+vector would satisfy
+\[
+2\pi_i=\pi_{i-1}+\pi_{i+1},\qquad i\in\mathbb Z.
+\]
+Thus consecutive differences are constant, so $\pi_i=a+bi$.
+Nonnegativity for every integer $i$ forces $b=0$, hence $\pi_i=\pi_0$.
+
+\textbf{(b)} No constant nonnegative sequence on $\mathbb Z$ sums to
+$1$. Thus a stationary probability vector cannot exist, and the
+irreducible recurrent chain is null recurrent. Its long-run occupation
+proportions are all zero, so the equality in (a) also holds for these
+proportions. These zero proportions are not a stationary probability
+\emph{distribution}.
+}
+
+\begin{exercise}%[Exercise 41]
+\label{ex:markov-chains-41}
+Let $\pi_i$ denote the long-run proportion of time a given irreducible Markov chain is in state $i$.
+\begin{enumerate}
+\item[(a)] Explain why $\pi_i$ is also the proportion of transitions that are into state $i$ as well as being the proportion of transitions that are from state $i$.
+\item[(b)] $\pi_i P_{i,j}$ represents the proportion of transitions that satisfy what property?
+\item[(c)] $\sum_{i} \pi_i P_{i,j}$ represent the proportion of transitions that satisfy what property?
+\item[(d)] Using the preceding explain why
+\[
+\pi_j = \sum_{i} \pi_i P_{i,j}
+\]
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} In the long run, the number of entries into state $i$ must essentially equal the number of departures from state $i$ (differing by at most 1 at any finite step). Since $\pi_i$ is the long-run proportion of time spent in state $i$, each unit of time corresponds to exactly one transition out of state $i$. Thus, $\pi_i$ represents the long-run proportion of transitions originating from state $i$. By balance, it must also equal the long-run proportion of transitions entering state $i$.
+
+\textbf{(b)} $\pi_i P_{i,j}$ represents the long-run proportion of all transitions that start in state $i$ and move directly into state $j$ in the next step.
+
+\textbf{(c)} $\sum_{i} \pi_i P_{i,j}$ sums the proportions of transitions moving into state $j$ from any possible starting state $i$. Therefore, it represents the total long-run proportion of transitions that end in state $j$.
+
+\textbf{(d)} From part (a), $\pi_j$ is the long-run proportion of transitions that are into state $j$. From part (c), $\sum_{i} \pi_i P_{i,j}$ is also the total long-run proportion of transitions that enter state $j$. Equating these two expressions for the same physical quantity yields the stationary identity:
+\[
+\pi_j = \sum_{i} \pi_i P_{i,j}
+\]
+}
+
+\begin{exercise}%[Exercise 42]
+\label{ex:markov-chains-42}
+Let $A$ be a set of states, and let $A^c$ be the remaining states.
+\begin{enumerate}
+\item[(a)] What is the interpretation of
+\[
+\sum_{i \in A} \sum_{j \in A^c} \pi_i P_{i,j}?
+\]
+\item[(b)] What is the interpretation of
+\[
+\sum_{i \in A^c} \sum_{j \in A} \pi_i P_{i,j}?
+\]
+\item[(c)] Explain the identity
+\[
+\sum_{i \in A} \sum_{j \in A^c} \pi_i P_{i,j} = \sum_{i \in A^c} \sum_{j \in A} \pi_i P_{i,j}
+\]
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} This expression represents the long-run proportion of all transitions that start from a state inside set $A$ and end in a state outside set $A$ (in $A^c$). In other words, it is the long-run rate of escaping or leaving set $A$.
+
+\textbf{(b)} This expression represents the long-run proportion of all transitions that start from a state outside set $A$ (in $A^c$) and end in a state inside set $A$. In other words, it is the long-run rate of entering set $A$.
+
+\textbf{(c)} For the Markov chain to remain in a stationary regime, the system cannot indefinitely pile up inside or outside of set $A$. Over the long run, every time the process exits set $A$, it must eventually return to set $A$ to exit again. Thus, the total number of transitions leaving $A$ must balance the total number of transitions entering $A$ (differing by at most 1 at any given time). Therefore, the long-run rate of leaving $A$ must equal the long-run rate of entering $A$:
+\[
+\sum_{i \in A} \sum_{j \in A^c} \pi_i P_{i,j} = \sum_{i \in A^c} \sum_{j \in A} \pi_i P_{i,j}
+\]
+}
+
+\begin{exercise}%[Exercise 43]
+\label{ex:markov-chains-43}
+Each day, one of $n$ possible elements is requested, the $i$th one with probability $P_i, i \ge 1, \sum_1^n P_i = 1$. These elements are at all times arranged in an ordered list that is revised as follows: The element selected is moved to the front of the list with the relative positions of all the other elements remaining unchanged. Define the state at any time to be the list ordering at that time and note that there are $n!$ possible states.
+\begin{enumerate}
+\item[(a)] Argue that the preceding is a Markov chain.
+\item[(b)] For any state $i_1, \dots, i_n$ (which is a permutation of $1, 2, \dots, n$), let $\pi(i_1, \dots, i_n)$ denote the limiting probability. In order for the state to be $i_1, \dots, i_n$, it is necessary for the last request to be for $i_1$, the last non-$i_1$ request for $i_2$, the last non-$i_1$ or $i_2$ request for $i_3$, and so on. Hence, it appears intuitive that
+\[
+\pi(i_1, \dots, i_n) = P_{i_1} \frac{P_{i_2}}{1 - P_{i_1}} \frac{P_{i_3}}{1 - P_{i_1} - P_{i_2}} \dots \frac{P_{i_{n-1}}}{1 - P_{i_1} - \dots - P_{i_{n-2}}}
+\]
+Verify when $n = 3$ that the preceding are indeed the limiting probabilities.
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} The next ordering of the list depends exclusively on two things: the current arrangement of the list and which element is selected next. The probability of choosing any element $i$ is constant ($P_i$) and independent of previous choices or past positions. Since the future list configuration depends only on the current configuration and the independent current selection, the process satisfies the Markov property and is a Markov chain.
+
+Assume $P_i>0$ for all items.\par
+\textbf{(b)} Let $n = 3$. We wish to verify that the proposed formula satisfies the stationary equations for a state, say $\pi(1, 2, 3)$. According to the formula:
+\[
+\pi(1, 2, 3) = P_1 \frac{P_2}{1 - P_1}
+\]
+Note that since $P_1 + P_2 + P_3 = 1$, the final implied factor $\frac{P_3}{1-P_1-P_2} = \frac{P_3}{P_3} = 1$, so the expression is complete.
+
+To verify stationarity, we look at all states that can transition into $(1, 2, 3)$ in one step. A transition into $(1, 2, 3)$ occurs if and only if element 1 is requested while the relative order of the remaining elements is $(2, 3)$. The states that have the relative order $(2, 3)$ for the remaining elements are $(1, 2, 3)$, $(2, 1, 3)$, and $(2, 3, 1)$. In each case, requesting element 1 (with probability $P_1$) moves 1 to the front, yielding $(1, 2, 3)$.
+
+Thus, the balance equation for state $(1, 2, 3)$ is:
+\[
+\pi(1, 2, 3) = \Big( \pi(1, 2, 3) + \pi(2, 1, 3) + \pi(2, 3, 1) \Big) \cdot P_1
+\]
+Let us substitute the proposed formula for each of these three states on the right-hand side:
+\begin{align*}
+\pi(1, 2, 3) &= P_1 \frac{P_2}{1 - P_1} \\
+\pi(2, 1, 3) &= P_2 \frac{P_1}{1 - P_2} \\
+\pi(2, 3, 1) &= P_2 \frac{P_3}{1 - P_2}
+\end{align*}
+Summing the terms inside the parentheses:
+\begin{align*}
+\pi(1, 2, 3) + \pi(2, 1, 3) + \pi(2, 3, 1) &= P_1 \frac{P_2}{1 - P_1} + P_2 \frac{P_1}{1 - P_2} + P_2 \frac{P_3}{1 - P_2} \\
+&= P_1 \frac{P_2}{1 - P_1} + \frac{P_2}{1 - P_2} (P_1 + P_3)
+\end{align*}
+Since $P_1 + P_2 + P_3 = 1$, we have $P_1 + P_3 = 1 - P_2$. Substituting this back:
+\[
+= P_1 \frac{P_2}{1 - P_1} + \frac{P_2}{1 - P_2} (1 - P_2) = P_1 \frac{P_2}{1 - P_1} + P_2
+\]
+Now, find a common denominator for these two remaining terms:
+\[
+= P_2 \left( \frac{P_1}{1 - P_1} + 1 \right) = P_2 \left( \frac{P_1 + 1 - P_1}{1 - P_1} \right) = \frac{P_2}{1 - P_1}
+\]
+Finally, multiply this sum by the transition probability $P_1$ as required by the balance equation:
+\[
+\Big( \pi(1, 2, 3) + \pi(2, 1, 3) + \pi(2, 3, 1) \Big) \cdot P_1 = \frac{P_2}{1 - P_1} \cdot P_1 = P_1 \frac{P_2}{1 - P_1} = \pi(1,2,3)
+\]
+The equation holds. By symmetry, this verification applies to all other permutations, confirming that the proposed formula gives the true limiting probabilities.
+}
+
+\begin{exercise}%[Exercise 44]
+\label{ex:markov-chains-44}
+Suppose that a population consists of a fixed number, say, $m$, of genes in any generation. Each gene is one of two possible genetic types. If exactly $i$ (of the $m$) genes of any generation are of type 1, then the next generation will have $j$ type 1 genes (and $m - j$ type 2 genes) with probability
+\[
+\binom{m}{j} \left(\frac{i}{m}\right)^j \left(\frac{m-i}{m}\right)^{m-j}, \quad j = 0, 1, \dots, m
+\]
+Let $X_n$ denote the number of type 1 genes in the $n$th generation, and assume that $X_0 = i$.
+\begin{enumerate}
+\item[(a)] Find $E[X_n]$.
+\item[(b)] What is the probability that eventually all the genes will be type 1?
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} Given $X_n = i$, the next state $X_{n+1}$ follows a binomial distribution with parameters $m$ (number of trials) and $p = \frac{i}{m} = \frac{X_n}{m}$ (success probability).
+
+The conditional expectation is:
+\[
+E[X_{n+1} \mid X_n] = m \cdot \left(\frac{X_n}{m}\right) = X_n
+\]
+Taking the total expectation on both sides yields:
+\[
+E[X_{n+1}] = E[E[X_{n+1} \mid X_n]] = E[X_n]
+\]
+By induction, the expected value remains constant across all generations:
+\[
+E[X_n] = E[X_0] = i
+\]
+
+\textbf{(b)} The states $j = 0$ and $j = m$ are absorbing states because if the population consists entirely of one type of gene, no genes of the other type can be generated. Since the chain is finite and every other state can reach these absorbing states, the process will eventually be absorbed into either state 0 (extinction of type 1) or state $m$ (fixation of type 1) with probability 1.
+
+Let $P_{\text{all}}$ be the probability that the population eventually consists entirely of type 1 genes (absorption at $m$). As $n \to \infty$, the random variable $X_n$ converges to a limiting random variable $X_\infty$ which takes value $m$ with probability $P_{\text{all}}$ and value $0$ with probability $1 - P_{\text{all}}$.
+
+Using the property from part (a) that $E[X_n] = i$ for all $n$, we can take the limit by bounded convergence, since $0\le X_n\le m$:
+\[
+E[X_\infty] = m \cdot P_{\text{all}} + 0 \cdot (1 - P_{\text{all}}) = i
+\]
+Solving for $P_{\text{all}}$ gives:
+\[
+P_{\text{all}} = \frac{i}{m}
+\]
+}
+
+\setcounter{exercise}{45}
+
+\begin{exercise}%[Exercise 46]
+\label{ex:markov-chains-46}
+An individual possesses $r$ umbrellas that he employs in going from his home to office, and vice versa. If he is at home (the office) at the beginning (end) of a day and it is raining, then he will take an umbrella with him to the office (home), provided there is one to be taken. If it is not raining, then he never takes an umbrella. Assume that, independent of the past, it rains at the beginning (end) of a day with probability $p$, independent of the past.
+\begin{enumerate}
+\item[(a)] Define a Markov chain with $r + 1$ states, which will help us to determine the proportion of time that our man gets wet. (Note: He gets wet if it is raining, and all umbrellas are at his other location.)
+\item[(b)] Show that the limiting probabilities are given by
+\[
+\pi_i = \begin{cases}
+\dfrac{q}{r + q}, & \text{if } i = 0 \\
+\dfrac{1}{r + q}, & \text{if } i = 1, \dots, r
+\end{cases} \quad \text{where } q = 1 - p
+\]
+\item[(c)] What fraction of time does our man get wet?
+\item[(d)] When $r = 3$, what value of $p$ maximizes the fraction of time he gets wet?
+\end{enumerate}
+\end{exercise}
+\solution{
+Assume $r\ge1$ and $0<p<1$ for the limiting-distribution argument.\par
+\textbf{(a)} Let the state $X_n$ be the number of umbrellas available at the individual's current location (home or office) before his trip. There are $r+1$ possible states, $i \in \{0, 1, \dots, r\}$. Let $q = 1 - p$.
+If the current state is $i$ ($0 < i \le r$):
+\begin{itemize}
+\item With probability $p$, it rains, he takes one umbrella, and leaves $i-1$ umbrellas behind. The next location will have the remaining $r - (i - 1) = r - i + 1$ umbrellas. Thus, $P_{i, r-i+1} = p$.
+\item With probability $q$, it does not rain, he takes no umbrella, leaving $i$ umbrellas behind. The next location will have $r - i$ umbrellas. Thus, $P_{i, r-i} = q$.
+\end{itemize}
+If the current state is $0$, he cannot take any umbrella regardless of the weather. Thus, he leaves $0$ umbrellas behind, and the next location will have all $r$ umbrellas. Hence, $P_{0, r} = 1$.
+
+\textbf{(b)} The stationary equations are given by $\pi_j = \sum_i \pi_i P_{i,j}$. We can guess the form $\pi_i = c$ for $i=1,\dots,r$ and $\pi_0 = c q$. Let us verify this balance by verifying $\sum_{i=0}^r \pi_i = 1$:
+\[
+\pi_0 + \sum_{i=1}^r \pi_i = cq + rc = c(r + q) = 1 \implies c = \frac{1}{r+q}
+\]
+Thus, $\pi_0 = \frac{q}{r+q}$ and $\pi_i = \frac{1}{r+q}$ for $i=1,\dots,r$. We check equation for state $r$:
+\[
+\pi_r = \pi_0 P_{0,r} + \pi_1 P_{1,r} = \pi_0(1) + \pi_1(p) = \frac{q}{r+q} + \frac{p}{r+q} = \frac{1}{r+q}
+\]
+This matches perfectly. Similar checks verify the other states, confirming the unique stationary distribution.
+
+\textbf{(c)} The individual gets wet if he is at a location with 0 umbrellas and it is raining. Since the weather is independent of the location's state, this long-run fraction of time is:
+\[
+\text{Fraction} = \pi_0 \cdot p = \frac{p q}{r + q} = \frac{p(1-p)}{r + 1 - p}
+\]
+
+\textbf{(d)} For $r = 3$, the fraction is $f(p) = \frac{p - p^2}{4 - p}$. To find the maximum, we differentiate with respect to $p$:
+\[
+f'(p) = \frac{(1 - 2p)(4 - p) - (p - p^2)(-1)}{(4 - p)^2} = \frac{4 - p - 8p + 2p^2 + p - p^2}{(4 - p)^2} = \frac{p^2 - 8p + 4}{(4 - p)^2}
+\]
+Setting $f'(p) = 0$ yields $p^2 - 8p + 4 = 0$. Solving the quadratic equation for $p \in [0, 1]$:
+\[
+p = \frac{8 - \sqrt{64 - 16}}{2} = 4 - \sqrt{12} = 4 - 2\sqrt{3} \approx 0.5359
+\]
+}
+
+\begin{exercise}%[Exercise 47]
+\label{ex:markov-chains-47}
+Let $\{X_n, n \ge 0\}$ denote an ergodic Markov chain with limiting probabilities $\pi_i$. Define the process $\{Y_n, n \ge 1\}$ by $Y_n = (X_{n-1}, X_n)$. That is, $Y_n$ keeps track of the last two states of the original chain. Is $\{Y_n, n \ge 1\}$ a Markov chain? If so, determine its transition probabilities and find $\lim_{n \to \infty} P\{Y_n = (i,j)\}$.
+\end{exercise}
+\solution{
+Yes, $\{Y_n\}$ is a Markov chain. The value of $Y_{n+1} = (X_n, X_{n+1})$ depends on the past history only through its immediate predecessor $Y_n = (X_{n-1}, X_n)$, because $X_{n+1}$ depends only on $X_n$ via the Markov property of $\{X_n\}$.
+
+The transition probabilities are given by:
+\[
+P_{Y_n, Y_{n+1}} = P\{(X_n, X_{n+1}) = (k, l) \mid (X_{n-1}, X_n) = (i, j)\}
+\]
+This probability is $0$ unless the current second component matches the next first component (i.e., $j = k$). If $j = k$, then:
+\[
+P\{(j, l) \mid (i, j)\} = P\{X_{n+1} = l \mid X_n = j, X_{n-1} = i\} = P_{j,l}
+\]
+The limiting probabilities are found directly from the joint distribution under stationarity:
+\[
+\lim_{n \to \infty} P\{Y_n = (i,j)\} = \lim_{n \to \infty} P\{X_{n-1} = i, X_n = j\} = \lim_{n \to \infty} P\{X_{n-1} = i\} P_{i,j} = \pi_i P_{i,j}
+\]
+}
+
+\begin{exercise}%[Exercise 48]
+\label{ex:markov-chains-48}
+Consider a Markov chain in steady state. Say that a $k$ length run of zeroes ends at time $m$ if
+\[
+X_{m-k-1} \neq 0, \quad X_{m-k} = X_{m-k+1} = \dots = X_{m-1} = 0, \quad X_m \neq 0
+\]
+Show that the probability of this event is $\pi_0 (P_{0,0})^{k-1} (1 - P_{0,0})^2$, where $\pi_0$ is the limiting probability of state 0.
+\end{exercise}
+\solution{
+By stationarity, the probability of entering state $0$ from outside it
+in any given step is
+\[
+\sum_{i\ne0}\pi_iP_{i0}
+=\pi_0-\pi_0P_{00}=\pi_0(1-P_{00}).
+\]
+After entering, a run of exactly $k\ge1$ zeros requires $k-1$ transitions
+from $0$ to itself, followed by a transition out of $0$. By the Markov
+property, its probability at the specified time is therefore
+\[
+\pi_0(1-P_{00})P_{00}^{k-1}(1-P_{00})
+=\pi_0P_{00}^{k-1}(1-P_{00})^2.
+\]
+}
+
+\begin{exercise}%[Exercise 49]
+\label{ex:markov-chains-49}
+Let $P^{(1)}$ and $P^{(2)}$ denote transition probability matrices for ergodic Markov chains having the same state space. Let $\pi^1$ and $\pi^2$ denote the stationary (limiting) probability vectors for the two chains. Consider a process defined as follows:
+\begin{enumerate}
+\item[(a)] $X_0 = 1$. A coin is then flipped and if it comes up heads, then the remaining states $X_1, \dots$ are obtained from the transition probability matrix $P^{(1)}$ and if tails from the matrix $P^{(2)}$. Is $\{X_n, n \ge 0\}$ a Markov chain? If $p = P\{\text{coin comes up heads}\}$, what is $\lim_{n \to \infty} P(X_n = i)$?
+\item[(b)] $X_0 = 1$. At each stage the coin is flipped and if it comes up heads, then the next state is chosen according to $P^{(1)}$ and if tails comes up, then it is chosen according to $P^{(2)}$. In this case do the successive states constitute a Markov chain? If so, determine the transition probabilities. Show by a counterexample that the limiting probabilities are not the same as in part (a).
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} In general, the process is not Markov: the past path
+contains information about the transition matrix chosen initially.
+There are exceptions, such as $P^{(1)}=P^{(2)}$. Conditioning on the
+initial choice gives
+\[
+\lim_{n\to\infty}P(X_n=i)=p\pi_i^1+(1-p)\pi_i^2.
+\]
+\textbf{(b)} Fresh independent choices at each step give a Markov chain
+with matrix $P=pP^{(1)}+(1-p)P^{(2)}$.
+For a counterexample satisfying the ergodicity assumption, take $p=1/2$
+and
+\[
+P^{(1)}=\begin{pmatrix}9/10&1/10\\1/5&4/5\end{pmatrix},
+\qquad
+P^{(2)}=\begin{pmatrix}1/5&4/5\\2/5&3/5\end{pmatrix}.
+\]
+Both matrices have strictly positive entries. Their stationary vectors
+are $(2/3,1/3)$ and $(1/3,2/3)$, whose equally weighted mixture is
+$(1/2,1/2)$. In contrast,
+\[
+P=\begin{pmatrix}11/20&9/20\\3/10&7/10\end{pmatrix}
+\]
+has stationary vector $(2/5,3/5)$. Thus the two limiting distributions
+differ even when both original chains are ergodic.
+}
+
+\begin{exercise}%[Exercise 50]
+\label{ex:markov-chains-50}
+In Exercise 8, if today's flip lands heads, what is the expected number of additional flips needed until the pattern $t, t, h, t, h, t, t$ occurs?
+\end{exercise}
+\solution{
+The flips follow Exercise~8: the probability of heads next is $0.7$
+after heads and $0.6$ after tails. Consequently the formula for a
+pattern in independent fair flips does not apply.
+
+Track the longest suffix of the observed flips that is a proper prefix
+of $TTHTHTT$. The transient states are
+\[
+\varnothing,\ T,\ TT,\ TTH,\ TTHT,\ TTHTH,\ TTHTHT.
+\]
+The empty-prefix state ends in heads, so today's heads starts in that
+state. Let $e_0,\ldots,e_6$ be the expected additional numbers of flips
+from these states; reaching the full pattern has remaining time zero.
+First-step analysis gives
+\begin{align*}
+e_0&=1+0.7e_0+0.3e_1,\\
+e_1&=1+0.6e_0+0.4e_2,\\
+e_2&=1+0.4e_2+0.6e_3,\\
+e_3&=1+0.7e_0+0.3e_4,\\
+e_4&=1+0.4e_2+0.6e_5,\\
+e_5&=1+0.7e_0+0.3e_6,\\
+e_6&=1+0.6e_0.
+\end{align*}
+For example, a tail after $TTHT$ leaves the suffix $TT$, and a tail
+after $TTHTHT$ completes the target. Solving gives
+\[
+e_0=\frac{31835}{54}\approx589.54.
+\]
+This is the expected number of additional flips after today's heads.
+}
+
+\begin{exercise}%[Exercise 51]
+\label{ex:markov-chains-51}
+In the mood model given in the chapter setup, Gary is in a cheerful mood today. Find the expected number of days until he has been glum for three consecutive days.
+\end{exercise}
+\solution{
+The states must distinguish cheerful and so-so moods, since they have
+different probabilities of becoming glum. Use states $C,S,G_1,G_2$,
+where $G_k$ records a current run of $k$ glum days; three glum days is
+the absorbing target. Let $c,s,g_1,g_2$ be the expected additional days.
+Using the transition matrix given in the setup,
+\begin{align*}
+c&=1+0.5c+0.4s+0.1g_1,\\
+s&=1+0.3c+0.4s+0.3g_1,\\
+g_1&=1+0.2c+0.3s+0.5g_2,\\
+g_2&=1+0.2c+0.3s.
+\end{align*}
+The last equation has no continuation term when the next day is glum,
+because that completes the three-day run. Solving the system yields
+\[
+(c,s,g_1,g_2)=\left(\frac{236}{9},\frac{226}{9},\frac{62}{3},\frac{124}{9}\right).
+\]
+Starting cheerful, the expected waiting time is $236/9\approx26.22$ days.
+}
+
+\begin{exercise}%[Exercise 52]
+\label{ex:markov-chains-52}
+A taxi driver provides service in two zones of a city. Fares picked up in zone $A$ will have destinations in zone $A$ with probability $0.6$ or in zone $B$ with probability $0.4$. Fares picked up in zone $B$ will have destinations in zone $A$ with probability $0.3$ or in zone $B$ with probability $0.7$. The driver's expected profit for a trip entirely in zone $A$ is $6$; for a trip entirely in zone $B$ is $8$; and for a trip that involves both zones is $12$. Find the taxi driver's average profit per trip.
+\end{exercise}
+\solution{
+First, we find the stationary probabilities of being in each zone by modeling the location of transitions as a two-state Markov chain with matrix:
+\[
+P = \begin{pmatrix} 0.6 & 0.4 \\ 0.3 & 0.7 \end{pmatrix}
+\]
+The stationary equations $\pi_A P_{A,B} = \pi_B P_{B,A}$ give:
+\[
+0.4 \pi_A = 0.3 \pi_B \implies \pi_A = \frac{3}{7}, \quad \pi_B = \frac{4}{7}
+\]
+Next, we calculate the expected profit generated from a trip originating in each zone:
+\begin{align*}
+R_A &= P_{A,A}(6) + P_{A,B}(12) = 0.6(6) + 0.4(12) = 3.6 + 4.8 = 8.4 \\
+R_B &= P_{B,A}(12) + P_{B,B}(8) = 0.3(12) + 0.7(8) = 3.6 + 5.6 = 9.2
+\end{align*}
+The long-run average profit per trip is the expected value across the stationary distribution:
+\[
+\text{Average Profit} = \pi_A R_A + \pi_B R_B = \frac{3}{7}(8.4) + \frac{4}{7}(9.2) = \frac{25.2 + 36.8}{7} = \frac{62}{7} \approx 8.86
+\]
+}
+
+\begin{exercise}%[Exercise 53]
+\label{ex:markov-chains-53}
+An insurer assigns each policyholder an annual premium level $0$, $1$,
+or $2$, charging $500$, $750$, or $1000$ monetary units, respectively.
+The level at the start of a year determines that year's premium. For a
+policyholder of type $\lambda$, annual claim counts are independent
+Poisson random variables with mean $\lambda$. A claim-free year lowers
+the next year's level by one, stopping at level $0$; a year with one or
+more claims sets the next year's level to $2$. A policyholder's type
+remains fixed. One-third of policyholders have $\lambda=1/4$ and
+two-thirds have $\lambda=1/2$. Find the long-run average annual premium
+per policyholder.
+\end{exercise}
+\solution{
+For a fixed type, put $q=e^{-\lambda}$, the probability of a claim-free
+year. With rows and columns ordered $0,1,2$, the transition matrix is
+\[
+P(\lambda)=\begin{pmatrix}q&0&1-q\\q&0&1-q\\0&q&1-q\end{pmatrix}.
+\]
+Since $0<q<1$, the chain is irreducible and aperiodic. Every row sends
+probability $1-q$ to state $2$, so its stationary probability is
+$\pi_2=1-q$. The balance equation for state $1$ gives
+$\pi_1=q\pi_2=q(1-q)$, and normalization gives $\pi_0=q^2$.
+The mean premium for this type is therefore
+\begin{align*}
+R(\lambda)&=500q^2+750q(1-q)+1000(1-q)\\
+&=1000-250e^{-\lambda}-250e^{-2\lambda}.
+\end{align*}
+Average over the fixed policyholder types, using their population
+fractions rather than their claim frequencies:
+\begin{align*}
+\overline R&=\frac13R(1/4)+\frac23R(1/2)\\
+&=1000-\frac{250}{3}\left(e^{-1/4}+3e^{-1/2}+2e^{-1}\right)\\
+&\approx722.15\text{ monetary units per year}.
+\end{align*}
+}
+
+\begin{exercise}%[Exercise 54]
+\label{ex:markov-chains-54}
+Consider the Ehrenfest urn model in which $M$ molecules are distributed between two urns, and at each time point one of the molecules is chosen at random and is then removed from its urn and placed in the other one. Let $X_n$ denote the number of molecules in urn 1 after the $n$th switch and let $\mu_n = E[X_n]$. Show that
+\begin{enumerate}
+\item[(a)] $\mu_{n+1} = 1 + (1 - 2/M)\mu_n$.
+\item[(b)] Use (a) to prove that
+\[
+\mu_n = \frac{M}{2} + \left(\frac{M - 2}{M}\right)^n \left(E[X_0] - \frac{M}{2}\right)
+\]
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} Given $X_n$, the number of molecules in urn 1 at step $n+1$ increases by 1 if a molecule from urn 2 is chosen, and decreases by 1 if a molecule from urn 1 is chosen. Thus:
+\[
+X_{n+1} = \begin{cases}
+X_n + 1, & \text{with prob } \dfrac{M - X_n}{M} \\
+X_n - 1, & \text{with prob } \dfrac{X_n}{M}
+\end{cases}
+\]
+Taking the conditional expectation:
+\[
+E[X_{n+1} \mid X_n] = (X_n + 1)\frac{M - X_n}{M} + (X_n - 1)\frac{X_n}{M} = X_n + 1 - \frac{2X_n}{M} = 1 + \left(1 - \frac{2}{M}\right)X_n
+\]
+Taking total expectation yields the desired relation:
+\[
+\mu_{n+1} = 1 + \left(1 - \frac{2}{M}\right)\mu_n
+\]
+
+\textbf{(b)} We rewrite the relation as $\mu_{n+1} - \frac{M}{2} = \left(1 - \frac{2}{M}\right)\left(\mu_n - \frac{M}{2}\right)$. Let $Y_n = \mu_n - \frac{M}{2}$. Then:
+\[
+Y_{n+1} = \left(\frac{M - 2}{M}\right) Y_n \implies Y_n = \left(\frac{M - 2}{M}\right)^n Y_0
+\]
+Substituting back $Y_n$:
+\[
+\mu_n - \frac{M}{2} = \left(\frac{M - 2}{M}\right)^n \left(E[X_0] - \frac{M}{2}\right) \implies \mu_n = \frac{M}{2} + \left(\frac{M - 2}{M}\right)^n \left(E[X_0] - \frac{M}{2}\right)
+\]
+}
+
+\begin{exercise}%[Exercise 55]
+\label{ex:markov-chains-55}
+Consider a population of individuals each of whom possesses two genes that can be either type $A$ or type $a$, with $A$ dominant. For randomly and independently chosen parents, let $S_{10}$ be the probability of a recessive child given one dominant and one recessive parent, and $S_{11}$ the probability given two dominant parents. Compute $S_{11}$ and $S_{10}$ to show that $S_{11} = S_{10}^2$. (The quantities $S_{10}$ and $S_{11}$ are known in the genetics literature as Snyder's ratios.)
+\end{exercise}
+\solution{
+Let $a,b,c$ be the proportions of genotypes $AA,aa,Aa$ in the parent
+population, and assume $a+c>0$. Given that a parent is dominant, it is
+heterozygous with probability $c/(a+c)$. Therefore its probability of
+transmitting $a$ is $u=c/[2(a+c)]$. A recessive parent always transmits
+$a$, and independently sampled dominant parents transmit independently.
+Consequently
+\[
+S_{10}=u=\frac{c}{2(a+c)},\qquad
+S_{11}=u^2=S_{10}^2.
+\]
+Hardy--Weinberg equilibrium is not needed for this relation. If it is
+additionally assumed and the recessive allele frequency is $z$, then
+$u=z/(1+z)$.
+}
+
+\begin{exercise}%[Exercise 56]
+\label{ex:markov-chains-56}
+Suppose that on each play of the game a gambler either wins $1$ with probability $p$ or loses $1$ with probability $1 - p$. The gambler continues betting until she or he is either up $n$ or down $m$. What is the probability that the gambler quits a winner?
+\end{exercise}
+\solution{
+This is the classical Gambler's Ruin problem. Let $P_i$ be the probability that the gambler reaches total profit $n$ starting from a current relative position $i$ (where the boundaries are $-m$ and $n$). Let $q = 1-p$.
+The difference equation is:
+\[
+P_i = p P_{i+1} + q P_{i-1}
+\]
+with boundary conditions $P_{-m} = 0$ and $P_n = 1$.
+The solution to this standard system depends on whether $p = 0.5$:
+\[
+P_i = \begin{cases}
+\dfrac{1 - (q/p)^{i+m}}{1 - (q/p)^{n+m}}, & \text{if } p \neq q \\
+\dfrac{i + m}{n + m}, & \text{if } p = q = 0.5
+\end{cases}
+\]
+Starting at position $i = 0$ (the initial state), the probability that the gambler quits a winner is:
+\[
+P_0 = \begin{cases}
+\dfrac{1 - (q/p)^m}{1 - (q/p)^{n+m}}, & \text{if } p \neq 0.5 \\
+\dfrac{m}{n + m}, & \text{if } p = 0.5
+\end{cases}
+\]
+}
+
+\begin{exercise}%[Exercise 57]
+\label{ex:markov-chains-57}
+A particle moves among $n+1$ vertices on a circle, moving clockwise with probability $p$ and counterclockwise with probability $1-p$ at each independent step. Starting at a specified state, call it state $0$, let $T$ be the time of the first return to state $0$. Find the probability that all states have been visited by time $T$.
+\hfill \textbf{Hint:} Condition on the initial transition and then use results from the gambler's ruin problem.
+\end{exercise}
+\solution{
+Assume $n\ge1$ and $0<p<1$. By symmetry, on the first step the particle moves either to state 1 (clockwise) with probability $p$, or to state $n$ (counterclockwise) with probability $q = 1-p$.
+
+Suppose it moves to state 1. For all states to be visited before returning to 0, the particle must reach state $n$ before hitting state 0. This is exactly equivalent to a Gambler's Ruin problem on the line $\{0, 1, \dots, n\}$ starting at position 1, where 0 and $n$ are the boundaries. It wins if it hits $n$ first.
+From the Gambler's ruin formulas:
+\[
+P(\text{reach } n \text{ before } 0 \mid \text{start at } 1) = \begin{cases}
+\dfrac{1 - (q/p)^1}{1 - (q/p)^n}, & \text{if } p \neq q \\
+\dfrac{1}{n}, & \text{if } p = q = 0.5
+\end{cases}
+\]
+
+Conversely, if the first step was to state $n$ (probability $q$), it must reach state 1 before hitting 0 to visit all states. This is symmetric but with the roles of $p$ and $q$ reversed:
+\[
+P(\text{reach } 1 \text{ before } 0 \mid \text{start at } n) = \begin{cases}
+\dfrac{1 - (p/q)^1}{1 - (p/q)^n}, & \text{if } p \neq q \\
+\dfrac{1}{n}, & \text{if } p = q = 0.5
+\end{cases}
+\]
+
+Using the law of total probability, the overall probability is:
+\[
+\text{Total Prob} = \begin{cases}
+p \cdot \dfrac{1 - q/p}{1 - (q/p)^n} + q \cdot \dfrac{1 - p/q}{1 - (p/q)^n}, & \text{if } p \neq 0.5 \\
+\dfrac{1}{n}, & \text{if } p = 0.5
+\end{cases}
+\]
+}
+
+\begin{exercise}%[Exercise 58]
+\label{ex:markov-chains-58}
+In a gambler's ruin game with fortunes $0,1,\ldots,N$, each independent bet increases the fortune by $1$ with probability $p\in(0,1)$ or decreases it by $1$ with probability $q=1-p$; play stops at $0$ or $N$. Suppose the gambler's fortune is presently $i$, and suppose that we know that the gambler's fortune will eventually reach $N$ (before it goes to 0). Given this information, show that the probability he wins the next gamble is
+\[
+\begin{cases}
+\dfrac{p[1 - (q/p)^{i+1}]}{1 - (q/p)^i}, & \text{if } p \neq \frac{1}{2} \\
+\dfrac{i + 1}{2i}, & \text{if } p = \frac{1}{2}
+\end{cases}
+\]
+\end{exercise}
+\solution{
+Let $P_k$ denote the probability that the gambler reaches $N$ before 0 starting from fortune $k$. From the classical Gambler's Ruin formulas, we have:
+\[
+P_k = \begin{cases}
+\dfrac{1 - (q/p)^k}{1 - (q/p)^N}, & \text{if } p \neq \frac{1}{2} \\
+\dfrac{k}{N}, & \text{if } p = \frac{1}{2}
+\end{cases}
+\]
+Following the hint, we use the definition of conditional probability:
+\[
+P\{X_{n+1} = i+1 \mid X_n = i, \lim_{m \to \infty} X_m = N\} = \frac{P\{X_{n+1} = i+1, \lim_{m \to \infty} X_m = N \mid X_n = i\}}{P\{\lim_{m \to \infty} X_m = N \mid X_n = i\}}
+\]
+Applying the Markov property, the numerator is the probability of moving from $i$ to $i+1$ in one step, times the probability of eventually reaching $N$ starting from $i+1$:
+\[
+\text{Numerator} = P\{X_{n+1} = i+1 \mid X_n = i\} \cdot P\{\lim_{m \to \infty} X_m = N \mid X_{n+1} = i+1\} = p \cdot P_{i+1}
+\]
+The denominator is simply $P_i$. Therefore, the conditional probability is $\dfrac{p P_{i+1}}{P_i}$.
+
+\textbf{Case 1:} $p \neq \frac{1}{2}$
+\[
+\frac{p P_{i+1}}{P_i} = p \cdot \frac{\frac{1 - (q/p)^{i+1}}{1 - (q/p)^N}}{\frac{1 - (q/p)^i}{1 - (q/p)^N}} = \frac{p[1 - (q/p)^{i+1}]}{1 - (q/p)^i}
+\]
+
+\textbf{Case 2:} $p = \frac{1}{2}$
+\[
+\frac{p P_{i+1}}{P_i} = \frac{1}{2} \cdot \frac{\frac{i+1}{N}}{\frac{i}{N}} = \frac{i+1}{2i}
+\]
+The claims are shown.
+}
+
+\begin{exercise}%[Exercise 59]
+\label{ex:markov-chains-59}
+For independent bets that change the fortune by $+1$ with probability $p\in(0,1)$ and $-1$ with probability $q=1-p$, stopping at $0$ or $N$, let $M_i$ denote the mean number of games that must be played until the gambler either goes broke or reaches a fortune of $N$, given that he starts with $i, i = 0, 1, \dots, N$. Show that $M_i$ satisfies
+\[
+M_0 = M_N = 0; \quad M_i = 1 + p M_{i+1} + q M_{i-1}, \quad i = 1, \dots, N - 1
+\]
+\end{exercise}
+\solution{
+If the gambler starts at $i = 0$ or $i = N$, the process terminates instantly because the game boundaries are already reached. Thus, $M_0 = 0$ and $M_N = 0$.
+
+For any intermediate fortune $i \in \{1, \dots, N-1\}$, the gambler plays exactly 1 game.
+\begin{itemize}
+\item With probability $p$, he wins, increasing his fortune to $i+1$, from which the expected remaining games is $M_{i+1}$.
+\item With probability $q$, he loses, decreasing his fortune to $i-1$, from which the expected remaining games is $M_{i-1}$.
+\end{itemize}
+By conditioning on the outcome of this first step (using the law of total expectation), we obtain:
+\[
+M_i = (1 + M_{i+1})p + (1 + M_{i-1})q = 1 + p M_{i+1} + q M_{i-1}
+\]
+since $p + q = 1$. This yields the given system of difference equations.
+}
+
+\begin{exercise}%[Exercise 60]
+\label{ex:markov-chains-60}
+Solve the equations given in Exercise 59 to obtain
+\[
+M_i = \begin{cases}
+i(N - i), & \text{if } p = \frac{1}{2} \\
+\dfrac{i}{q - p} - \dfrac{N}{q - p} \left( \dfrac{1 - (q/p)^i}{1 - (q/p)^N} \right), & \text{if } p \neq \frac{1}{2}
+\end{cases}
+\]
+\end{exercise}
+\solution{
+We can rewrite the second-order difference equation $M_i = 1 + p M_{i+1} + q M_{i-1}$ as:
+\[
+p(M_{i+1} - M_i) - q(M_i - M_{i-1}) = -1
+\]
+
+\textbf{Case 1:} $p = q = \frac{1}{2}$
+The equation simplifies to $(M_{i+1} - M_i) - (M_i - M_{i-1}) = -2$. Let $d_i = M_i - M_{i-1}$. Then $d_{i+1} - d_i = -2$, which implies $d_i = d_1 - 2(i-1)$. Summing these differences from $1$ to $i$ gives:
+\[
+M_i = M_0 + \sum_{k=1}^i d_k = 0 + i d_1 - 2\frac{i(i-1)}{2} = i d_1 - i^2 + i
+\]
+Using the boundary condition $M_N = 0$:
+\[
+N d_1 - N^2 + N = 0 \implies d_1 = N - 1
+\]
+Substituting $d_1$ back into the formula for $M_i$:
+\[
+M_i = i(N - 1) - i^2 + i = iN - i - i^2 + i = i(N - i)
+\]
+
+\textbf{Case 2:} $p \neq q$
+The general solution to the non-homogeneous equation consists of a homogeneous part and a particular solution. The homogeneous recurrence equation is $p M_{i+1} - M_i + q M_{i-1} = 0$, which has the standard solution $A + B(q/p)^i$. For the non-homogeneous part, a linear particular solution of the form $C \cdot i$ works. Substituting $M_i = C \cdot i$ into the original recurrence gives:
+\[
+C \cdot i = 1 + p C(i+1) + q C(i-1) \implies 0 = 1 + C(p - q) \implies C = \frac{1}{q - p}
+\]
+Thus, the general solution is:
+\[
+M_i = A + B\left(\frac{q}{p}\right)^i + \frac{i}{q - p}
+\]
+Using the boundary conditions $M_0 = 0$ and $M_N = 0$:
+\[
+M_0 = A + B = 0 \implies B = -A
+\]
+\[
+M_N = A - A\left(\frac{q}{p}\right)^N + \frac{N}{q - p} = 0 \implies A \left[1 - \left(\frac{q}{p}\right)^N \right] = -\frac{N}{q - p} \implies A = -\frac{N}{q - p} \frac{1}{1 - (q/p)^N}
+\]
+Substituting $A$ and $B = -A$ back into our expression for $M_i$:
+\[
+M_i = \frac{i}{q - p} - \frac{N}{q - p} \frac{1}{1 - (q/p)^N} + \frac{N}{q - p} \frac{(q/p)^i}{1 - (q/p)^N} = \frac{i}{q - p} - \frac{N}{q - p} \left( \frac{1 - (q/p)^i}{1 - (q/p)^N} \right)
+\]
+This completes the verification.
+}
+
+\begin{exercise}%[Exercise 61]
+\label{ex:markov-chains-61}
+Suppose in the gambler's ruin problem that the probability of winning a bet depends on the gambler's present fortune. Specifically, suppose that $\alpha_i$ is the probability that the gambler wins a bet when his or her fortune is $i$. Given that the gambler's initial fortune is $i$, let $P(i)$ denote the probability that the gambler's fortune reaches $N$ before 0.
+\begin{enumerate}
+\item[(a)] Derive a formula that relates $P(i)$ to $P(i - 1)$ and $P(i + 1)$.
+\item[(b)] Using the same approach as in the gambler's ruin problem, solve the equation of part (a) for $P(i)$.
+\item[(c)] Suppose that $i$ balls are initially in urn 1 and $N - i$ are in urn 2, and suppose that at each stage one of the $N$ balls is randomly chosen, taken from whichever urn it is in, and placed in the other urn. Find the probability that the first urn becomes empty before the second.
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} By conditioning on the very first bet from state $i$:
+\[
+P(i) = \alpha_i P(i+1) + (1 - \alpha_i) P(i-1), \quad i = 1, \dots, N-1
+\]
+with boundary conditions $P(0) = 0$ and $P(N) = 1$.
+
+\textbf{(b)} Rearranging the relation gives $\alpha_i(P(i+1) - P(i)) = (1 - \alpha_i)(P(i) - P(i-1))$, which means:
+\[
+P(i+1) - P(i) = \frac{1 - \alpha_i}{\alpha_i} (P(i) - P(i-1))
+\]
+Let $\beta_i = \frac{1 - \alpha_i}{\alpha_i}$. By iterating this relationship downwards to $P(1)-P(0)$, we find:
+\[
+P(i+1) - P(i) = \left( \prod_{k=1}^i \beta_k \right) P(1)
+\]
+Summing these intervals from $k=0$ to $i-1$, and defining the empty product as 1:
+\[
+P(i) = P(1) \sum_{j=0}^{i-1} \left( \prod_{k=1}^j \beta_k \right)
+\]
+Using the upper boundary condition $P(N) = 1$, we can find $P(1)$:
+\[
+1 = P(1) \sum_{j=0}^{N-1} \left( \prod_{k=1}^j \beta_k \right) \implies P(1) = \left[ \sum_{j=0}^{N-1} \left( \prod_{k=1}^j \beta_k \right) \right]^{-1}
+\]
+Substituting this back yields the final explicit expression for $P(i)$:
+\[
+P(i) = \frac{\sum_{j=0}^{i-1} \left( \prod_{k=1}^j \beta_k \right)}{\sum_{j=0}^{N-1} \left( \prod_{k=1}^j \beta_k \right)}, \quad \text{where } \beta_k = \frac{1 - \alpha_k}{\alpha_k}
+\]
+
+\textbf{(c)} This system is the Ehrenfest urn model. Let $X_n$ be the number of balls in urn 1. At state $i$, a ball is selected from urn 1 with probability $i/N$, moving the chain to $i-1$. It is selected from urn 2 with probability $(N-i)/N$, moving it to $i+1$.
+Thus, the probability of increasing the count in urn 1 is $\alpha_i = \frac{N-i}{N}$. The ratio $\beta_k$ becomes:
+\[
+\beta_k = \frac{1 - \alpha_k}{\alpha_k} = \frac{1 - \frac{N-k}{N}}{\frac{N-k}{N}} = \frac{k}{N-k}
+\]
+The product term inside our equation is:
+\[
+\prod_{k=1}^j \beta_k = \prod_{k=1}^j \frac{k}{N-k} = \frac{j!}{(N-1)(N-2)\cdots(N-j)} = \frac{j!(N-1-j)!}{(N-1)!} = \frac{1}{\binom{N-1}{j}}
+\]
+We want to find the probability that urn 1 becomes empty first, which means reaching state $0$ before state $N$. This is exactly $1 - P(i)$, where $P(i)$ is the probability of reaching $N$ first. Utilizing our formula from part (b):
+\[
+1 - P(i) = 1 - \frac{\sum_{j=0}^{i-1} \frac{1}{\binom{N-1}{j}}}{\sum_{j=0}^{N-1} \frac{1}{\binom{N-1}{j}}} = \frac{\sum_{j=i}^{N-1} \frac{1}{\binom{N-1}{j}}}{\sum_{j=0}^{N-1} \frac{1}{\binom{N-1}{j}}}
+\]
+}
+
+\setcounter{exercise}{63}
+\begin{exercise}%[Exercise 64]
+\label{ex:markov-chains-64}
+Consider a branching process having $\mu < 1$. Show that if $X_0 = 1$, then the expected number of individuals that ever exist in this population is given by $1/(1 - \mu)$. What if $X_0 = n$?
+\end{exercise}
+\solution{
+Let $X_k$ be the population size of the $k$-th generation. The total number of individuals that will ever exist in the population is given by the infinite sum $T = \sum_{k=0}^{\infty} X_k$.
+
+By linearity of expectation, we can express the expected total population as:
+\[
+E[T] = E\left[ \sum_{k=0}^{\infty} X_k \right] = \sum_{k=0}^{\infty} E[X_k]
+\]
+For a standard branching process starting with a single individual ($X_0 = 1$), the expected size of the $k$-th generation is $E[X_k] = \mu^k$. Since $\mu < 1$, this forms a convergent geometric series:
+\[
+E[T] = \sum_{k=0}^{\infty} \mu^k = \frac{1}{1 - \mu}
+\]
+If the process starts instead with $X_0 = n$ individuals, each of these $n$ initial individuals initiates an independent and identically distributed branching tree process. By linearity, the total expected population is simply $n$ times the expectation of a single lineage:
+\[
+E[T] = \frac{n}{1 - \mu}
+\]
+}
+
+\setcounter{exercise}{65}
+
+\begin{exercise}%[Exercise 66]
+\label{ex:markov-chains-66}
+For a branching process, calculate $\pi_0$ when
+\begin{enumerate}
+\item[(a)] $P_0 = \frac{1}{4}, P_2 = \frac{3}{4}$
+\item[(b)] $P_0 = \frac{1}{4}, P_1 = \frac{1}{2}, P_2 = \frac{1}{4}$
+\item[(c)] $P_0 = \frac{1}{6}, P_1 = \frac{1}{2}, P_3 = \frac{1}{3}$
+\end{enumerate}
+\end{exercise}
+\solution{
+The extinction probability $\pi_0$ is the smallest non-negative root of the generating function relation $\pi_0 = \sum_{j=0}^{\infty} P_j (\pi_0)^j$.
+
+\textbf{(a)} The equation is $\pi_0 = P_0 + P_2 \pi_0^2 = \frac{1}{4} + \frac{3}{4}\pi_0^2$. Rearranging terms:
+\[
+3\pi_0^2 - 4\pi_0 + 1 = 0 \implies (3\pi_0 - 1)(\pi_0 - 1) = 0
+\]
+The roots are $\pi_0 = \frac{1}{3}$ and $\pi_0 = 1$. The smallest non-negative root is $\pi_0 = \frac{1}{3}$.
+
+\textbf{(b)} The equation is $\pi_0 = P_0 + P_1 \pi_0 + P_2 \pi_0^2 = \frac{1}{4} + \frac{1}{2}\pi_0 + \frac{1}{4}\pi_0^2$. Rearranging terms:
+\[
+\frac{1}{4}\pi_0^2 - \frac{1}{2}\pi_0 + \frac{1}{4} = 0 \implies \frac{1}{4}(\pi_0 - 1)^2 = 0
+\]
+This quadratic equation has a single repeated root, which is $\pi_0 = 1$.
+
+\textbf{(c)} The equation is $\pi_0 = P_0 + P_1 \pi_0 + P_3 \pi_0^3 = \frac{1}{6} + \frac{1}{2}\pi_0 + \frac{1}{3}\pi_0^3$. Rearranging terms:
+\[
+2\pi_0^3 - 3\pi_0 + 1 = 0
+\]
+We know that $\pi_0 = 1$ is always a root of this equation. Factoring out $(\pi_0 - 1)$ via polynomial division:
+\[
+(\pi_0 - 1)(2\pi_0^2 + 2\pi_0 - 1) = 0
+\]
+Solving the remaining quadratic term $2\pi_0^2 + 2\pi_0 - 1 = 0$ using the quadratic formula:
+\[
+\pi_0 = \frac{-2 \pm \sqrt{4 - 4(2)(-1)}}{4} = \frac{-2 \pm \sqrt{12}}{4} = \frac{-1 \pm \sqrt{3}}{2}
+\]
+Since the probability must be non-negative, we discard the negative root. The two valid roots are $\pi_0 = 1$ and $\pi_0 = \frac{\sqrt{3} - 1}{2} \approx 0.366$. The smallest root is $\pi_0 = \frac{\sqrt{3} - 1}{2}$.
+}
+
+\setcounter{exercise}{67}
+
+\begin{exercise}%[Exercise 68]
+\label{ex:markov-chains-68}
+\begin{enumerate}
+\item[(a)] Show that the limiting probabilities of the reversed Markov chain are the same as for the forward chain by showing that they satisfy the equations
+\[
+\pi_j = \sum_{i} \pi_i Q_{i,j}
+\]
+\item[(b)] Give an intuitive explanation for the result of part (a).
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} By definition, the transition probabilities $Q_{i,j}$ of the reversed Markov chain are related to the transition probabilities $P_{j,i}$ of the forward chain via the relation:
+\[
+Q_{i,j} = \frac{\pi_j P_{j,i}}{\pi_i}
+\]
+To verify that $\pi$ is also the stationary distribution for the reversed chain, we substitute this definition into the right-hand side of the stationary equation for the reversed chain:
+\[
+\sum_{i} \pi_i Q_{i,j} = \sum_{i} \pi_i \left( \frac{\pi_j P_{j,i}}{\pi_i} \right) = \sum_{i} \pi_j P_{j,i}
+\]
+Since $\pi_j$ does not depend on the summation index $i$, we can factor it out of the sum:
+\[
+= \pi_j \sum_{i} P_{j,i}
+\]
+Because the row sums of any transition probability matrix must equal 1 ($\sum_{i} P_{j,i} = 1$), the expression simplifies to:
+\[
+= \pi_j \cdot 1 = \pi_j
+\]
+Thus, the equation $\pi_j = \sum_{i} \pi_i Q_{i,j}$ holds, meaning that the reversed chain shares the exact same stationary probabilities $\pi$ as the forward chain.
+
+\textbf{(b)} The limiting probability $\pi_j$ represents the long-run proportion of time that the system spends in state $j$. When we observe a Markov chain in steady state and view the sequence of states in reverse chronological order, the proportion of time the process spends in any given state $j$ does not change. Time reversal alters the sequence of transitions between states, but it cannot alter the overall long-run occupancy of the states themselves.
+}
+
+\setcounter{exercise}{69}
+
+\begin{exercise}%[Exercise 70]
+\label{ex:markov-chains-70}
+A total of $m$ white and $m$ black balls are distributed among two urns, with each urn containing $m$ balls. At each stage, a ball is randomly selected from each urn and the two selected balls are interchanged. Let $X_n$ denote the number of black balls in urn 1 after the $n$th interchange.
+\begin{enumerate}
+\item[(a)] Give the transition probabilities of the Markov chain $X_n, n \ge 0$.
+\item[(b)] Without any computations, what do you think are the limiting probabilities of this chain?
+\item[(c)] Find the limiting probabilities and show that the stationary chain is time reversible.
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} Let the state $X_n = i$ be the number of black balls in urn 1. Since each urn must contain exactly $m$ balls in total, if urn 1 has $i$ black balls, it must also contain $m - i$ white balls. Consequently, urn 2 must contain the remaining $m - i$ black balls and $i$ white balls.
+
+At each transition, one ball is drawn at random from each urn. The state can change by at most 1:
+\begin{itemize}
+\item \textbf{Transition $i \to i+1$:} We must select a white ball from urn 1 and a black ball from urn 2.
+\[
+P_{i, i+1} = \left(\frac{m - i}{m}\right) \left(\frac{m - i}{m}\right) = \frac{(m - i)^2}{m^2}
+\]
+\end{itemize}
+\begin{itemize}
+\item \textbf{Transition $i \to i-1$:} We must select a black ball from urn 1 and a white ball from urn 2.
+\[
+P_{i, i-1} = \left(\frac{i}{m}\right) \left(\frac{i}{m}\right) = \frac{i^2}{m^2}
+\]
+\end{itemize}
+\begin{itemize}
+\item \textbf{Transition $i \to i$:} We either select black from both urns, or white from both urns.
+\[
+P_{i,i} = \left(\frac{i}{m}\right)\left(\frac{m-i}{m}\right) + \left(\frac{m-i}{m}\right)\left(\frac{i}{m}\right) = \frac{2i(m-i)}{m^2}
+\]
+\end{itemize}
+
+\textbf{(b)} By symmetry and randomness, any collection of $m$ balls chosen out of the total pool of $2m$ balls (containing $m$ black and $m$ white balls) is equally likely to end up in urn 1 in the long run. Therefore, the limiting distribution should be hyper-geometric, corresponding to choosing $m$ balls from a pool of $2m$ containing $m$ black balls.
+
+\textbf{(c)} The proposed hyper-geometric stationary distribution is:
+\[
+\pi_i = \frac{\binom{m}{i}\binom{m}{m-i}}{\binom{2m}{m}} = \frac{\binom{m}{i}^2}{\binom{2m}{m}}, \quad i = 0, 1, \dots, m
+\]
+To show that the chain is time reversible, we verify that it satisfies the detailed balance equations $\pi_i P_{i, i+1} = \pi_{i+1} P_{i+1, i}$ for all $i$:
+\[
+\pi_i P_{i, i+1} = \frac{\binom{m}{i}^2}{\binom{2m}{m}} \cdot \frac{(m - i)^2}{m^2}
+\]
+Using the definition of the binomial coefficient, we note that $\binom{m}{i}(m-i) = \frac{m!}{i!(m-i-1)!} = m \binom{m-1}{i}$. Thus:
+\[
+\pi_i P_{i, i+1} = \frac{1}{\binom{2m}{m}} \left[ \frac{m \binom{m-1}{i}}{m} \right]^2 = \frac{\binom{m-1}{i}^2}{\binom{2m}{m}}
+\]
+Now we look at the reverse direction:
+\[
+\pi_{i+1} P_{i+1, i} = \frac{\binom{m}{i+1}^2}{\binom{2m}{m}} \cdot \frac{(i + 1)^2}{m^2} = \frac{1}{\binom{2m}{m}} \left[ \frac{\binom{m}{i+1}(i+1)}{m} \right]^2
+\]
+Since $\binom{m}{i+1}(i+1) = \frac{m!}{i!(m-i-1)!} = m \binom{m-1}{i}$, we obtain:
+\[
+\pi_{i+1} P_{i+1, i} = \frac{1}{\binom{2m}{m}} \left[ \frac{m \binom{m-1}{i}}{m} \right]^2 = \frac{\binom{m-1}{i}^2}{\binom{2m}{m}}
+\]
+Because $\pi_i P_{i, i+1} = \pi_{i+1} P_{i+1, i}$ holds for all $i$, the detailed balance condition is satisfied. Therefore, the chain is time reversible and the guessed distribution is its unique stationary distribution. For $m\ge2$ there is a self-loop in an interior state, so the chain is aperiodic and this is also the limiting distribution. For $m=1$, the chain alternates between $0$ and $1$; it has stationary vector $(1/2,1/2)$ but no limiting distribution from a fixed initial state.
+}
+
+\begin{exercise}%[Exercise 71]
+\label{ex:markov-chains-71}
+It follows from Theorem 4.2 that for a time reversible Markov chain
+\[
+P_{i,j} P_{j,k} P_{k,i} = P_{i,k} P_{k,j} P_{j,i}, \quad \text{for all } i,j,k
+\]
+It turns out that if the state space is finite and $P_{i,j} > 0$ for all $i,j$, then the preceding is also a sufficient condition for time reversibility. (That is, in this case, we need only check the equation for paths from $i$ to $i$ that have only two intermediate states.) Prove this.
+\\ \textbf{Hint:} Fix $i$ and show that the equations
+\[
+\pi_j P_{j,k} = \pi_k P_{k,j}
+\]
+are satisfied by $\pi_j = c P_{i,j}/P_{j,i}$, where $c$ is chosen so that $\sum_j \pi_j = 1$.
+\end{exercise}
+\solution{
+Following the hint, let us define a vector $\pi$ by setting $\pi_j = c \frac{P_{i,j}}{P_{j,i}}$ for a fixed state $i$, where $c$ is a normalization constant. We must show that this choice satisfies the detailed balance equations $\pi_j P_{j,k} = \pi_k P_{k,j}$ for any pair of states $j$ and $k$.
+
+We substitute our definition of $\pi_j$ into the left-hand side of the detailed balance equation:
+\[
+\pi_j P_{j,k} = \left( c \frac{P_{i,j}}{P_{j,i}} \right) P_{j,k} = c \frac{P_{i,j} P_{j,k}}{P_{j,i}}
+\]
+From the given sufficient condition, we are allowed to use the cycle property $P_{i,j} P_{j,k} P_{k,i} = P_{i,k} P_{k,j} P_{j,i}$. Since $P_{k,i} > 0$, we can rearrange this identity to express the numerator product as:
+\[
+P_{i,j} P_{j,k} = \frac{P_{i,k} P_{k,j} P_{j,i}}{P_{k,i}}
+\]
+Substituting this substitution back into our simplified expression for $\pi_j P_{j,k}$:
+\[
+\pi_j P_{j,k} = c \frac{\frac{P_{i,k} P_{k,j} P_{j,i}}{P_{k,i}}}{P_{j,i}} = c \frac{P_{i,k} P_{k,j}}{P_{k,i}} = \left( c \frac{P_{i,k}}{P_{k,i}} \right) P_{k,j}
+\]
+By our original definition of the vector components, the term inside the parentheses is exactly $\pi_k$. Thus, we have:
+\[
+\pi_j P_{j,k} = \pi_k P_{k,j}
+\]
+Since this detailed balance relation holds for all choices of states $j$ and $k$, the Markov chain is by definition time reversible, and the normalized vector $\pi$ is its unique stationary probability distribution.
+}
+
+\setcounter{exercise}{73}
+\begin{exercise}%[Exercise 74]
+\label{ex:markov-chains-74}
+A group of $n$ processors is arranged in an ordered list. When a job arrives, the first processor in line attempts it; if it is unsuccessful, then the next in line tries it; if it too is unsuccessful, then the next in line tries it, and so on. When the job is successfully processed or after all processors have been unsuccessful, the job leaves the system. At this point we are allowed to reorder the processors, and a new job appears. Suppose that we use the one-closer reordering rule, which moves the processor that was successful one closer to the front of the line by interchanging its position with the one in front of it. If all processors were unsuccessful (or if the processor in the first position was successful), then the ordering remains the same. Suppose that each time processor $i$ attempts a job then, independently of anything else, it is successful with probability $p_i$.
+\begin{enumerate}
+\item[(a)] Define an appropriate Markov chain to analyze this model.
+\item[(b)] Show that this Markov chain is time reversible.
+\item[(c)] Find the long-run probabilities.
+\end{enumerate}
+\end{exercise}
+\solution{
+\textbf{(a)} The appropriate state for this system at any step is the specific ordered list of the processors. Let the state be a permutation $\sigma = (i_1, i_2, \dots, i_n)$ of the set $\{1, 2, \dots, n\}$, where $i_k$ denotes the processor currently occupying position $k$. There are $n!$ possible states.
+
+A transition occurs when a new job is processed. Processor $i_k$ in position $k$ is called upon if and only if all processors in front of it failed, which occurs with probability $\prod_{j=1}^{k-1}(1-p_{i_j})$. Then, it succeeds with probability $p_{i_k}$, causing it to swap places with processor $i_{k-1}$.
+
+\textbf{(b) \& (c)} Assume $0<p_i<1$ for every processor, so all adjacent swaps have positive probability and the chain is irreducible. Let $\alpha_i = \frac{p_i}{1 - p_i}$. We propose that the long-run stationary probability $\pi(\sigma)$ of being in state $\sigma = (i_1, i_2, \dots, i_n)$ is proportional to the product of these values weighted by position:
+\[
+\pi(i_1, i_2, \dots, i_n) = C \prod_{k=1}^n (\alpha_{i_k})^{n-k}
+\]
+where $C$ is a normalization constant. To establish time reversibility and prove this is the correct distribution, we check detailed balance between any two states that can transition into one another in a single step. Let $\sigma$ and $\sigma'$ be two permutations that differ only by swapping two adjacent elements at positions $k$ and $k+1$:
+\[
+\sigma = (\dots, i_k, i_{k+1}, \dots), \quad \sigma' = (\dots, i_{k+1}, i_k, \dots)
+\]
+A transition from $\sigma \to \sigma'$ happens if processor $i_{k+1}$ (currently in position $k+1$) is successful. The probability of this single event is:
+\[
+P_{\sigma, \sigma'} = \left[ \prod_{j=1}^{k-1} (1 - p_{i_j}) \right] (1 - p_{i_k}) p_{i_{k+1}}
+\]
+Conversely, a transition from $\sigma' \to \sigma$ happens if processor $i_k$ (now in position $k+1$ in state $\sigma'$) succeeds:
+\[
+P_{\sigma', \sigma} = \left[ \prod_{j=1}^{k-1} (1 - p_{i_j}) \right] (1 - p_{i_{k+1}}) p_{i_k}
+\]
+Now we evaluate the detailed balance ratio using our proposed formula for $\pi$:
+\[
+\frac{\pi(\sigma)}{\pi(\sigma')} = \frac{(\alpha_{i_k})^{n-k} (\alpha_{i_{k+1}})^{n-(k+1)}}{(\alpha_{i_{k+1}})^{n-k} (\alpha_{i_k})^{n-(k+1)}} = \frac{\alpha_{i_k}}{\alpha_{i_{k+1}}} = \frac{p_{i_k}/(1-p_{i_k})}{p_{i_{k+1}}/(1-p_{i_{k+1}})} = \frac{p_{i_k}(1-p_{i_{k+1}})}{p_{i_{k+1}}(1-p_{i_k})}
+\]
+Next, we evaluate the ratio of the transition probabilities:
+\[
+\frac{P_{\sigma', \sigma}}{P_{\sigma, \sigma'}} = \frac{\left[ \prod_{j=1}^{k-1} (1 - p_{i_j}) \right] (1 - p_{i_{k+1}}) p_{i_k}}{\left[ \prod_{j=1}^{k-1} (1 - p_{i_j}) \right] (1 - p_{i_k}) p_{i_{k+1}}} = \frac{p_{i_k}(1-p_{i_{k+1}})}{p_{i_{k+1}}(1-p_{i_k})}
+\]
+Since $\frac{\pi(\sigma)}{\pi(\sigma')} = \frac{P_{\sigma', \sigma}}{P_{\sigma, \sigma'}}$, it follows that $\pi(\sigma) P_{\sigma, \sigma'} = \pi(\sigma') P_{\sigma', \sigma}$.
+
+Detailed balance is satisfied for all adjacent transpositions, meaning the chain is time reversible and the long-run probabilities are given by this product form.
+}

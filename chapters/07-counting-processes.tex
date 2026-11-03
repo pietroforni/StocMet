@@ -1,0 +1,3989 @@
+\section{Counting Processes}
+\label{sec:counting-processes}
+
+\setcounter{exercise}{0}
+\begin{exercise}
+\label{ex:counting-processes-1}
+The time $T$ required to repair a machine is an exponentially distributed random variable with mean $\frac12$ hours.
+\begin{enumerate}
+\item What is the probability that a repair time exceeds $\frac12$ hour?
+\item What is the probability that a repair takes at least $12\frac12$ hours given that its duration exceeds $12$ hours?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Since $T$ is exponential with mean $\frac12$, its rate is
+\[
+\lambda=2.
+\]
+Thus
+\[
+P(T>t)=e^{-2t}, \qquad t\ge 0.
+\]
+
+\noindent
+\textbf{(a)}
+\[
+P\left(T>\frac12\right)=e^{-2(1/2)}=e^{-1}.
+\]
+
+\noindent
+\textbf{(b)}
+Using the memoryless property of the exponential distribution,
+\[
+P\left(T\ge 12\frac12 \mid T>12\right)
+=
+P\left(T\ge \frac12\right)
+=
+e^{-1}.
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-2}
+Suppose that you arrive at a single-teller bank to find five other customers in the bank, one being served and the other four waiting in line. You join the end of the line. If the service times are all exponential with rate $\mu$, what is the expected amount of time you will spend in the bank?
+\end{exercise}
+
+\solution{
+There are five customers ahead of you: one in service and four waiting. By the memoryless property, the remaining service time of the customer currently being served is exponential with rate $\mu$.
+
+Thus, before you leave the bank, there must be six exponential service completions: the remaining service of the customer in service, the service times of the four customers ahead of you, and your own service time.
+
+Each has mean
+\[
+\frac1\mu.
+\]
+Therefore, the expected time you spend in the bank is
+\[
+6\cdot \frac1\mu=\frac6\mu.
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-3}
+Let $X$ be an exponential random variable. Without any computations, tell which one of the following is correct. Explain your answer.
+\begin{enumerate}
+\item $E[X^2\mid X>1]=E[(X+1)^2]$,
+\item $E[X^2\mid X>1]=E[X^2]+1$,
+\item $E[X^2\mid X>1]=(1+E[X])^2$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+The correct statement is
+\[
+{E[X^2\mid X>1]=E[(X+1)^2].}
+\]
+
+This follows from the memoryless property. Given that $X>1$, the excess lifetime
+\[
+X-1
+\]
+has the same distribution as $X$. Hence, conditionally on $X>1$, the random variable $X$ has the same distribution as
+\[
+1+X.
+\]
+Therefore,
+\[
+E[X^2\mid X>1]=E[(1+X)^2].
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-4}
+Consider a post office with two clerks. Three people, A, B, and C, enter simultaneously. A and B go directly to the clerks, and C waits until either A or B leaves before he begins service. What is the probability that A is still in the post office after the other two have left when
+\begin{enumerate}
+\item the service time for each clerk is exactly ten minutes?
+\item the service times are $i$ with probability $\frac13$, $i=1,2,3$?
+\item the service times are exponential with mean $1/\mu$?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let $S_A,S_B,S_C$ denote the service times of A, B, and C.
+
+\noindent
+\textbf{(a)}
+If every service time is exactly ten minutes, then A and B both leave at time $10$, and C then begins service and leaves at time $20$. Hence A cannot be the last to leave. Therefore,
+\[
+P(\text{A is last})=0.
+\]
+
+\noindent
+\textbf{(b)}
+Here
+\[
+S_A,S_B,S_C\in\{1,2,3\}
+\]
+independently, each value having probability $\frac13$.
+
+For A to be last, B must finish before A, and then C must finish before A. Thus we need
+\[
+S_B+S_C<S_A.
+\]
+Since $S_A\le 3$, the only possibility is
+\[
+S_A=3,\qquad S_B=1,\qquad S_C=1.
+\]
+Therefore,
+\[
+P(\text{A is last})
+=
+\left(\frac13\right)^3
+=
+\frac1{27}.
+\]
+
+\noindent
+\textbf{(c)}
+Suppose the service times are exponential with rate $\mu$. A can be last only if B finishes before A. This happens with probability
+\[
+\frac12.
+\]
+Once B finishes, C begins service. By the memoryless property, A's remaining service time is exponential with rate $\mu$, independent of C's service time. Thus, after C begins service, the probability that C finishes before A is again
+\[
+\frac12.
+\]
+Therefore,
+\[
+P(\text{A is last})
+=
+\frac12\cdot \frac12
+=
+\frac14.
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-5}
+The lifetime of a radio is exponentially distributed with a mean of ten years. If Jones buys a ten-year-old radio, what is the probability that it will be working after an additional ten years?
+\end{exercise}
+
+\solution{
+Let $T$ be the lifetime of the radio. Since $T$ is exponential with mean $10$, its rate is
+\[
+\lambda=\frac1{10}.
+\]
+We want
+\[
+P(T>20\mid T>10).
+\]
+By the memoryless property,
+\[
+P(T>20\mid T>10)=P(T>10).
+\]
+Hence
+\[
+P(T>10)=e^{-(1/10)10}=e^{-1}.
+\]
+Therefore,
+\[
+{P(T>20\mid T>10)=e^{-1}.}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-6}
+Smith arrives to find two servers busy and no one else waiting. The servers work independently, with exponential service times of rate $\lambda_i$ at server $i$. Smith enters service with the first server to become free. Show that, among Smith and the two customers already in service,
+\[
+P\{\text{Smith is not last}\}
+=
+\left(\frac{\lambda_1}{\lambda_1+\lambda_2}\right)^2
++
+\left(\frac{\lambda_2}{\lambda_1+\lambda_2}\right)^2.
+\]
+\end{exercise}
+
+\solution{
+Smith begins service when one of the two servers first becomes free.
+
+The probability that server $1$ becomes free before server $2$ is
+\[
+\frac{\lambda_1}{\lambda_1+\lambda_2}.
+\]
+If Smith is then served by server $1$, Smith is not last precisely if his service is completed before the remaining service at server $2$. By the memoryless property, this probability is again
+\[
+\frac{\lambda_1}{\lambda_1+\lambda_2}.
+\]
+Thus the contribution from server $1$ is
+\[
+\left(\frac{\lambda_1}{\lambda_1+\lambda_2}\right)^2.
+\]
+
+Similarly, the contribution from server $2$ is
+\[
+\left(\frac{\lambda_2}{\lambda_1+\lambda_2}\right)^2.
+\]
+
+Therefore,
+\[
+P\{\text{Smith is not last}\}
+=
+\left(\frac{\lambda_1}{\lambda_1+\lambda_2}\right)^2
++
+\left(\frac{\lambda_2}{\lambda_1+\lambda_2}\right)^2.
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-7}
+If $X_1$ and $X_2$ are independent nonnegative continuous random variables, show that
+\[
+P\{X_1<X_2\mid \min(X_1,X_2)=t\}
+=
+\frac{r_1(t)}{r_1(t)+r_2(t)},
+\]
+where $r_i(t)$ is the failure rate function of $X_i$.
+\end{exercise}
+
+\solution{
+Let
+\[
+\overline F_i(t)=P(X_i>t)
+\]
+and
+\[
+r_i(t)=\frac{f_i(t)}{\overline F_i(t)}.
+\]
+
+For small $h>0$,
+\[
+P(t<X_1<t+h,\ X_2>t)
+\approx f_1(t)\overline F_2(t)h,
+\]
+and
+\[
+P(t<X_2<t+h,\ X_1>t)
+\approx f_2(t)\overline F_1(t)h.
+\]
+Therefore,
+\[
+P\{X_1<X_2\mid \min(X_1,X_2)=t\}
+=
+\frac{f_1(t)\overline F_2(t)}
+{f_1(t)\overline F_2(t)+f_2(t)\overline F_1(t)}.
+\]
+Using
+\[
+f_i(t)=r_i(t)\overline F_i(t),
+\]
+we get
+\[
+P\{X_1<X_2\mid \min(X_1,X_2)=t\}
+=
+\frac{r_1(t)\overline F_1(t)\overline F_2(t)}
+{r_1(t)\overline F_1(t)\overline F_2(t)+r_2(t)\overline F_1(t)\overline F_2(t)}.
+\]
+Canceling the common factor gives
+\[
+P\{X_1<X_2\mid \min(X_1,X_2)=t\}
+=
+\frac{r_1(t)}{r_1(t)+r_2(t)}.
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-8}
+Let $X_i$, $i=1,\ldots,n$, be independent continuous random variables, with $X_i$ having failure rate function $r_i(t)$. Let $T$ be independent of this sequence, and suppose that
+\[
+\sum_{i=1}^n P\{T=i\}=1.
+\]
+Show that the failure rate function $r(t)$ of $X_T$ is given by
+\[
+r(t)=\sum_{i=1}^n r_i(t)P\{T=i\mid X_T>t\}.
+\]
+\end{exercise}
+
+\solution{
+Let
+\[
+p_i=P(T=i).
+\]
+The survival function of $X_T$ is
+\[
+P(X_T>t)
+=
+\sum_{i=1}^n P(T=i)P(X_i>t)
+=
+\sum_{i=1}^n p_i \overline F_i(t).
+\]
+The density of $X_T$ is
+\[
+f_{X_T}(t)
+=
+\sum_{i=1}^n p_i f_i(t).
+\]
+Hence its failure rate is
+\[
+r(t)
+=
+\frac{f_{X_T}(t)}{P(X_T>t)}
+=
+\frac{\sum_{i=1}^n p_i f_i(t)}
+{\sum_{i=1}^n p_i \overline F_i(t)}.
+\]
+Since
+\[
+f_i(t)=r_i(t)\overline F_i(t),
+\]
+we have
+\[
+r(t)
+=
+\frac{\sum_{i=1}^n p_i r_i(t)\overline F_i(t)}
+{\sum_{i=1}^n p_i \overline F_i(t)}.
+\]
+But
+\[
+P(T=i\mid X_T>t)
+=
+\frac{p_i\overline F_i(t)}
+{\sum_{j=1}^n p_j\overline F_j(t)}.
+\]
+Therefore,
+\[
+r(t)
+=
+\sum_{i=1}^n r_i(t)P(T=i\mid X_T>t).
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-9}
+Machine $1$ is currently working. Machine $2$ will be put in use at a time $t$ from now. If the lifetime of machine $i$ is exponential with rate $\lambda_i$, $i=1,2$, what is the probability that machine $1$ is the first machine to fail?
+\end{exercise}
+
+\solution{
+Let
+\[
+X_1\sim \operatorname{Exponential}(\lambda_1)
+\]
+be the remaining lifetime of machine $1$, and let
+\[
+X_2\sim \operatorname{Exponential}(\lambda_2)
+\]
+be the lifetime of machine $2$ once it is put into use.
+
+Machine $2$ fails at time
+\[
+t+X_2.
+\]
+Thus machine $1$ fails first if
+\[
+X_1<t+X_2.
+\]
+Therefore,
+\[
+P(X_1<t+X_2)
+=
+P(X_1<t)+P(t\le X_1<t+X_2).
+\]
+Now,
+\[
+P(X_1<t)=1-e^{-\lambda_1 t}.
+\]
+Also,
+\[
+P(t\le X_1<t+X_2)
+=
+\int_t^\infty \lambda_1 e^{-\lambda_1 x}P(X_2>x-t)\,dx.
+\]
+Since
+\[
+P(X_2>x-t)=e^{-\lambda_2(x-t)},
+\]
+we get
+\[
+P(t\le X_1<t+X_2)
+=
+\int_t^\infty \lambda_1 e^{-\lambda_1 x}e^{-\lambda_2(x-t)}\,dx.
+\]
+Thus
+\[
+P(t\le X_1<t+X_2)
+=
+\frac{\lambda_1}{\lambda_1+\lambda_2}e^{-\lambda_1 t}.
+\]
+Hence
+\[
+P(\text{machine 1 fails first})
+=
+1-e^{-\lambda_1 t}
++
+\frac{\lambda_1}{\lambda_1+\lambda_2}e^{-\lambda_1 t}.
+\]
+Simplifying,
+\[
+{
+P(\text{machine 1 fails first})
+=
+1-\frac{\lambda_2}{\lambda_1+\lambda_2}e^{-\lambda_1 t}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-10}
+Let $X$ and $Y$ be independent exponential random variables with respective rates $\lambda$ and $\mu$. Let $M=\min(X,Y)$. Find
+\begin{enumerate}
+\item $E[MX\mid M=X]$,
+\item $E[MX\mid M=Y]$,
+\item $\operatorname{Cov}(X,M)$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let
+\[
+r=\lambda+\mu.
+\]
+Then
+\[
+M\sim \operatorname{Exponential}(r),
+\]
+and
+\[
+P(M=X)=\frac{\lambda}{r},\qquad P(M=Y)=\frac{\mu}{r}.
+\]
+
+\noindent
+\textbf{(a)}
+On the event $\{M=X\}$, we have $X=M$. Therefore,
+\[
+MX=M^2.
+\]
+Since $M$ is exponential with rate $r$,
+\[
+E[M^2]=\frac{2}{r^2}.
+\]
+Hence
+\[
+{
+E[MX\mid M=X]=\frac{2}{(\lambda+\mu)^2}.
+}
+\]
+
+\noindent
+\textbf{(b)}
+On the event $\{M=Y\}$, we have $M=Y<X$. By the memoryless property,
+\[
+X=M+Z,
+\]
+where
+\[
+Z\sim \operatorname{Exponential}(\lambda)
+\]
+is independent of $M$. Hence
+\[
+MX=M(M+Z)=M^2+MZ.
+\]
+Therefore,
+\[
+E[MX\mid M=Y]
+=
+E[M^2]+E[M]E[Z].
+\]
+Thus
+\[
+E[MX\mid M=Y]
+=
+\frac{2}{r^2}
++
+\frac1r\cdot \frac1\lambda.
+\]
+So
+\[
+{
+E[MX\mid M=Y]
+=
+\frac{2}{(\lambda+\mu)^2}
++
+\frac{1}{\lambda(\lambda+\mu)}.
+}
+\]
+
+\noindent
+\textbf{(c)}
+Using the law of total expectation,
+\[
+E[XM]
+=
+E[XM\mid M=X]P(M=X)
++
+E[XM\mid M=Y]P(M=Y).
+\]
+Therefore,
+\[
+E[XM]
+=
+\frac{2}{r^2}\cdot \frac{\lambda}{r}
++
+\left(\frac{2}{r^2}+\frac{1}{\lambda r}\right)\frac{\mu}{r}.
+\]
+This simplifies to
+\[
+E[XM]
+=
+\frac{2}{r^2}+\frac{\mu}{\lambda r^2}.
+\]
+Also,
+\[
+E[X]=\frac1\lambda,
+\qquad
+E[M]=\frac1r.
+\]
+Hence
+\[
+\operatorname{Cov}(X,M)
+=
+E[XM]-E[X]E[M].
+\]
+Thus
+\[
+\operatorname{Cov}(X,M)
+=
+\frac{2}{r^2}+\frac{\mu}{\lambda r^2}
+-
+\frac1{\lambda r}.
+\]
+Since $r=\lambda+\mu$, this becomes
+\[
+{
+\operatorname{Cov}(X,M)=\frac1{(\lambda+\mu)^2}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-11}
+Let $X,Y_1,\ldots,Y_n$ be independent exponential random variables, $X$ having rate $\lambda$ and $Y_i$ having rate $\mu$. Let $A_i$ be the event that the $i$th smallest of these $n+1$ random variables is one of the $Y_i$. Find
+\[
+p=P\{X>\max_i Y_i\}
+\]
+by using the identity
+\[
+p=P(A_1\cdots A_n)=P(A_1)P(A_2\mid A_1)\cdots P(A_n\mid A_1\cdots A_{n-1}).
+\]
+Verify your answer when $n=2$ by conditioning on $X$ to obtain $p$.
+\end{exercise}
+
+\solution{
+The event
+\[
+\{X>\max_i Y_i\}
+\]
+means that the first $n$ smallest values are all among
+\[
+Y_1,\ldots,Y_n.
+\]
+Thus
+\[
+p=P(A_1A_2\cdots A_n).
+\]
+
+Initially, the total rate of the $Y_i$ variables is $n\mu$, while the rate of $X$ is $\lambda$. Hence
+\[
+P(A_1)=\frac{n\mu}{\lambda+n\mu}.
+\]
+Given that the first smallest value was one of the $Y_i$, there remain $n-1$ variables of type $Y$ and the variable $X$. Therefore,
+\[
+P(A_2\mid A_1)=\frac{(n-1)\mu}{\lambda+(n-1)\mu}.
+\]
+Continuing in this way,
+\[
+P(A_j\mid A_1\cdots A_{j-1})
+=
+\frac{(n-j+1)\mu}{\lambda+(n-j+1)\mu}.
+\]
+Therefore,
+\[
+p
+=
+\prod_{j=1}^n
+\frac{j\mu}{\lambda+j\mu}.
+\]
+Hence
+\[
+{
+P\{X>\max_i Y_i\}
+=
+\prod_{j=1}^n
+\frac{j\mu}{\lambda+j\mu}.
+}
+\]
+
+For $n=2$, this gives
+\[
+p=
+\frac{\mu}{\lambda+\mu}
+\cdot
+\frac{2\mu}{\lambda+2\mu}
+=
+\frac{2\mu^2}{(\lambda+\mu)(\lambda+2\mu)}.
+\]
+
+Now verify by conditioning on $X$. Since
+\[
+P(Y_1<X,Y_2<X\mid X=x)
+=
+(1-e^{-\mu x})^2,
+\]
+we have
+\[
+p
+=
+\int_0^\infty
+(1-e^{-\mu x})^2\lambda e^{-\lambda x}\,dx.
+\]
+Expanding,
+\[
+p
+=
+\int_0^\infty
+\lambda e^{-\lambda x}
+\left(1-2e^{-\mu x}+e^{-2\mu x}\right)\,dx.
+\]
+Thus
+\[
+p
+=
+1-\frac{2\lambda}{\lambda+\mu}
++
+\frac{\lambda}{\lambda+2\mu}.
+\]
+Simplifying,
+\[
+p=
+\frac{2\mu^2}{(\lambda+\mu)(\lambda+2\mu)},
+\]
+which agrees with the formula above.
+}
+
+\begin{exercise}
+\label{ex:counting-processes-12}
+If $X_i$, $i=1,2,3$, are independent exponential random variables with rates $\lambda_i$, $i=1,2,3$, find
+\begin{enumerate}
+\item $P\{X_1<X_2<X_3\}$,
+\item $P\{X_1<X_2\mid \max(X_1,X_2,X_3)=X_3\}$,
+\item $E[\max X_i\mid X_1<X_2<X_3]$,
+\item $E[\max X_i]$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let
+\[
+\Lambda=\lambda_1+\lambda_2+\lambda_3.
+\]
+
+\noindent
+\textbf{(a)}
+The probability that $X_1$ is the first to occur is
+\[
+\frac{\lambda_1}{\Lambda}.
+\]
+Given that $X_1$ is first, the probability that $X_2$ occurs before $X_3$ is
+\[
+\frac{\lambda_2}{\lambda_2+\lambda_3}.
+\]
+Therefore,
+\[
+{
+P(X_1<X_2<X_3)
+=
+\frac{\lambda_1}{\Lambda}
+\cdot
+\frac{\lambda_2}{\lambda_2+\lambda_3}.
+}
+\]
+
+\noindent
+\textbf{(b)}
+The event $\{\max(X_1,X_2,X_3)=X_3\}$ means that $X_3$ is last. The possible orders are
+\[
+X_1<X_2<X_3
+\qquad\text{or}\qquad
+X_2<X_1<X_3.
+\]
+Thus
+\[
+P(X_1<X_2\mid X_3\text{ is last})
+=
+\frac{P(X_1<X_2<X_3)}
+{P(X_1<X_2<X_3)+P(X_2<X_1<X_3)}.
+\]
+Now,
+\[
+P(X_1<X_2<X_3)
+=
+\frac{\lambda_1}{\Lambda}
+\frac{\lambda_2}{\lambda_2+\lambda_3},
+\]
+and
+\[
+P(X_2<X_1<X_3)
+=
+\frac{\lambda_2}{\Lambda}
+\frac{\lambda_1}{\lambda_1+\lambda_3}.
+\]
+Therefore,
+\[
+P(X_1<X_2\mid X_3\text{ is last})
+=
+\frac{\frac{1}{\lambda_2+\lambda_3}}
+{\frac{1}{\lambda_2+\lambda_3}+\frac{1}{\lambda_1+\lambda_3}}.
+\]
+Hence
+\[
+{
+P(X_1<X_2\mid \max(X_1,X_2,X_3)=X_3)
+=
+\frac{\lambda_1+\lambda_3}{\lambda_1+\lambda_2+2\lambda_3}.
+}
+\]
+
+\noindent
+\textbf{(c)}
+Given the order
+\[
+X_1<X_2<X_3,
+\]
+the spacings are independent exponentials with rates
+\[
+\Lambda,\qquad \lambda_2+\lambda_3,\qquad \lambda_3.
+\]
+Thus
+\[
+X_3
+=
+X_1+(X_2-X_1)+(X_3-X_2).
+\]
+Therefore,
+\[
+E[\max X_i\mid X_1<X_2<X_3]
+=
+E[X_3\mid X_1<X_2<X_3].
+\]
+Hence
+\[
+{
+E[\max X_i\mid X_1<X_2<X_3]
+=
+\frac1{\Lambda}
++
+\frac1{\lambda_2+\lambda_3}
++
+\frac1{\lambda_3}.
+}
+\]
+
+\noindent
+\textbf{(d)}
+For $t\ge 0$,
+\[
+P(\max X_i\le t)
+=
+\prod_{i=1}^3(1-e^{-\lambda_i t}).
+\]
+Thus
+\[
+E[\max X_i]
+=
+\int_0^\infty P(\max X_i>t)\,dt.
+\]
+Now,
+\[
+P(\max X_i>t)
+=
+1-\prod_{i=1}^3(1-e^{-\lambda_i t}).
+\]
+Expanding and integrating,
+\[
+{
+E[\max X_i]
+=
+\frac1{\lambda_1}
++\frac1{\lambda_2}
++\frac1{\lambda_3}
+-\frac1{\lambda_1+\lambda_2}
+-\frac1{\lambda_1+\lambda_3}
+-\frac1{\lambda_2+\lambda_3}
++\frac1{\lambda_1+\lambda_2+\lambda_3}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-13}
+A single server is busy and there are $n\ge1$ customers waiting in
+first-come, first-served order. Service times are independent exponentials
+with rate $\mu$. Independently, each waiting customer abandons the queue
+after an exponential patience time with rate $\theta>0$. Find the
+expected time until the customer initially in position $n$ in the queue
+leaves the queue, either by starting service or by abandoning it.
+\end{exercise}
+
+\solution{
+Under the stated assumptions, service times are exponential with rate $\mu$, and each person waiting in line independently departs without service at rate $\theta$.
+
+Let $E_k$ be the expected time until the tagged customer leaves the line when he is in position $k$ in line. Thus the desired quantity is $E_n$.
+
+When the tagged customer is in position $k$, the next relevant event occurs at rate
+\[
+\mu+k\theta.
+\]
+This event is either a service completion, an abandonment by one of the $k-1$ people ahead of him, or his own abandonment.
+
+For $k=1$,
+\[
+E_1=\frac1{\mu+\theta}.
+\]
+For $k\ge 2$,
+\[
+E_k
+=
+\frac1{\mu+k\theta}
++
+\frac{\mu+(k-1)\theta}{\mu+k\theta}E_{k-1}.
+\]
+Multiplying by $\mu+k\theta$ gives
+\[
+(\mu+k\theta)E_k
+=
+1+(\mu+(k-1)\theta)E_{k-1}.
+\]
+Since
+\[
+(\mu+\theta)E_1=1,
+\]
+it follows by induction that
+\[
+(\mu+k\theta)E_k=k.
+\]
+Therefore,
+\[
+{
+E_n=\frac{n}{\mu+n\theta}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-14}
+Let $X$ be an exponential random variable with rate $\lambda$.
+\begin{enumerate}
+\item Use the definition of conditional expectation to determine $E[X\mid X<c]$.
+\item Now determine $E[X\mid X<c]$ by using the following identity:
+\[
+E[X]=E[X\mid X<c]P(X<c)+E[X\mid X>c]P(X>c).
+\]
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)}
+By definition,
+\[
+E[X\mid X<c]
+=
+\frac{\int_0^c x\lambda e^{-\lambda x}\,dx}{P(X<c)}.
+\]
+Since
+\[
+P(X<c)=1-e^{-\lambda c},
+\]
+and
+\[
+\int_0^c x\lambda e^{-\lambda x}\,dx
+=
+\frac1\lambda-e^{-\lambda c}\left(c+\frac1\lambda\right),
+\]
+we get
+\[
+E[X\mid X<c]
+=
+\frac{\frac1\lambda-e^{-\lambda c}\left(c+\frac1\lambda\right)}
+{1-e^{-\lambda c}}.
+\]
+Equivalently,
+\[
+{
+E[X\mid X<c]
+=
+\frac1\lambda-\frac{c e^{-\lambda c}}{1-e^{-\lambda c}}
+=
+\frac1\lambda-\frac{c}{e^{\lambda c}-1}.
+}
+\]
+
+\textbf{(b)}
+We use
+\[
+E[X]=E[X\mid X<c]P(X<c)+E[X\mid X>c]P(X>c).
+\]
+Now,
+\[
+E[X]=\frac1\lambda,
+\qquad
+P(X<c)=1-e^{-\lambda c},
+\qquad
+P(X>c)=e^{-\lambda c}.
+\]
+By the memoryless property,
+\[
+E[X\mid X>c]=c+\frac1\lambda.
+\]
+Therefore,
+\[
+\frac1\lambda
+=
+E[X\mid X<c](1-e^{-\lambda c})
++
+\left(c+\frac1\lambda\right)e^{-\lambda c}.
+\]
+Solving for $E[X\mid X<c]$ gives
+\[
+{
+E[X\mid X<c]
+=
+\frac1\lambda-\frac{c e^{-\lambda c}}{1-e^{-\lambda c}}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-15}
+One hundred items are simultaneously put on a life test. Suppose the lifetimes of the individual items are independent exponential random variables with mean $200$ hours. The test will end when there have been a total of $5$ failures. If $T$ is the time at which the test ends, find $E[T]$ and $\operatorname{Var}(T)$.
+\end{exercise}
+
+\solution{
+Each lifetime is exponential with mean $200$, so the rate is
+\[
+\lambda=\frac1{200}.
+\]
+The time until the first failure is exponential with rate
+\[
+100\lambda.
+\]
+After the first failure, $99$ items remain, so the time until the next failure is exponential with rate
+\[
+99\lambda.
+\]
+Continuing, the time until the fifth failure can be written as a sum of independent exponential random variables with rates
+\[
+100\lambda,\ 99\lambda,\ 98\lambda,\ 97\lambda,\ 96\lambda.
+\]
+Therefore,
+\[
+E[T]
+=
+\sum_{j=96}^{100}\frac1{j\lambda}.
+\]
+Since $\lambda=\frac1{200}$,
+\[
+{
+E[T]
+=
+200\left(
+\frac1{100}+\frac1{99}+\frac1{98}+\frac1{97}+\frac1{96}
+\right).
+}
+\]
+
+Also,
+\[
+\operatorname{Var}(T)
+=
+\sum_{j=96}^{100}\frac1{(j\lambda)^2}.
+\]
+Hence
+\[
+{
+\operatorname{Var}(T)
+=
+200^2\left(
+\frac1{100^2}+\frac1{99^2}+\frac1{98^2}+\frac1{97^2}+\frac1{96^2}
+\right).
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-16}
+There are three jobs that need to be processed, with the processing time of job $i$ being exponential with rate $\mu_i$. There are two processors available, so processing on two of the jobs can immediately start, with processing on the final job to start when one of the initial ones is finished.
+\begin{enumerate}
+\item Let $T_i$ denote the time at which the processing of job $i$ is completed. If the objective is to minimize $E[T_1+T_2+T_3]$, which jobs should be initially processed if $\mu_1<\mu_2<\mu_3$?
+\item Let $M$, called the makespan, be the time until all three jobs have been processed. With $S$ equal to the time that there is only a single processor working, show that
+\[
+2E[M]=E[S]+\sum_{i=1}^3\frac1{\mu_i}.
+\]
+\end{enumerate}
+For the rest of this problem, suppose that $\mu_1=\mu_2=\mu$, $\mu_3=\lambda$. Also, let $P(\mu)$ be the probability that the last job to finish is either job $1$ or job $2$, and let $P(\lambda)=1-P(\mu)$ be the probability that the last job to finish is job $3$.
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Express $E[S]$ in terms of $P(\mu)$ and $P(\lambda)$.
+\item Let $P_{i,j}(\mu)$ be the value of $P(\mu)$ when $i$ and $j$ are the jobs that are initially started. Show that $P_{1,2}(\mu)\le P_{1,3}(\mu)$.
+\item If $\mu>\lambda$, show that $E[M]$ is minimized when job $3$ is one of the jobs that is initially started.
+\item If $\mu<\lambda$, show that $E[M]$ is minimized when processing is initially started on jobs $1$ and $2$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)}
+Suppose jobs $i$ and $j$ are initially processed, and job $k$ waits. Then
+\[
+E[T_i]=\frac1{\mu_i},
+\qquad
+E[T_j]=\frac1{\mu_j}.
+\]
+The waiting job $k$ starts when the first of jobs $i$ and $j$ finishes. The expected time until that first completion is
+\[
+\frac1{\mu_i+\mu_j}.
+\]
+Therefore,
+\[
+E[T_k]=\frac1{\mu_i+\mu_j}+\frac1{\mu_k}.
+\]
+Hence
+\[
+E[T_1+T_2+T_3]
+=
+\sum_{\ell=1}^3\frac1{\mu_\ell}
++
+\frac1{\mu_i+\mu_j}.
+\]
+The first term is fixed, so we minimize the expectation by maximizing
+\[
+\mu_i+\mu_j.
+\]
+Since
+\[
+\mu_1<\mu_2<\mu_3,
+\]
+we should initially process jobs $2$ and $3$.
+
+\[
+{\text{Initially process jobs }2\text{ and }3.}
+\]
+
+\textbf{(b)}
+Let the total amount of required processing work be
+\[
+W=\sum_{i=1}^3 V_i,
+\]
+where $V_i$ is the processing time of job $i$. During the interval $[0,M]$, two processors are working except during the time interval of length $S$, when only one processor is working.
+
+Thus the total processor work done is
+\[
+2(M-S)+S=2M-S.
+\]
+This must equal the total required work:
+\[
+2M-S=\sum_{i=1}^3 V_i.
+\]
+Taking expectations,
+\[
+2E[M]-E[S]=\sum_{i=1}^3 E[V_i].
+\]
+Since
+\[
+E[V_i]=\frac1{\mu_i},
+\]
+we get
+\[
+2E[M]-E[S]=\sum_{i=1}^3\frac1{\mu_i}.
+\]
+Therefore,
+\[
+{
+2E[M]=E[S]+\sum_{i=1}^3\frac1{\mu_i}.
+}
+\]
+
+\textbf{(c)}
+The time $S$ is the final period during which only the last remaining job is being processed.
+
+If the last job is either job $1$ or job $2$, its rate is $\mu$, so the expected value of $S$ is $\frac1\mu$. If the last job is job $3$, its rate is $\lambda$, so the expected value of $S$ is $\frac1\lambda$.
+
+Therefore,
+\[
+{
+E[S]=\frac{P(\mu)}{\mu}+\frac{P(\lambda)}{\lambda}.
+}
+\]
+
+\textbf{(d)}
+First suppose jobs $1$ and $2$ are initially started. Then job $3$ waits. After the first of jobs $1$ and $2$ finishes, job $3$ starts. At that point, one job of rate $\mu$ and one job of rate $\lambda$ remain. The last job has rate $\mu$ precisely if the job of rate $\lambda$ finishes first. Hence
+\[
+P_{1,2}(\mu)=\frac{\lambda}{\mu+\lambda}.
+\]
+
+Now suppose jobs $1$ and $3$ are initially started. Job $2$ waits. If job $1$ finishes first, which occurs with probability
+\[
+\frac{\mu}{\mu+\lambda},
+\]
+then job $2$ starts, and the remaining jobs have rates $\mu$ and $\lambda$. The probability that the last job has rate $\mu$ is then
+\[
+\frac{\lambda}{\mu+\lambda}.
+\]
+If job $3$ finishes first, which occurs with probability
+\[
+\frac{\lambda}{\mu+\lambda},
+\]
+then jobs $1$ and $2$ remain, both having rate $\mu$, so the last job certainly has rate $\mu$.
+
+Therefore,
+\[
+P_{1,3}(\mu)
+=
+\frac{\mu}{\mu+\lambda}\cdot \frac{\lambda}{\mu+\lambda}
++
+\frac{\lambda}{\mu+\lambda}.
+\]
+Thus
+\[
+P_{1,3}(\mu)
+=
+\frac{\mu\lambda}{(\mu+\lambda)^2}
++
+\frac{\lambda}{\mu+\lambda}.
+\]
+Since
+\[
+P_{1,2}(\mu)=\frac{\lambda}{\mu+\lambda},
+\]
+we have
+\[
+P_{1,3}(\mu)-P_{1,2}(\mu)
+=
+\frac{\mu\lambda}{(\mu+\lambda)^2}\ge 0.
+\]
+Hence
+\[
+{
+P_{1,2}(\mu)\le P_{1,3}(\mu).
+}
+\]
+
+\textbf{(e)}
+From part (b), minimizing $E[M]$ is equivalent to minimizing $E[S]$, because
+\[
+\sum_{i=1}^3\frac1{\mu_i}
+\]
+is fixed.
+
+From part (c),
+\[
+E[S]=\frac{P(\mu)}{\mu}+\frac{1-P(\mu)}{\lambda}.
+\]
+Thus
+\[
+E[S]
+=
+\frac1\lambda
++
+P(\mu)\left(\frac1\mu-\frac1\lambda\right).
+\]
+If
+\[
+\mu>\lambda,
+\]
+then
+\[
+\frac1\mu-\frac1\lambda<0.
+\]
+Therefore, $E[S]$ is minimized by making $P(\mu)$ as large as possible. By part (d), $P(\mu)$ is larger when job $3$ is one of the jobs initially started. Hence
+\[
+{
+\text{if }\mu>\lambda,\text{ then }E[M]\text{ is minimized by initially starting job }3
+}
+\]
+together with either job $1$ or job $2$.
+
+\textbf{(f)}
+Again,
+\[
+E[S]
+=
+\frac1\lambda
++
+P(\mu)\left(\frac1\mu-\frac1\lambda\right).
+\]
+If
+\[
+\mu<\lambda,
+\]
+then
+\[
+\frac1\mu-\frac1\lambda>0.
+\]
+Therefore, $E[S]$ is minimized by making $P(\mu)$ as small as possible. By part (d), this occurs when jobs $1$ and $2$ are initially started.
+
+Hence
+\[
+{
+\text{if }\mu<\lambda,\text{ then }E[M]\text{ is minimized by initially starting jobs }1\text{ and }2.
+}
+\]
+}
+
+\setcounter{exercise}{19}
+\begin{exercise}
+\label{ex:counting-processes-20}
+Consider a two-server system in which a customer is served first by server $1$, then by server $2$, and then departs. The service times at server $i$ are exponential random variables with rates $\mu_i$, $i=1,2$. When you arrive, you find server $1$ free and two customers at server $2$---customer A in service and customer B waiting in line.
+\begin{enumerate}
+\item Find $P_A$, the probability that A is still in service when you move over to server $2$.
+\item Find $P_B$, the probability that B is still in the system when you move over to server $2$.
+\item Find $E[T]$, where $T$ is the time that you spend in the system.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let $S_1$ be your service time at server $1$, and let $R_A$ be the remaining service time of customer A at server $2$. By the memoryless property,
+\[
+S_1\sim \operatorname{Exp}(\mu_1),
+\qquad
+R_A\sim \operatorname{Exp}(\mu_2).
+\]
+
+\textbf{(a)} A is still in service when you move to server $2$ if
+\[
+S_1<R_A.
+\]
+Thus
+\[
+P_A=P(S_1<R_A)=\frac{\mu_1}{\mu_1+\mu_2}.
+\]
+
+\textbf{(b)} Let $S_B$ be B's service time at server $2$. Then B is still in the system when you move to server $2$ if
+\[
+S_1<R_A+S_B.
+\]
+Since $R_A$ and $S_B$ are independent exponentials with rate $\mu_2$,
+\[
+P_B=P(S_1<R_A+S_B).
+\]
+Using conditioning,
+\[
+P_B=1-E\left[e^{-\mu_1(R_A+S_B)}\right].
+\]
+Now
+\[
+E[e^{-\mu_1R_A}]
+=
+\frac{\mu_2}{\mu_1+\mu_2}.
+\]
+Therefore,
+\[
+P_B
+=
+1-\left(\frac{\mu_2}{\mu_1+\mu_2}\right)^2.
+\]
+
+\textbf{(c)} Write
+\[
+T=S_1+S_2+W_A+W_B,
+\]
+where $S_2$ is your own service time at server $2$, $W_A$ is the time you wait while A is being served, and $W_B$ is the time you wait while B is being served.
+
+Clearly,
+\[
+E[S_1]=\frac1{\mu_1},
+\qquad
+E[S_2]=\frac1{\mu_2}.
+\]
+Also,
+\[
+W_A=(R_A-S_1)^+.
+\]
+By the memoryless property,
+\[
+E[W_A]
+=
+P(S_1<R_A)\frac1{\mu_2}
+=
+\frac{\mu_1}{\mu_1+\mu_2}\cdot \frac1{\mu_2}.
+\]
+Similarly, if B is still in the system when you arrive at server $2$, the expected amount of service of B that remains to be waited through is $\frac1{\mu_2}$. Hence
+\[
+E[W_B]
+=
+P_B\frac1{\mu_2}
+=
+\frac1{\mu_2}\left[
+1-\left(\frac{\mu_2}{\mu_1+\mu_2}\right)^2
+\right].
+\]
+Therefore,
+\[
+{
+E[T]
+=
+\frac1{\mu_1}
++\frac1{\mu_2}
++
+\frac{\mu_1}{\mu_2(\mu_1+\mu_2)}
++
+\frac1{\mu_2}\left[
+1-\left(\frac{\mu_2}{\mu_1+\mu_2}\right)^2
+\right].
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-21}
+In a certain system, a customer must first be served by server $1$ and then by server $2$. The service times at server $i$ are exponential with rate $\mu_i$, $i=1,2$. An arrival finding server $1$ busy waits in line for that server. Upon completion of service at server $1$, a customer either enters service with server $2$ if that server is free or else remains with server $1$ until server $2$ is free. Customers depart the system after being served by server $2$. Suppose that when you arrive there is one customer in the system and that customer is being served by server $1$. What is the expected total time you spend in the system?
+\end{exercise}
+
+\solution{
+Let A be the customer initially at server $1$. You must first wait for A to finish service at server $1$, which has mean
+\[
+\frac1{\mu_1}.
+\]
+Then you enter service at server $1$, while A moves to server $2$.
+
+Let $S_1$ be your service time at server $1$ and let $R_2$ be A's service time at server $2$. Then
+\[
+S_1\sim \operatorname{Exp}(\mu_1),
+\qquad
+R_2\sim \operatorname{Exp}(\mu_2).
+\]
+If you finish server $1$ before A finishes server $2$, you are blocked and must wait. The expected blocking time is
+\[
+E[(R_2-S_1)^+]
+=
+P(S_1<R_2)\frac1{\mu_2}
+=
+\frac{\mu_1}{\mu_1+\mu_2}\cdot \frac1{\mu_2}.
+\]
+Finally, your own service time at server $2$ has mean $\frac1{\mu_2}$.
+
+Thus the expected total time is
+\[
+{
+\frac1{\mu_1}
++\frac1{\mu_1}
++
+\frac{\mu_1}{\mu_2(\mu_1+\mu_2)}
++
+\frac1{\mu_2}
+}
+\]
+or
+\[
+{
+E[T]
+=
+\frac2{\mu_1}
++
+\frac1{\mu_2}
++
+\frac{\mu_1}{\mu_2(\mu_1+\mu_2)}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-22}
+Suppose in Exercise $21$ you arrive to find two others in the system, one being served by server $1$ and one by server $2$. What is the expected time you spend in the system? Recall that if server $1$ finishes before server $2$, then server $1$'s customer will remain with him until server $2$ becomes free.
+\end{exercise}
+
+\solution{
+Let $U$ be the remaining service time of the customer at server $1$, and let $V$ be the remaining service time of the customer at server $2$. Then
+\[
+U\sim \operatorname{Exp}(\mu_1),
+\qquad
+V\sim \operatorname{Exp}(\mu_2).
+\]
+You cannot enter server $1$ until the customer there has completed service at server $1$ and has moved to server $2$. Thus your waiting time before entering server $1$ is
+\[
+\max(U,V).
+\]
+Hence
+\[
+E[\max(U,V)]
+=
+E[U]+E[V]-E[\min(U,V)].
+\]
+Since
+\[
+E[U]=\frac1{\mu_1},
+\qquad
+E[V]=\frac1{\mu_2},
+\qquad
+E[\min(U,V)]=\frac1{\mu_1+\mu_2},
+\]
+we get
+\[
+E[\max(U,V)]
+=
+\frac1{\mu_1}
++
+\frac1{\mu_2}
+-
+\frac1{\mu_1+\mu_2}.
+\]
+
+After you enter server $1$, the situation is the same as in Exercise $21$: you have service at server $1$, possible blocking before server $2$, and service at server $2$. Therefore,
+\[
+E[T]
+=
+E[\max(U,V)]
++
+\frac1{\mu_1}
++
+\frac{\mu_1}{\mu_2(\mu_1+\mu_2)}
++
+\frac1{\mu_2}.
+\]
+Thus
+\[
+{
+E[T]
+=
+\frac2{\mu_1}
++
+\frac2{\mu_2}
+-
+\frac1{\mu_1+\mu_2}
++
+\frac{\mu_1}{\mu_2(\mu_1+\mu_2)}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-23}
+A flashlight needs two batteries to be operational. Consider such a flashlight along with a set of $n$ functional batteries---battery $1$, battery $2,\ldots,$ battery $n$. Initially, battery $1$ and battery $2$ are installed. Whenever a battery fails, it is immediately replaced by the lowest numbered functional battery that has not yet been put in use. Suppose that the lifetimes of the different batteries are independent exponential random variables each having rate $\mu$. At a random time, call it $T$, a battery will fail and our stockpile will be empty. At that moment exactly one of the batteries---which we call battery $X$---will not yet have failed.
+\begin{enumerate}
+\item What is $P\{X=n\}$?
+\item What is $P\{X=1\}$?
+\item What is $P\{X=i\}$?
+\item Find $E[T]$.
+\item What is the distribution of $T$?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+At any time before $T$, two batteries are in use. Since their lifetimes are independent exponentials with the same rate $\mu$, each of the two currently installed batteries is equally likely to be the next one to fail.
+
+Thus the process can be viewed as a sequence of pairwise competitions: the surviving battery competes with the next newly installed battery, and each has probability $\frac12$ of surviving.
+
+\textbf{(a)} Battery $n$ is installed last. At the final failure time, battery $n$ is one of the two batteries in use, so it survives with probability
+\[
+{
+P\{X=n\}=\frac12.
+}
+\]
+
+\textbf{(b)} Battery $1$ must survive every competition against batteries $2,3,\ldots,n$. Therefore,
+\[
+{
+P\{X=1\}=\left(\frac12\right)^{n-1}.
+}
+\]
+
+\textbf{(c)} Similarly,
+\[
+P\{X=2\}=\left(\frac12\right)^{n-1}.
+\]
+For $i=3,4,\ldots,n$, battery $i$ must first beat the current surviving battery when it is installed, and then must survive against batteries $i+1,\ldots,n$. Hence
+\[
+{
+P\{X=i\}=
+\left(\frac12\right)^{n-i+1},
+\qquad i=3,\ldots,n.
+}
+\]
+Thus, in full,
+\[
+P\{X=i\}
+=
+\begin{cases}
+2^{-(n-1)}, & i=1,2,\\[4pt]
+2^{-(n-i+1)}, & i=3,\ldots,n.
+\end{cases}
+\]
+
+\textbf{(d)} Until time $T$, there are always two batteries in use. Therefore, the time between successive failures is exponential with rate
+\[
+2\mu.
+\]
+The time $T$ occurs at the $(n-1)$st failure. Hence $T$ is the sum of $n-1$ independent exponential random variables with rate $2\mu$. Therefore,
+\[
+{
+E[T]=\frac{n-1}{2\mu}.
+}
+\]
+
+\textbf{(e)} Since $T$ is the sum of $n-1$ independent exponentials with rate $2\mu$,
+\[
+{
+T\sim \operatorname{Gamma}(n-1,2\mu).
+}
+\]
+Thus its density is
+\[
+f_T(t)
+=
+\frac{(2\mu)^{n-1}}{(n-2)!}t^{n-2}e^{-2\mu t},
+\qquad t>0,
+\]
+and its distribution function is
+\[
+F_T(t)
+=
+1-e^{-2\mu t}\sum_{k=0}^{n-2}\frac{(2\mu t)^k}{k!},
+\qquad t\ge 0.
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-24}
+There are two servers available to process $n$ jobs. Initially, each server begins work on a job. Whenever a server completes work on a job, that job leaves the system and the server begins processing a new job, provided there are still jobs waiting to be processed. Let $T$ denote the time until all jobs have been processed. If the time that it takes server $i$ to process a job is exponentially distributed with rate $\mu_i$, $i=1,2$, find $E[T]$ and $\operatorname{Var}(T)$.
+\end{exercise}
+
+\solution{
+Let
+\[
+\mu=\mu_1+\mu_2.
+\]
+While there are still waiting jobs, both servers are busy. The time between job completions is then exponential with rate $\mu_1+\mu_2$.
+
+For the first $n-2$ completions, both servers remain busy. Hence the total time for these first $n-2$ completions is the sum of $n-2$ independent exponentials with rate $\mu$.
+
+After that, no jobs are waiting, and there remain two jobs in service. By the memoryless property, their remaining service times are independent exponentials with rates $\mu_1$ and $\mu_2$. The final time is therefore the maximum of these two remaining service times.
+
+Let
+\[
+M=\max(X_1,X_2),
+\]
+where
+\[
+X_1\sim \operatorname{Exp}(\mu_1),
+\qquad
+X_2\sim \operatorname{Exp}(\mu_2).
+\]
+Then
+\[
+E[M]
+=
+\frac1{\mu_1}
++
+\frac1{\mu_2}
+-
+\frac1{\mu_1+\mu_2}.
+\]
+Thus
+\[
+E[T]
+=
+\frac{n-2}{\mu_1+\mu_2}
++
+\frac1{\mu_1}
++
+\frac1{\mu_2}
+-
+\frac1{\mu_1+\mu_2}.
+\]
+Therefore,
+\[
+{
+E[T]
+=
+\frac1{\mu_1}
++
+\frac1{\mu_2}
++
+\frac{n-3}{\mu_1+\mu_2}.
+}
+\]
+
+For the variance,
+\[
+\operatorname{Var}\left(\sum_{j=1}^{n-2} Z_j\right)
+=
+\frac{n-2}{(\mu_1+\mu_2)^2},
+\]
+where $Z_j\sim \operatorname{Exp}(\mu_1+\mu_2)$.
+
+Also,
+\[
+\operatorname{Var}(M)
+=
+\frac1{\mu_1^2}
++
+\frac1{\mu_2^2}
+-
+\frac{3}{(\mu_1+\mu_2)^2}.
+\]
+Hence
+\[
+\operatorname{Var}(T)
+=
+\frac{n-2}{(\mu_1+\mu_2)^2}
++
+\frac1{\mu_1^2}
++
+\frac1{\mu_2^2}
+-
+\frac{3}{(\mu_1+\mu_2)^2}.
+\]
+Thus
+\[
+{
+\operatorname{Var}(T)
+=
+\frac1{\mu_1^2}
++
+\frac1{\mu_2^2}
++
+\frac{n-5}{(\mu_1+\mu_2)^2}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-25}
+Customers can be served by any of three servers, where the service times of server $i$ are exponentially distributed with rate $\mu_i$, $i=1,2,3$. Whenever a server becomes free, the customer who has been waiting the longest begins service with that server.
+\begin{enumerate}
+\item If you arrive to find all three servers busy and no one waiting, find the expected time until you depart the system.
+\item If you arrive to find all three servers busy and one person waiting, find the expected time until you depart the system.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let
+\[
+\Lambda=\mu_1+\mu_2+\mu_3.
+\]
+
+\textbf{(a)} Since all three servers are busy, the time until the first server becomes free is exponential with rate $\Lambda$, so its mean is
+\[
+\frac1{\Lambda}.
+\]
+The probability that server $i$ becomes free first is
+\[
+\frac{\mu_i}{\Lambda}.
+\]
+If you enter service with server $i$, your expected service time is $\frac1{\mu_i}$. Therefore, the expected service time you receive is
+\[
+\sum_{i=1}^3 \frac{\mu_i}{\Lambda}\frac1{\mu_i}
+=
+\frac3{\Lambda}.
+\]
+Thus
+\[
+{
+E[T]=\frac1{\Lambda}+\frac3{\Lambda}=\frac4{\Lambda}.
+}
+\]
+
+\textbf{(b)} If one person is waiting ahead of you, then you must wait for two service completions before you enter service. Each time all three servers are busy, the time until the next completion has mean $\frac1{\Lambda}$. Hence your expected waiting time is
+\[
+\frac2{\Lambda}.
+\]
+Once you enter service, your expected service time is again
+\[
+\frac3{\Lambda}.
+\]
+Therefore,
+\[
+{
+E[T]=\frac2{\Lambda}+\frac3{\Lambda}=\frac5{\Lambda}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-26}
+Each entering customer must be served first by server $1$, then by server $2$, and finally by server $3$. The amount of time it takes to be served by server $i$ is an exponential random variable with rate $\mu_i$, $i=1,2,3$. Suppose you enter the system when it contains a single customer who is being served by server $3$.
+\begin{enumerate}
+\item Find the probability that server $3$ will still be busy when you move over to server $2$.
+\item Find the probability that server $3$ will still be busy when you move over to server $3$.
+\item Find the expected amount of time that you spend in the system.
+\item Suppose that you enter the system when it contains a single customer who is being served by server $2$. Find the expected amount of time that you spend in the system.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let $R_3$ be the remaining service time of the customer initially at server $3$. Then
+\[
+R_3\sim \operatorname{Exp}(\mu_3).
+\]
+
+\textbf{(a)} You move to server $2$ after completing service at server $1$. Let
+\[
+S_1\sim \operatorname{Exp}(\mu_1).
+\]
+Server $3$ is still busy at that time if
+\[
+S_1<R_3.
+\]
+Therefore,
+\[
+{
+P(S_1<R_3)=\frac{\mu_1}{\mu_1+\mu_3}.
+}
+\]
+
+\textbf{(b)} You move to server $3$ after completing service at servers $1$ and $2$. Let
+\[
+S_2\sim \operatorname{Exp}(\mu_2).
+\]
+Then server $3$ is still busy if
+\[
+S_1+S_2<R_3.
+\]
+Thus
+\[
+P(S_1+S_2<R_3)
+=
+E[e^{-\mu_3(S_1+S_2)}].
+\]
+Since $S_1$ and $S_2$ are independent,
+\[
+{
+P(S_1+S_2<R_3)
+=
+\frac{\mu_1}{\mu_1+\mu_3}
+\cdot
+\frac{\mu_2}{\mu_2+\mu_3}.
+}
+\]
+
+\textbf{(c)} Your own expected service time is
+\[
+\frac1{\mu_1}+\frac1{\mu_2}+\frac1{\mu_3}.
+\]
+The only possible waiting occurs at server $3$. The expected waiting time there is
+\[
+E[(R_3-S_1-S_2)^+].
+\]
+By the memoryless property,
+\[
+E[(R_3-S_1-S_2)^+]
+=
+P(S_1+S_2<R_3)\frac1{\mu_3}.
+\]
+Therefore,
+\[
+{
+E[T]
+=
+\frac1{\mu_1}
++
+\frac1{\mu_2}
++
+\frac1{\mu_3}
++
+\frac1{\mu_3}
+\frac{\mu_1}{\mu_1+\mu_3}
+\frac{\mu_2}{\mu_2+\mu_3}.
+}
+\]
+
+\textbf{(d)} Now suppose the single customer initially in the system is at server $2$. Let $A$ be that customer's remaining service time at server $2$:
+\[
+A\sim \operatorname{Exp}(\mu_2).
+\]
+You first complete service at server $1$, taking time
+\[
+S_1\sim \operatorname{Exp}(\mu_1).
+\]
+Your expected waiting time at server $2$ is
+\[
+E[(A-S_1)^+]
+=
+P(S_1<A)\frac1{\mu_2}
+=
+\frac{\mu_1}{\mu_1+\mu_2}\cdot \frac1{\mu_2}.
+\]
+
+Now consider the possible waiting at server $3$. If $S_1<A$, then you and the other customer begin service at servers $2$ and $3$ at the same time. Your expected waiting at server $3$ in this case is
+\[
+\frac{\mu_2}{\mu_2+\mu_3}\cdot \frac1{\mu_3}.
+\]
+If $A<S_1$, then by the memoryless property the remaining time until you finish server $1$ after the other customer leaves server $2$ is exponential with rate $\mu_1$. Hence the expected waiting at server $3$ in this case is
+\[
+\frac{\mu_1}{\mu_1+\mu_3}
+\frac{\mu_2}{\mu_2+\mu_3}
+\frac1{\mu_3}.
+\]
+Therefore,
+\[
+E[W_3]
+=
+\frac{\mu_1}{\mu_1+\mu_2}
+\frac{\mu_2}{\mu_2+\mu_3}
+\frac1{\mu_3}
++
+\frac{\mu_2}{\mu_1+\mu_2}
+\frac{\mu_1}{\mu_1+\mu_3}
+\frac{\mu_2}{\mu_2+\mu_3}
+\frac1{\mu_3}.
+\]
+
+Thus the expected total time is
+\[
+{
+E[T]
+=
+\frac1{\mu_1}
++
+\frac1{\mu_2}
++
+\frac1{\mu_3}
++
+\frac{\mu_1}{\mu_2(\mu_1+\mu_2)}
++
+E[W_3].
+}
+\]
+}
+
+\setcounter{exercise}{33}
+\begin{exercise}
+\label{ex:counting-processes-34}
+Two individuals, A and B, both require kidney transplants. If she does not receive a new kidney, then A will die after an exponential time with rate $\mu_A$, and B after an exponential time with rate $\mu_B$. New kidneys arrive in accordance with a Poisson process having rate $\lambda$. It has been decided that the first kidney will go to A, or to B if B is alive and A is not at that time, and the next one to B if still living.
+\begin{enumerate}
+\item What is the probability that A obtains a new kidney?
+\item What is the probability that B obtains a new kidney?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let $K_1$ be the time until the first kidney arrives. Then
+\[
+K_1\sim \operatorname{Exp}(\lambda).
+\]
+Let $D_A$ and $D_B$ be the death times of A and B, with
+\[
+D_A\sim \operatorname{Exp}(\mu_A),
+\qquad
+D_B\sim \operatorname{Exp}(\mu_B).
+\]
+
+\textbf{(a)} A obtains a kidney if she is alive when the first kidney arrives:
+\[
+K_1<D_A.
+\]
+Therefore,
+\[
+{
+P(\text{A obtains a kidney})
+=
+\frac{\lambda}{\lambda+\mu_A}.
+}
+\]
+
+\textbf{(b)} B obtains a kidney in either of two ways.
+
+First, A may die before the first kidney arrives, while B is still alive at that time. This event is
+\[
+D_A<K_1<D_B.
+\]
+Its probability is
+\[
+\int_0^\infty \lambda e^{-\lambda t}
+(1-e^{-\mu_A t})e^{-\mu_B t}\,dt
+=
+\frac{\lambda}{\lambda+\mu_B}
+-
+\frac{\lambda}{\lambda+\mu_A+\mu_B}.
+\]
+
+Second, A may receive the first kidney, and B may still be alive when the second kidney arrives. If $K_2$ is the time between the first and second kidney arrivals, then $K_2\sim \operatorname{Exp}(\lambda)$, and this event has probability
+\[
+P(K_1<D_A,\ K_1+K_2<D_B).
+\]
+Thus
+\[
+P(K_1<D_A,\ K_1+K_2<D_B)
+=
+\int_0^\infty\int_0^\infty
+\lambda^2 e^{-\lambda(x+y)}
+e^{-\mu_A x}
+e^{-\mu_B(x+y)}
+\,dy\,dx.
+\]
+Hence
+\[
+P(K_1<D_A,\ K_1+K_2<D_B)
+=
+\frac{\lambda^2}{(\lambda+\mu_A+\mu_B)(\lambda+\mu_B)}.
+\]
+Therefore,
+\[
+P(\text{B obtains a kidney})
+=
+\frac{\lambda}{\lambda+\mu_B}
+-
+\frac{\lambda}{\lambda+\mu_A+\mu_B}
++
+\frac{\lambda^2}{(\lambda+\mu_A+\mu_B)(\lambda+\mu_B)}.
+\]
+Simplifying,
+\[
+{
+P(\text{B obtains a kidney})
+=
+\frac{\lambda(\lambda+\mu_A)}
+{(\lambda+\mu_B)(\lambda+\mu_A+\mu_B)}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-35}
+Let $\{N(t):t\ge0\}$ be a right-continuous counting process with $N(0)=0$,
+independent increments, and
+$N(s+t)-N(s)\sim\operatorname{Poisson}(\lambda t)$ for every $s,t\ge0$.
+Show that its successive interarrival times are independent exponential
+random variables with rate $\lambda$.
+\end{exercise}
+
+\solution{
+The assumptions give $N(0)=0$, the process has independent increments, and
+\[
+N(t+s)-N(s)\sim \operatorname{Poisson}(\lambda t).
+\]
+
+Let $S_n$ be the time of the $n$th event, and let
+\[
+T_n=S_n-S_{n-1},
+\qquad S_0=0,
+\]
+be the interarrival times.
+
+For the first interarrival time,
+\[
+P(T_1>t)=P(N(t)=0)=e^{-\lambda t}.
+\]
+Therefore,
+\[
+T_1\sim \operatorname{Exp}(\lambda).
+\]
+
+Now condition on the past up to time $S_{n-1}$. For $t\ge 0$,
+\[
+P(T_n>t\mid \text{past up to }S_{n-1})
+=
+P(N(S_{n-1}+t)-N(S_{n-1})=0).
+\]
+The strong Markov property at $S_{n-1}$ gives the same fresh Poisson increment law. This property follows from independent stationary increments at deterministic times by approximating $S_{n-1}$ from above by dyadic-grid stopping times and using right continuity. Thus
+\[
+P(N(S_{n-1}+t)-N(S_{n-1})=0)=e^{-\lambda t}.
+\]
+The same stopping-time argument shows that this probability is independent of the past. Hence
+\[
+T_n\sim \operatorname{Exp}(\lambda),
+\]
+and the interarrival times are independent.
+
+Thus the event times of the process are generated by independent exponential interarrival times with rate $\lambda$, as required.
+}
+
+\begin{exercise}
+\label{ex:counting-processes-36}
+Let $S(t)$ denote the price of a security at time $t$. A popular model for the process $\{S(t),t\ge 0\}$ supposes that the price remains unchanged until a shock occurs, at which time the price is multiplied by a random factor. If we let $N(t)$ denote the number of shocks by time $t$, and let $X_i$ denote the $i$th multiplicative factor, then this model supposes that
+\[
+S(t)=S(0)\prod_{i=1}^{N(t)}X_i,
+\]
+where $\prod_{i=1}^{N(t)}X_i$ is equal to $1$ when $N(t)=0$. Suppose that the $X_i$ are independent exponential random variables with rate $\mu$, that $\{N(t),t\ge 0\}$ is a Poisson process with rate $\lambda$, that $\{N(t),t\ge 0\}$ is independent of the $X_i$, and that $S(0)=s$.
+\begin{enumerate}
+\item Find $E[S(t)]$.
+\item Find $E[S^2(t)]$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Condition on $N(t)=n$. Since the $X_i$ are independent,
+\[
+E\left[\prod_{i=1}^n X_i\right]
+=
+(E[X])^n.
+\]
+Because $X_i\sim \operatorname{Exp}(\mu)$,
+\[
+E[X]=\frac1\mu.
+\]
+Thus
+\[
+E[S(t)\mid N(t)=n]
+=
+s\left(\frac1\mu\right)^n.
+\]
+Since $N(t)\sim \operatorname{Poisson}(\lambda t)$,
+\[
+E[S(t)]
+=
+sE\left[\left(\frac1\mu\right)^{N(t)}\right].
+\]
+Using the probability generating function of a Poisson random variable,
+\[
+E[a^{N(t)}]=e^{\lambda t(a-1)}.
+\]
+Therefore,
+\[
+{
+E[S(t)]
+=
+s\exp\left\{\lambda t\left(\frac1\mu-1\right)\right\}.
+}
+\]
+
+For the second moment,
+\[
+S^2(t)=s^2\prod_{i=1}^{N(t)}X_i^2.
+\]
+Since
+\[
+E[X^2]=\frac2{\mu^2},
+\]
+we obtain
+\[
+E[S^2(t)]
+=
+s^2E\left[\left(\frac2{\mu^2}\right)^{N(t)}\right].
+\]
+Hence
+\[
+{
+E[S^2(t)]
+=
+s^2
+\exp\left\{
+\lambda t\left(\frac2{\mu^2}-1\right)
+\right\}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-37}
+A machine works for an exponentially distributed time with rate $\mu$ and then fails. A repair crew checks the machine at times distributed according to a Poisson process with rate $\lambda$; if the machine is found to have failed then it is immediately replaced. Find the expected time between replacements of machines.
+\end{exercise}
+
+\solution{
+Let $F$ be the time until the machine fails. Then
+\[
+F\sim \operatorname{Exp}(\mu),
+\]
+so
+\[
+E[F]=\frac1\mu.
+\]
+
+After the machine fails, the replacement does not occur until the next inspection time. Since inspections occur according to a Poisson process with rate $\lambda$, the time from the failure until the next inspection is exponential with rate $\lambda$. Its mean is
+\[
+\frac1\lambda.
+\]
+
+Therefore, the time between replacements is the failure time plus the time from failure to the next inspection. Hence
+\[
+{
+E[\text{time between replacements}]
+=
+\frac1\mu+\frac1\lambda.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-38}
+Let $\{M_i(t),t\ge 0\}$, $i=1,2,3$, be independent Poisson processes with respective rates $\lambda_i$, $i=1,2,3$, and set
+\[
+N_1(t)=M_1(t)+M_2(t),
+\qquad
+N_2(t)=M_2(t)+M_3(t).
+\]
+The stochastic process $\{(N_1(t),N_2(t)),t\ge 0\}$ is called a bivariate Poisson process.
+\begin{enumerate}
+\item Find $P\{N_1(t)=n,N_2(t)=m\}$.
+\item Find $\operatorname{Cov}(N_1(t),N_2(t))$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Since
+\[
+N_1(t)=M_1(t)+M_2(t),
+\qquad
+N_2(t)=M_2(t)+M_3(t),
+\]
+we condition on
+\[
+M_2(t)=k.
+\]
+Then
+\[
+M_1(t)=n-k,
+\qquad
+M_3(t)=m-k.
+\]
+Thus $k$ must satisfy
+\[
+0\le k\le \min(n,m).
+\]
+Since $M_1,M_2,M_3$ are independent,
+\[
+P\{N_1(t)=n,N_2(t)=m\}
+\]
+equals
+\[
+\sum_{k=0}^{\min(n,m)}
+P(M_1(t)=n-k)P(M_2(t)=k)P(M_3(t)=m-k).
+\]
+Therefore,
+\[
+{
+P\{N_1(t)=n,N_2(t)=m\}
+=
+e^{-(\lambda_1+\lambda_2+\lambda_3)t}
+\sum_{k=0}^{\min(n,m)}
+\frac{(\lambda_1t)^{n-k}}{(n-k)!}
+\frac{(\lambda_2t)^k}{k!}
+\frac{(\lambda_3t)^{m-k}}{(m-k)!}.
+}
+\]
+
+\textbf{(b)} We have
+\[
+\operatorname{Cov}(N_1(t),N_2(t))
+=
+\operatorname{Cov}(M_1(t)+M_2(t),M_2(t)+M_3(t)).
+\]
+All processes are independent except for the common term $M_2(t)$, so
+\[
+\operatorname{Cov}(N_1(t),N_2(t))
+=
+\operatorname{Var}(M_2(t)).
+\]
+Since
+\[
+M_2(t)\sim \operatorname{Poisson}(\lambda_2t),
+\]
+we get
+\[
+{
+\operatorname{Cov}(N_1(t),N_2(t))=\lambda_2t.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-39}
+A certain scientific theory supposes that mistakes in cell division occur according to a Poisson process with rate $2.5$ per year, and that an individual dies when $196$ such mistakes have occurred. Assuming this theory, find
+\begin{enumerate}
+\item the mean lifetime of an individual,
+\item the variance of the lifetime of an individual.
+\end{enumerate}
+Also approximate
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item the probability that an individual dies before age $67.2$,
+\item the probability that an individual reaches age $90$,
+\item the probability that an individual reaches age $100$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+All normal-tail calculations below are approximations. Let $T$ be the time of the $196$th event in a Poisson process with rate
+\[
+\lambda=2.5.
+\]
+Then
+\[
+T\sim \operatorname{Gamma}(196,2.5).
+\]
+
+\textbf{(a)} Hence
+\[
+{
+E[T]=\frac{196}{2.5}=78.4.
+}
+\]
+
+\textbf{(b)}
+\[
+{
+\operatorname{Var}(T)=\frac{196}{(2.5)^2}=31.36.
+}
+\]
+Thus
+\[
+\sigma_T=\sqrt{31.36}=5.6.
+\]
+
+For the approximations, use
+\[
+T\approx N(78.4,31.36).
+\]
+
+\textbf{(c)}
+\[
+P(T<67.2)
+=
+P\left(Z<\frac{67.2-78.4}{5.6}\right)
+=
+P(Z<-2).
+\]
+Thus
+\[
+{
+P(T<67.2)\approx 0.0228.
+}
+\]
+
+\textbf{(d)}
+\[
+P(T>90)
+=
+P\left(Z>\frac{90-78.4}{5.6}\right)
+=
+P(Z>2.0714).
+\]
+Hence
+\[
+{
+P(T>90)\approx 0.0192.
+}
+\]
+
+\textbf{(e)}
+\[
+P(T>100)
+=
+P\left(Z>\frac{100-78.4}{5.6}\right)
+=
+P(Z>3.8571).
+\]
+Therefore,
+\[
+{
+P(T>100)\approx 0.00006.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-40}
+Show that if $\{N_i(t),t\ge 0\}$ are independent Poisson processes with rate $\lambda_i$, $i=1,2$, then $\{N(t),t\ge 0\}$ is a Poisson process with rate $\lambda_1+\lambda_2$, where
+\[
+N(t)=N_1(t)+N_2(t).
+\]
+\end{exercise}
+
+\solution{
+Clearly,
+\[
+N(0)=N_1(0)+N_2(0)=0.
+\]
+
+For $0\le s<t$,
+\[
+N(t)-N(s)
+=
+[N_1(t)-N_1(s)]+[N_2(t)-N_2(s)].
+\]
+Since $N_1$ and $N_2$ are independent Poisson processes, the two increments are independent, with
+\[
+N_1(t)-N_1(s)\sim \operatorname{Poisson}(\lambda_1(t-s)),
+\]
+and
+\[
+N_2(t)-N_2(s)\sim \operatorname{Poisson}(\lambda_2(t-s)).
+\]
+The sum of independent Poisson random variables is Poisson, so
+\[
+N(t)-N(s)
+\sim
+\operatorname{Poisson}((\lambda_1+\lambda_2)(t-s)).
+\]
+Also, increments over disjoint intervals are independent because the corresponding increments of $N_1$ and $N_2$ are independent.
+
+Therefore,
+\[
+{
+\{N(t),t\ge 0\}
+}
+\]
+is a Poisson process with rate
+\[
+{\lambda_1+\lambda_2.}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-41}
+In Exercise $40$, what is the probability that the first event of the combined process is from the $N_1$ process?
+\end{exercise}
+
+\solution{
+Let $T_1$ be the time of the first event of process $N_1$, and let $T_2$ be the time of the first event of process $N_2$. Then
+\[
+T_1\sim \operatorname{Exp}(\lambda_1),
+\qquad
+T_2\sim \operatorname{Exp}(\lambda_2),
+\]
+independently.
+
+The first event of the combined process is from $N_1$ if
+\[
+T_1<T_2.
+\]
+Therefore,
+\[
+{
+P(T_1<T_2)=\frac{\lambda_1}{\lambda_1+\lambda_2}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-42}
+Let $\{N(t),t\ge 0\}$ be a Poisson process with rate $\lambda$. Let $S_n$ denote the time of the $n$th event. Find
+\begin{enumerate}
+\item $E[S_4]$,
+\item $E[S_4\mid N(1)=2]$,
+\item $E[N(4)-N(2)\mid N(1)=3]$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} The time $S_4$ is the sum of $4$ independent exponential random variables with rate $\lambda$. Therefore,
+\[
+{
+E[S_4]=\frac4\lambda.
+}
+\]
+
+\textbf{(b)} Given that
+\[
+N(1)=2,
+\]
+there have been exactly two events by time $1$. The fourth event will be the second event after time $1$. By independent increments, the process after time $1$ starts fresh. Thus the expected additional time until two more events is
+\[
+\frac2\lambda.
+\]
+Therefore,
+\[
+{
+E[S_4\mid N(1)=2]
+=
+1+\frac2\lambda.
+}
+\]
+
+\textbf{(c)} The increment
+\[
+N(4)-N(2)
+\]
+is independent of $N(1)$ because it concerns the disjoint interval $(2,4]$. Also,
+\[
+N(4)-N(2)\sim \operatorname{Poisson}(2\lambda).
+\]
+Hence
+\[
+{
+E[N(4)-N(2)\mid N(1)=3]=2\lambda.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-43}
+Customers arrive at a two-server service station according to a Poisson process with rate $\lambda$. Whenever a new customer arrives, any customer that is in the system immediately departs. A new arrival enters service first with server $1$ and then with server $2$. If the service times at the servers are independent exponentials with respective rates $\mu_1$ and $\mu_2$, what proportion of entering customers completes their service with server $2$?
+\end{exercise}
+
+\solution{
+A customer completes service with server $2$ if both service times are completed before the next arrival occurs.
+
+Let
+\[
+A\sim \operatorname{Exp}(\lambda)
+\]
+be the time until the next arrival. Let
+\[
+S_1\sim \operatorname{Exp}(\mu_1),
+\qquad
+S_2\sim \operatorname{Exp}(\mu_2)
+\]
+be the service times at servers $1$ and $2$. The customer completes service if
+\[
+S_1+S_2<A.
+\]
+Thus
+\[
+P(S_1+S_2<A)
+=
+E[e^{-\lambda(S_1+S_2)}].
+\]
+By independence,
+\[
+E[e^{-\lambda(S_1+S_2)}]
+=
+E[e^{-\lambda S_1}]E[e^{-\lambda S_2}].
+\]
+Since
+\[
+E[e^{-\lambda S_i}]
+=
+\frac{\mu_i}{\mu_i+\lambda},
+\]
+we get
+\[
+{
+P(\text{customer completes service})
+=
+\frac{\mu_1}{\mu_1+\lambda}
+\cdot
+\frac{\mu_2}{\mu_2+\lambda}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-44}
+Cars pass a certain street location according to a Poisson process with rate $\lambda$. A woman who wants to cross the street at that location waits until she can see that no cars will come by in the next $T$ time units.
+\begin{enumerate}
+\item Find the probability that her waiting time is $0$.
+\item Find her expected waiting time.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let $X$ be the time until the next car arrives. Since cars arrive according to a Poisson process with rate $\lambda$,
+\[
+X\sim \operatorname{Exp}(\lambda).
+\]
+
+\textbf{(a)} Her waiting time is $0$ if the next car will not arrive within the next $T$ time units, that is, if
+\[
+X>T.
+\]
+Thus
+\[
+{
+P(\text{waiting time is }0)=P(X>T)=e^{-\lambda T}.
+}
+\]
+
+\textbf{(b)} Let $W$ be her waiting time. Condition on the time $X$ of the first car.
+
+If $X>T$, then
+\[
+W=0.
+\]
+If $X\le T$, then she waits until that car passes, and by the memoryless property of the Poisson process, the problem starts over. Hence
+\[
+W=X+W',
+\]
+where $W'$ has the same distribution as $W$ and is independent of $X$.
+
+Taking expectations,
+\[
+E[W]
+=
+E[X\mathbf{1}_{\{X\le T\}}]
++
+P(X\le T)E[W].
+\]
+Thus
+\[
+E[W]P(X>T)
+=
+E[X\mathbf{1}_{\{X\le T\}}].
+\]
+Now
+\[
+P(X>T)=e^{-\lambda T},
+\]
+and
+\[
+E[X\mathbf{1}_{\{X\le T\}}]
+=
+\int_0^T x\lambda e^{-\lambda x}\,dx.
+\]
+Evaluating the integral,
+\[
+\int_0^T x\lambda e^{-\lambda x}\,dx
+=
+\frac1\lambda(1-e^{-\lambda T})-Te^{-\lambda T}.
+\]
+Therefore,
+\[
+E[W]
+=
+\frac{\frac1\lambda(1-e^{-\lambda T})-Te^{-\lambda T}}
+{e^{-\lambda T}}.
+\]
+Hence
+\[
+{
+E[W]
+=
+\frac{e^{\lambda T}-1}{\lambda}-T.
+}
+\]
+}
+
+\setcounter{exercise}{46}
+
+\begin{exercise}
+\label{ex:counting-processes-47}
+Consider a two-server parallel queueing system where customers arrive according to a Poisson process with rate $\lambda$, and where the service times are exponential with rate $\mu$. Moreover, suppose that arrivals finding both servers busy immediately depart without receiving any service, whereas those finding at least one free server immediately enter service and then depart when their service is completed.
+\begin{enumerate}
+\item If both servers are presently busy, find the expected time until the next customer enters the system.
+\item Starting empty, find the expected time until both servers are busy.
+\item Find the expected time between two successive lost customers.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)}
+If both servers are busy, the time until the first service completion is exponential with rate $2\mu$, and so has mean
+\[
+\frac{1}{2\mu}.
+\]
+After one server becomes free, the next arrival enters the system. The time until the next arrival has mean
+\[
+\frac1\lambda.
+\]
+Therefore, the expected time until the next customer enters is
+\[
+{
+\frac{1}{2\mu}+\frac1\lambda.
+}
+\]
+
+\textbf{(b)}
+Let $E_i$ be the expected time until both servers are busy, starting with $i$ busy servers. Then
+\[
+E_2=0.
+\]
+Starting empty,
+\[
+E_0=\frac1\lambda+E_1.
+\]
+Starting with one busy server, the next event is either an arrival, with rate $\lambda$, or a service completion, with rate $\mu$. Hence
+\[
+E_1
+=
+\frac1{\lambda+\mu}
++
+\frac{\mu}{\lambda+\mu}E_0.
+\]
+Substituting into $E_0=\frac1\lambda+E_1$ gives
+\[
+E_0
+=
+\frac1\lambda
++
+\frac1{\lambda+\mu}
++
+\frac{\mu}{\lambda+\mu}E_0.
+\]
+Thus
+\[
+\frac{\lambda}{\lambda+\mu}E_0
+=
+\frac1\lambda+\frac1{\lambda+\mu}.
+\]
+Therefore,
+\[
+E_0
+=
+\frac{2\lambda+\mu}{\lambda^2}.
+\]
+So the expected time until both servers are busy, starting empty, is
+\[
+{
+\frac{2\lambda+\mu}{\lambda^2}.
+}
+\]
+
+\textbf{(c)}
+Let $L_i$ be the expected time until the next lost customer, starting with $i$ busy servers. A lost customer occurs only when an arrival finds both servers busy.
+
+Starting with two busy servers,
+\[
+L_2
+=
+\frac1{\lambda+2\mu}
++
+\frac{2\mu}{\lambda+2\mu}L_1.
+\]
+Starting with one busy server,
+\[
+L_1
+=
+\frac1{\lambda+\mu}
++
+\frac{\lambda}{\lambda+\mu}L_2
++
+\frac{\mu}{\lambda+\mu}L_0.
+\]
+Starting empty,
+\[
+L_0=\frac1\lambda+L_1.
+\]
+Using this in the equation for $L_1$,
+\[
+L_1=L_2+\frac1\lambda+\frac{\mu}{\lambda^2}.
+\]
+Substituting into the equation for $L_2$ gives
+\[
+L_2
+=
+\frac1{\lambda+2\mu}
++
+\frac{2\mu}{\lambda+2\mu}
+\left(
+L_2+\frac1\lambda+\frac{\mu}{\lambda^2}
+\right).
+\]
+Solving,
+\[
+L_2
+=
+\frac1\lambda+\frac{2\mu}{\lambda^2}+\frac{2\mu^2}{\lambda^3}.
+\]
+Thus the expected time between two successive lost customers is
+\[
+{
+\frac1\lambda+\frac{2\mu}{\lambda^2}+\frac{2\mu^2}{\lambda^3}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-48}
+Consider an $n$-server parallel queueing system where customers arrive according to a Poisson process with rate $\lambda$, where the service times are exponential random variables with rate $\mu$, and where any arrival finding all servers busy immediately departs without receiving any service. If an arrival finds all servers busy, find
+\begin{enumerate}
+\item the expected number of busy servers found by the next arrival,
+\item the probability that the next arrival finds all servers free,
+\item the probability that the next arrival finds exactly $i$ of the servers free.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Suppose that immediately after the lost arrival, all $n$ servers are busy. Let $A$ be the time until the next arrival. Then
+\[
+A\sim \operatorname{Exp}(\lambda).
+\]
+Each busy server independently remains busy until time $A$ with probability
+\[
+P(\operatorname{Exp}(\mu)>A\mid A)=e^{-\mu A}.
+\]
+
+\textbf{(a)}
+Given $A=t$, the number of busy servers at the next arrival is binomial with parameters $n$ and $e^{-\mu t}$. Thus
+\[
+E[\text{busy servers}\mid A=t]=ne^{-\mu t}.
+\]
+Therefore,
+\[
+E[\text{busy servers}]
+=
+nE[e^{-\mu A}]
+=
+n\frac{\lambda}{\lambda+\mu}.
+\]
+Hence
+\[
+{
+E[\text{busy servers found by next arrival}]
+=
+\frac{n\lambda}{\lambda+\mu}.
+}
+\]
+
+\textbf{(b)}
+The next arrival finds all servers free if all $n$ current services finish before the next arrival. Thus
+\[
+P(\text{all free})
+=
+E[(1-e^{-\mu A})^n].
+\]
+Therefore,
+\[
+P(\text{all free})
+=
+\int_0^\infty
+\lambda e^{-\lambda t}(1-e^{-\mu t})^n\,dt.
+\]
+Equivalently,
+\[
+{
+P(\text{all free})
+=
+\frac{\lambda}{\mu}
+B\left(\frac{\lambda}{\mu},n+1\right),
+}
+\]
+where $B(\cdot,\cdot)$ is the beta function.
+
+\textbf{(c)}
+The next arrival finds exactly $i$ free servers if exactly $i$ of the $n$ original services have completed by the arrival time. Thus
+\[
+P(\text{exactly }i\text{ free})
+=
+\binom{n}{i}
+\int_0^\infty
+\lambda e^{-\lambda t}
+(1-e^{-\mu t})^i
+e^{-\mu t(n-i)}
+\,dt.
+\]
+Hence
+\[
+{
+P(\text{exactly }i\text{ free})
+=
+\binom{n}{i}
+\frac{\lambda}{\mu}
+B\left(\frac{\lambda}{\mu}+n-i,i+1\right),
+}
+\]
+for
+\[
+i=0,1,\ldots,n.
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-49}
+Events occur according to a Poisson process with rate $\lambda$. Each time an event occurs, we must decide whether or not to stop, with our objective being to stop at the last event to occur prior to some specified time $T$, where $T>1/\lambda$. Consider the strategy that stops at the first event to occur after some fixed time $s$, $0\le s\le T$.
+\begin{enumerate}
+\item Using this strategy, what is the probability of winning?
+\item What value of $s$ maximizes the probability of winning?
+\item Show that one's probability of winning when using the preceding strategy with the value of $s$ specified in part (b) is $1/e$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)}
+We stop at the first event after time $s$. We win if this event occurs before time $T$ and no further events occur before time $T$.
+
+Let
+\[
+x=T-s.
+\]
+The time from $s$ until the first event after $s$ is exponential with rate $\lambda$. Thus the probability of winning is
+\[
+\int_0^x \lambda e^{-\lambda u}e^{-\lambda(x-u)}\,du.
+\]
+Therefore,
+\[
+P(\text{win})
+=
+\int_0^x \lambda e^{-\lambda x}\,du
+=
+\lambda x e^{-\lambda x}.
+\]
+Since $x=T-s$,
+\[
+{
+P(\text{win})=\lambda(T-s)e^{-\lambda(T-s)}.
+}
+\]
+
+\textbf{(b)}
+We maximize
+\[
+\lambda x e^{-\lambda x},
+\qquad 0\le x\le T.
+\]
+The function $x e^{-\lambda x}$ is maximized at
+\[
+x=\frac1\lambda.
+\]
+Since $T>1/\lambda$, this value is feasible. Therefore,
+\[
+T-s=\frac1\lambda,
+\]
+so
+\[
+{
+s=T-\frac1\lambda.
+}
+\]
+
+\textbf{(c)}
+Substituting $T-s=\frac1\lambda$ into the winning probability gives
+\[
+P(\text{win})
+=
+\lambda\left(\frac1\lambda\right)e^{-\lambda(1/\lambda)}
+=
+e^{-1}.
+\]
+Hence
+\[
+{
+P(\text{win})=\frac1e.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-50}
+The number of hours between successive train arrivals at the station is uniformly distributed on $(0,1)$. Passengers arrive according to a Poisson process with rate $7$ per hour. Suppose a train has just left the station. Let $X$ denote the number of people who get on the next train. Find
+\begin{enumerate}
+\item $E[X]$,
+\item $\operatorname{Var}(X)$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let $U$ be the time until the next train arrives. Then
+\[
+U\sim \operatorname{Uniform}(0,1).
+\]
+Given $U=u$, the number of passengers arriving before the next train is
+\[
+X\mid U=u\sim \operatorname{Poisson}(7u).
+\]
+
+\textbf{(a)}
+Using conditional expectation,
+\[
+E[X]=E[E[X\mid U]]=E[7U]=7E[U].
+\]
+Since $E[U]=\frac12$,
+\[
+{
+E[X]=\frac72.
+}
+\]
+
+\textbf{(b)}
+Using conditional variance,
+\[
+\operatorname{Var}(X)
+=
+E[\operatorname{Var}(X\mid U)]
++
+\operatorname{Var}(E[X\mid U]).
+\]
+Since
+\[
+\operatorname{Var}(X\mid U)=7U
+\]
+and
+\[
+E[X\mid U]=7U,
+\]
+we get
+\[
+\operatorname{Var}(X)
+=
+E[7U]+\operatorname{Var}(7U).
+\]
+Thus
+\[
+\operatorname{Var}(X)
+=
+7\cdot \frac12+49\cdot \frac1{12}.
+\]
+Therefore,
+\[
+{
+\operatorname{Var}(X)=\frac{91}{12}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-51}
+If an individual has never had a previous automobile accident, then the probability he or she has an accident in the next $h$ time units is $\beta h+o(h)$; on the other hand, if he or she has ever had a previous accident, then the probability is $\alpha h+o(h)$. Find the expected number of accidents an individual has by time $t$.
+\end{exercise}
+
+\solution{
+Assume no previous accidents at time $0$ and $\beta>0$. If $\beta=0$, the individual never has a first accident and the expectation is $0$. Let $S$ be the time of the first accident. Before the first accident, accidents occur at rate $\beta$, so
+\[
+S\sim \operatorname{Exp}(\beta).
+\]
+After the first accident, accidents occur at rate $\alpha$.
+
+Let $N(t)$ be the number of accidents by time $t$. Then
+\[
+E[N(t)]
+=
+P(S\le t)+\alpha E[(t-S)^+].
+\]
+Now
+\[
+P(S\le t)=1-e^{-\beta t}.
+\]
+Also,
+\[
+E[(t-S)^+]
+=
+\int_0^t P(S\le u)\,du
+=
+\int_0^t (1-e^{-\beta u})\,du.
+\]
+Therefore,
+\[
+E[(t-S)^+]
+=
+t-\frac{1-e^{-\beta t}}{\beta}.
+\]
+Hence
+\[
+{
+E[N(t)]
+=
+1-e^{-\beta t}
++
+\alpha\left(
+t-\frac{1-e^{-\beta t}}{\beta}
+\right).
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-52}
+Teams $1$ and $2$ are playing a match. The teams score points according to independent Poisson processes with respective rates $\lambda_1$ and $\lambda_2$. If the match ends when one of the teams has scored $k$ more points than the other, find the probability that team $1$ wins.
+\end{exercise}
+
+\solution{
+Combine the two Poisson processes. Points occur according to a Poisson process with rate
+\[
+\lambda_1+\lambda_2.
+\]
+Each point is scored by team $1$ with probability
+\[
+p=\frac{\lambda_1}{\lambda_1+\lambda_2},
+\]
+and by team $2$ with probability
+\[
+q=\frac{\lambda_2}{\lambda_1+\lambda_2}.
+\]
+
+Let $D$ be the difference
+\[
+D=(\text{team 1 score})-(\text{team 2 score}).
+\]
+Then $D$ is a random walk that increases by $1$ with probability $p$ and decreases by $1$ with probability $q$. The match ends when $D$ reaches $k$ or $-k$.
+
+This is the gambler's ruin problem, starting at $0$ with absorbing barriers at $k$ and $-k$. Therefore,
+\[
+P(\text{team 1 wins})
+=
+\frac{1-(q/p)^k}{1-(q/p)^{2k}},
+\qquad p\ne q.
+\]
+Equivalently,
+\[
+{
+P(\text{team 1 wins})
+=
+\frac{\lambda_1^k}{\lambda_1^k+\lambda_2^k}.
+}
+\]
+If $\lambda_1=\lambda_2$, this gives
+\[
+P(\text{team 1 wins})=\frac12.
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-53}
+The water level of a certain reservoir is depleted at a constant rate of $1000$ units daily. The reservoir is refilled by randomly occurring rainfalls. Rainfalls occur according to a Poisson process with rate $0.2$ per day. The amount of water added to the reservoir by a rainfall is $5000$ units with probability $0.8$ or $8000$ units with probability $0.2$. The present water level is just slightly below $5000$ units.
+\begin{enumerate}
+\item What is the probability the reservoir will be empty after five days?
+\item What is the probability the reservoir will be empty sometime within the next ten days?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Write the initial level as $1000a$, with $a<5$ and close to $5$.
+Take zero as the lowest possible water level, and assume no capacity
+limit affects these short paths.
+\textbf{(a)} A rainfall before day $5$ leaves a positive level at day
+$5$; without rainfall the initial water runs out at day $a<5$. Thus
+\[
+P(\text{empty at day }5)=P(N(5)=0)=e^{-1}.
+\]
+\textbf{(b)} Without rain the reservoir first empties at day $a$.
+If a $5000$-unit rainfall arrives before then, the emptying time moves
+to day $a+5<10$. A single $8000$-unit rainfall, or two rainfalls before
+emptying, postpones emptying beyond day $10$ for $a$ close to $5$.
+The disjoint cases of emptying within ten days are therefore:
+\begin{itemize}
+\item no rain before day $a$;
+\item one $5000$-unit rainfall before day $a$ and no other rain before
+day $a+5$.
+\end{itemize}
+By independent Poisson increments and independent rainfall amounts,
+\[
+P(\text{empty by day }10)=e^{-0.2a}+0.8(0.2a)e^{-0.2(a+5)}.
+\]
+Interpreting ``just slightly below $5000$'' as the limit $a\uparrow5$
+gives $e^{-1}+0.8e^{-2}$. For a specified positive shortfall, the
+preceding formula gives the exact value.
+}
+
+\begin{exercise}
+\label{ex:counting-processes-54}
+A viral linear DNA molecule of length $1$ is often known to contain a certain marked position, with the exact location of this mark being unknown. One approach to locating the marked position is to cut the molecule by agents that break it at points chosen according to a Poisson process with rate $\lambda$. Letting $m$ denote the location on the line of the marked position, if $L_1$ denotes the last Poisson event time before $m$ and $R_1$ denotes the first Poisson event time after $m$, find
+\begin{enumerate}
+\item $P\{L_1=0\}$,
+\item $P\{L_1<x\}$, $0<x<m$,
+\item $P\{R_1=1\}$,
+\item $P\{R_1>x\}$, $m<x<1$.
+\end{enumerate}
+If the cutting procedure is utilized on $n$ identical copies of the molecule, yielding the data $L_i,R_i$, $i=1,\ldots,n$, then the marked position lies between $L$ and $R$, where
+\[
+L=\max_i L_i,\qquad R=\min_i R_i.
+\]
+Find $E[R-L]$, and show that
+\[
+E[R-L]\sim \frac{2}{n\lambda}.
+\]
+\end{exercise}
+
+\solution{
+\textbf{(a)}
+Assume $0<m<1$, and use the molecule endpoints when there is no cut on a side. The event $\{L_1=0\}$ means that there are no Poisson events in $(0,m)$. Thus
+\[
+{
+P(L_1=0)=e^{-\lambda m}.
+}
+\]
+
+\textbf{(b)}
+For $0<x<m$, the event $\{L_1<x\}$ means that there are no Poisson events in $(x,m)$. Hence
+\[
+{
+P(L_1<x)=e^{-\lambda(m-x)}.
+}
+\]
+
+\textbf{(c)}
+The event $\{R_1=1\}$ means that there are no Poisson events in $(m,1)$. Thus
+\[
+{
+P(R_1=1)=e^{-\lambda(1-m)}.
+}
+\]
+
+\textbf{(d)}
+For $m<x<1$, the event $\{R_1>x\}$ means that there are no Poisson events in $(m,x)$. Therefore,
+\[
+{
+P(R_1>x)=e^{-\lambda(x-m)}.
+}
+\]
+
+Now repeat the experiment independently on $n$ identical copies.
+
+Let
+\[
+L=\max_i L_i.
+\]
+Then
+\[
+m-L
+\]
+is the smallest of the $n$ independent left distances from $m$ to the nearest cut on the left, each truncated at $m$. For $0<y<m$,
+\[
+P(m-L>y)=e^{-n\lambda y}.
+\]
+Therefore,
+\[
+E[m-L]
+=
+\int_0^m e^{-n\lambda y}\,dy
+=
+\frac{1-e^{-n\lambda m}}{n\lambda}.
+\]
+
+Similarly,
+\[
+R-m
+\]
+is the smallest of the $n$ independent right distances from $m$ to the nearest cut on the right, each truncated at $1-m$. Thus
+\[
+E[R-m]
+=
+\int_0^{1-m} e^{-n\lambda y}\,dy
+=
+\frac{1-e^{-n\lambda(1-m)}}{n\lambda}.
+\]
+
+Hence
+\[
+E[R-L]
+=
+E[R-m]+E[m-L].
+\]
+Therefore,
+\[
+{
+E[R-L]
+=
+\frac{2-e^{-n\lambda m}-e^{-n\lambda(1-m)}}{n\lambda}.
+}
+\]
+As $n\to\infty$,
+\[
+e^{-n\lambda m}\to 0,
+\qquad
+e^{-n\lambda(1-m)}\to 0,
+\]
+so
+\[
+{
+E[R-L]\sim \frac{2}{n\lambda}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-55}
+Consider a single server queueing system where customers arrive according to a Poisson process with rate $\lambda$, service times are exponential with rate $\mu$, and customers are served in the order of their arrival. Suppose that a customer arrives and finds $n-1$ others in the system. Let $X$ denote the number in the system at the moment that customer departs. Find the probability mass function of $X$.
+\end{exercise}
+
+\solution{
+The arriving customer has $n-1$ customers ahead of him, so his departure occurs after $n$ service completions: the $n-1$ customers ahead of him plus his own service.
+
+During this time, new arrivals may occur. By the memoryless property, each event in the combined arrival-service process is an arrival with probability
+\[
+\frac{\lambda}{\lambda+\mu},
+\]
+and a service completion with probability
+\[
+\frac{\mu}{\lambda+\mu}.
+\]
+
+The number $X$ of customers left in the system when the tagged customer departs equals the number of arrivals before the $n$th service completion. Hence $X$ has a negative binomial distribution.
+
+Thus, for $k=0,1,2,\ldots$,
+\[
+{
+P(X=k)
+=
+\binom{n+k-1}{k}
+\left(\frac{\mu}{\lambda+\mu}\right)^n
+\left(\frac{\lambda}{\lambda+\mu}\right)^k.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-56}
+An event independently occurs on each day with probability $p$. Let $N(n)$ denote the total number of events that occur on the first $n$ days, and let $T_r$ denote the day on which the $r$th event occurs.
+\begin{enumerate}
+\item What is the distribution of $N(n)$?
+\item What is the distribution of $T_1$?
+\item What is the distribution of $T_r$?
+\item Given that $N(n)=r$, show that the set of $r$ days on which events occurred has the same distribution as a random selection without replacement of $r$ of the values $1,2,\ldots,n$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)}
+Since each day independently has an event with probability $p$,
+\[
+{
+N(n)\sim \operatorname{Binomial}(n,p).
+}
+\]
+Thus
+\[
+P(N(n)=k)=\binom{n}{k}p^k(1-p)^{n-k}.
+\]
+
+\textbf{(b)}
+The random variable $T_1$ is the day of the first event. Therefore,
+\[
+{
+P(T_1=k)=(1-p)^{k-1}p,
+\qquad k=1,2,\ldots.
+}
+\]
+Thus $T_1$ is geometric with parameter $p$.
+
+\textbf{(c)}
+The event $\{T_r=k\}$ means that there are exactly $r-1$ events in the first $k-1$ days, and an event occurs on day $k$. Hence
+\[
+{
+P(T_r=k)
+=
+\binom{k-1}{r-1}
+p^r(1-p)^{k-r},
+\qquad k=r,r+1,\ldots.
+}
+\]
+Thus $T_r$ has a negative binomial distribution.
+
+\textbf{(d)}
+Given that $N(n)=r$, every specific set of $r$ event days has probability proportional to
+\[
+p^r(1-p)^{n-r}.
+\]
+This value is the same for every subset of $r$ days. Since there are
+\[
+\binom{n}{r}
+\]
+such subsets, each subset has conditional probability
+\[
+{
+\frac1{\binom{n}{r}}.
+}
+\]
+Therefore, given $N(n)=r$, the set of event days is distributed as a random selection without replacement of $r$ days from
+\[
+\{1,2,\ldots,n\}.
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-57}
+Events occur according to a Poisson process with rate $\lambda=2$ per hour.
+\begin{enumerate}
+\item What is the probability that no event occurs between 8 P.M. and 9 P.M.?
+\item Starting at noon, what is the expected time at which the fourth event occurs?
+\item What is the probability that two or more events occur between 6 P.M. and 8 P.M.?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)}
+The interval from 8 P.M. to 9 P.M. has length $1$ hour. Therefore,
+\[
+N\sim \operatorname{Poisson}(2).
+\]
+Thus
+\[
+{
+P(N=0)=e^{-2}.
+}
+\]
+
+\textbf{(b)}
+The time until the fourth event has mean
+\[
+\frac4\lambda=\frac42=2
+\]
+hours. Starting at noon, the expected time of the fourth event is therefore
+\[
+{\text{2 P.M.}}
+\]
+
+\textbf{(c)}
+The interval from 6 P.M. to 8 P.M. has length $2$ hours, so the number of events has distribution
+\[
+N\sim \operatorname{Poisson}(4).
+\]
+Therefore,
+\[
+P(N\ge 2)=1-P(N=0)-P(N=1).
+\]
+Thus
+\[
+P(N\ge 2)
+=
+1-e^{-4}-4e^{-4}.
+\]
+Hence
+\[
+{
+P(N\ge 2)=1-5e^{-4}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-58}
+Consider the coupon collecting problem where there are $m$ distinct types of coupons, and each new coupon collected is type $j$ with probability $p_j$, where
+\[
+\sum_{j=1}^m p_j=1.
+\]
+Suppose you stop collecting when you have a complete set of at least one of each type. Show that
+\[
+P\{i\text{ is the last type collected}\}
+=
+E\left[
+\prod_{j\ne i}
+\left(1-U^{p_j/p_i}\right)
+\right],
+\]
+where $U$ is a uniform random variable on $(0,1)$.
+\end{exercise}
+
+\solution{
+Assume $p_j>0$ for every type, so collecting a complete set is possible. Use a Poissonization argument. Suppose coupons arrive according to a Poisson process of rate $1$, and each coupon is independently of type $j$ with probability $p_j$. Then the arrivals of type $j$ form an independent Poisson process with rate $p_j$.
+
+Let $T_j$ be the time until the first coupon of type $j$ appears. Then
+\[
+T_j\sim \operatorname{Exp}(p_j),
+\]
+and the random variables
+\[
+T_1,\ldots,T_m
+\]
+are independent.
+
+The event that type $i$ is the last type collected is
+\[
+\{T_j<T_i \text{ for all } j\ne i\}.
+\]
+Conditioning on $T_i=t$,
+\[
+P(T_j<t \text{ for all }j\ne i\mid T_i=t)
+=
+\prod_{j\ne i}(1-e^{-p_jt}).
+\]
+Hence
+\[
+P(i\text{ is last})
+=
+E\left[
+\prod_{j\ne i}(1-e^{-p_jT_i})
+\right].
+\]
+
+Now define
+\[
+U=e^{-p_iT_i}.
+\]
+Since $T_i\sim \operatorname{Exp}(p_i)$, the random variable $U$ is uniform on $(0,1)$. Also,
+\[
+e^{-p_jT_i}
+=
+\left(e^{-p_iT_i}\right)^{p_j/p_i}
+=
+U^{p_j/p_i}.
+\]
+Therefore,
+\[
+{
+P\{i\text{ is the last type collected}\}
+=
+E\left[
+\prod_{j\ne i}
+\left(1-U^{p_j/p_i}\right)
+\right].
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-59}
+There are two types of claims that are made to an insurance company. Let $N_i(t)$ denote the number of type $i$ claims made by time $t$, and suppose that $\{N_1(t),t\ge 0\}$ and $\{N_2(t),t\ge 0\}$ are independent Poisson processes with rates $\lambda_1=10$ and $\lambda_2=1$. The amounts of successive type $1$ claims are independent exponential random variables with mean $\$1000$, whereas the amounts from type $2$ claims are independent exponential random variables with mean $\$5000$. A claim for $\$4000$ has just been received; what is the probability it is a type $1$ claim?
+\end{exercise}
+
+\solution{
+Let $f_1$ and $f_2$ be the claim amount densities for type $1$ and type $2$ claims. Since type $1$ claims have mean $1000$,
+\[
+f_1(x)=\frac1{1000}e^{-x/1000}.
+\]
+Since type $2$ claims have mean $5000$,
+\[
+f_2(x)=\frac1{5000}e^{-x/5000}.
+\]
+
+Using Bayes' rule with arrival rates,
+\[
+P(\text{type }1\mid X=x)
+=
+\frac{\lambda_1 f_1(x)}
+{\lambda_1 f_1(x)+\lambda_2 f_2(x)}.
+\]
+For $x=4000$,
+\[
+P(\text{type }1\mid X=4000)
+=
+\frac{10\cdot \frac1{1000}e^{-4}}
+{10\cdot \frac1{1000}e^{-4}
++
+1\cdot \frac1{5000}e^{-0.8}}.
+\]
+Thus
+\[
+P(\text{type }1\mid X=4000)
+=
+\frac{50e^{-4}}{50e^{-4}+e^{-0.8}}.
+\]
+Equivalently,
+\[
+{
+P(\text{type }1\mid X=4000)
+=
+\frac{50}{50+e^{3.2}}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-60}
+Customers arrive at a bank at a Poisson rate $\lambda$. Suppose two customers arrived during the first hour. What is the probability that
+\begin{enumerate}
+\item both arrived during the first $20$ minutes?
+\item at least one arrived during the first $20$ minutes?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Given that two customers arrived during the first hour, their arrival times are distributed as two independent uniform random variables on the interval $(0,1)$, unordered.
+
+The first $20$ minutes correspond to
+\[
+\frac13
+\]
+of an hour.
+
+\textbf{(a)}
+The probability that both arrivals occurred during the first $20$ minutes is
+\[
+\left(\frac13\right)^2.
+\]
+Thus
+\[
+{
+P(\text{both in first }20\text{ minutes})=\frac19.
+}
+\]
+
+\textbf{(b)}
+The probability that at least one arrived during the first $20$ minutes is
+\[
+1-P(\text{neither arrived during the first }20\text{ minutes}).
+\]
+The probability that a single arrival was not in the first $20$ minutes is
+\[
+\frac23.
+\]
+Therefore,
+\[
+P(\text{at least one in first }20\text{ minutes})
+=
+1-\left(\frac23\right)^2
+=
+1-\frac49
+=
+\frac59.
+\]
+Hence
+\[
+{
+P(\text{at least one in first }20\text{ minutes})=\frac59.
+}
+\]
+}
+
+\setcounter{exercise}{60}
+
+\begin{exercise}
+\label{ex:counting-processes-61}
+A system has a random number of flaws that we will suppose is Poisson distributed with mean $c$. Each of these flaws will, independently, cause the system to fail at a random time having distribution $G$. When a system failure occurs, suppose that the flaw causing the failure is immediately located and fixed.
+\begin{enumerate}
+\item What is the distribution of the number of failures by time $t$?
+\item What is the distribution of the number of flaws that remain in the system at time $t$?
+\item Are the random variables in parts (a) and (b) dependent or independent?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Assume flaw failure times are independent of the initial flaw count. Let $N$ denote the initial number of flaws. Then
+\[
+N\sim \operatorname{Poisson}(c).
+\]
+For each flaw, let its failure time have distribution function $G$. By time $t$, a given flaw has caused a failure with probability
+\[
+G(t),
+\]
+and has not yet caused a failure with probability
+\[
+1-G(t).
+\]
+
+\textbf{(a)} By Poisson thinning, the number of flaws that have caused failures by time $t$ is Poisson with mean
+\[
+cG(t).
+\]
+Thus, if $N_1(t)$ denotes the number of failures by time $t$, then
+\[
+{
+N_1(t)\sim \operatorname{Poisson}(cG(t)).
+}
+\]
+
+\textbf{(b)} Similarly, the number of flaws that remain in the system at time $t$ is Poisson with mean
+\[
+c[1-G(t)].
+\]
+Thus, if $N_2(t)$ denotes the number of remaining flaws at time $t$, then
+\[
+{
+N_2(t)\sim \operatorname{Poisson}(c[1-G(t)]).
+}
+\]
+
+\textbf{(c)} Since the flaws are independently classified into two categories, namely those that have failed by time $t$ and those that have not, the Poisson thinning property implies that
+\[
+N_1(t)
+\quad\text{and}\quad
+N_2(t)
+\]
+are independent random variables.
+
+Therefore,
+\[
+{\text{The two random variables are independent.}}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-62}
+Suppose that the number of typographical errors in a new text is Poisson distributed with mean $\lambda$. Two proofreaders independently read the text. Suppose that each error is independently found by proofreader $i$ with probability $p_i$, $i=1,2$. Let $X_1$ denote the number of errors that are found by proofreader $1$ but not by proofreader $2$. Let $X_2$ denote the number of errors that are found by proofreader $2$ but not by proofreader $1$. Let $X_3$ denote the number of errors that are found by both proofreaders. Finally, let $X_4$ denote the number of errors found by neither proofreader.
+\begin{enumerate}
+\item Describe the joint probability distribution of $X_1,X_2,X_3,X_4$.
+\item Show that
+\[
+\frac{E[X_1]}{E[X_3]}=\frac{1-p_2}{p_2}
+\qquad\text{and}\qquad
+\frac{E[X_2]}{E[X_3]}=\frac{1-p_1}{p_1}.
+\]
+\item Suppose now that $\lambda,p_1,$ and $p_2$ are all unknown. By using $X_i$ as an estimator of $E[X_i]$, $i=1,2,3$, present estimators of $p_1,p_2,$ and $\lambda$.
+\item Give an estimator of $X_4$, the number of errors not found by either proofreader.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Each error falls into exactly one of four categories:
+\[
+\begin{array}{c|c}
+\text{Category} & \text{Probability} \\ \hline
+\text{found by proofreader 1 but not 2} & p_1(1-p_2)\\
+\text{found by proofreader 2 but not 1} & p_2(1-p_1)\\
+\text{found by both proofreaders} & p_1p_2\\
+\text{found by neither proofreader} & (1-p_1)(1-p_2).
+\end{array}
+\]
+
+\textbf{(a)}
+Since the total number of errors is Poisson with mean $\lambda$, the Poisson splitting property implies that
+\[
+X_1,X_2,X_3,X_4
+\]
+are independent Poisson random variables with means
+\[
+E[X_1]=\lambda p_1(1-p_2),
+\]
+\[
+E[X_2]=\lambda p_2(1-p_1),
+\]
+\[
+E[X_3]=\lambda p_1p_2,
+\]
+and
+\[
+E[X_4]=\lambda(1-p_1)(1-p_2).
+\]
+Thus the joint probability mass function is
+\[
+P(X_1=x_1,X_2=x_2,X_3=x_3,X_4=x_4)
+=
+\prod_{i=1}^4 e^{-m_i}\frac{m_i^{x_i}}{x_i!},
+\]
+where
+\[
+m_1=\lambda p_1(1-p_2),
+\quad
+m_2=\lambda p_2(1-p_1),
+\quad
+m_3=\lambda p_1p_2,
+\quad
+m_4=\lambda(1-p_1)(1-p_2).
+\]
+
+\textbf{(b)}
+We have
+\[
+\frac{E[X_1]}{E[X_3]}
+=
+\frac{\lambda p_1(1-p_2)}{\lambda p_1p_2}
+=
+\frac{1-p_2}{p_2}.
+\]
+Similarly,
+\[
+\frac{E[X_2]}{E[X_3]}
+=
+\frac{\lambda p_2(1-p_1)}{\lambda p_1p_2}
+=
+\frac{1-p_1}{p_1}.
+\]
+
+\textbf{(c)}
+Using $X_i$ as an estimator of $E[X_i]$, we estimate
+\[
+\frac{1-p_2}{p_2}
+\]
+by
+\[
+\frac{X_1}{X_3}.
+\]
+Solving gives
+\[
+{
+\widehat p_2=\frac{X_3}{X_1+X_3}.
+}
+\]
+Similarly,
+\[
+{
+\widehat p_1=\frac{X_3}{X_2+X_3}.
+}
+\]
+
+Since
+\[
+E[X_3]=\lambda p_1p_2,
+\]
+we estimate $\lambda$ by
+\[
+\widehat\lambda
+=
+\frac{X_3}{\widehat p_1\widehat p_2}.
+\]
+Substituting the estimators gives
+\[
+{
+\widehat\lambda
+=
+\frac{(X_1+X_3)(X_2+X_3)}{X_3}.
+}
+\]
+
+\textbf{(d)}
+Since
+\[
+E[X_4]=\lambda(1-p_1)(1-p_2),
+\]
+and also
+\[
+E[X_4]
+=
+\frac{E[X_1]E[X_2]}{E[X_3]},
+\]
+a natural estimator of $X_4$ is
+\[
+{
+\widehat X_4=\frac{X_1X_2}{X_3}.
+}
+\]
+This estimator is meaningful when $X_3>0$.
+}
+
+\begin{exercise}
+\label{ex:counting-processes-63}
+Consider an infinite server queueing system in which customers arrive in accordance with a Poisson process with rate $\lambda$, and where the service distribution is exponential with rate $\mu$. Let $X(t)$ denote the number of customers in the system at time $t$. Find
+\begin{enumerate}
+\item $E[X(t+s)\mid X(s)=n]$,
+\item $\operatorname{Var}[X(t+s)\mid X(s)=n]$.
+\end{enumerate}
+Also, consider an infinite server queueing system in which customers arrive according to a Poisson process with rate $\lambda$, and where the service times are all exponential random variables with rate $\mu$. If there is currently a single customer in the system, find the probability that the system becomes empty when that customer departs.
+\end{exercise}
+
+\solution{
+Suppose
+\[
+X(s)=n.
+\]
+The customers present at time $s$ are the ``old'' customers. Each old customer independently remains in the system until time $s+t$ with probability
+\[
+p=e^{-\mu t}.
+\]
+Thus the number of old customers remaining at time $s+t$ is
+\[
+Y\sim \operatorname{Binomial}(n,e^{-\mu t}).
+\]
+
+Now consider the new arrivals during the interval $(s,s+t]$. An arrival at time $s+u$, where $0<u<t$, remains in the system until time $s+t$ with probability
+\[
+e^{-\mu(t-u)}.
+\]
+By thinning a Poisson process, the number of new customers present at time $s+t$ is Poisson with mean
+\[
+m
+=
+\int_0^t \lambda e^{-\mu(t-u)}\,du
+=
+\frac{\lambda}{\mu}(1-e^{-\mu t}).
+\]
+Call this number $Z$. Then
+\[
+Z\sim \operatorname{Poisson}\left(\frac{\lambda}{\mu}(1-e^{-\mu t})\right),
+\]
+and $Y$ and $Z$ are independent.
+
+Therefore,
+\[
+X(t+s)=Y+Z.
+\]
+
+\textbf{(a)}
+\[
+E[X(t+s)\mid X(s)=n]
+=
+E[Y]+E[Z].
+\]
+Thus
+\[
+{
+E[X(t+s)\mid X(s)=n]
+=
+ne^{-\mu t}
++
+\frac{\lambda}{\mu}(1-e^{-\mu t}).
+}
+\]
+
+\textbf{(b)}
+Since $Y$ and $Z$ are independent,
+\[
+\operatorname{Var}[X(t+s)\mid X(s)=n]
+=
+\operatorname{Var}(Y)+\operatorname{Var}(Z).
+\]
+Hence
+\[
+{
+\operatorname{Var}[X(t+s)\mid X(s)=n]
+=
+ne^{-\mu t}(1-e^{-\mu t})
++
+\frac{\lambda}{\mu}(1-e^{-\mu t}).
+}
+\]
+
+\textbf{(c)}
+Suppose there is currently one customer in the system. Let $S$ be the remaining service time of that customer. Then
+\[
+S\sim \operatorname{Exp}(\mu).
+\]
+Given $S=t$, the number of new customers still present when this customer departs is Poisson with mean
+\[
+\frac{\lambda}{\mu}(1-e^{-\mu t}).
+\]
+Thus the conditional probability that none are present is
+\[
+\exp\left\{-\frac{\lambda}{\mu}(1-e^{-\mu t})\right\}.
+\]
+Therefore, the desired probability is
+\[
+\int_0^\infty
+\mu e^{-\mu t}
+\exp\left\{-\frac{\lambda}{\mu}(1-e^{-\mu t})\right\}\,dt.
+\]
+Let
+\[
+u=e^{-\mu t}.
+\]
+Then
+\[
+\mu e^{-\mu t}dt=-du.
+\]
+So the integral becomes
+\[
+\int_0^1
+\exp\left\{-\frac{\lambda}{\mu}(1-u)\right\}\,du.
+\]
+Evaluating,
+\[
+{
+P(\text{system empty when the customer departs})
+=
+\frac{\mu}{\lambda}\left(1-e^{-\lambda/\mu}\right).
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-64}
+Suppose that people arrive at a bus stop in accordance with a Poisson process with rate $\lambda$. The bus departs at time $t$. Let $X$ denote the total amount of waiting time of all those who get on the bus at time $t$. We want to determine $\operatorname{Var}(X)$. Let $N(t)$ denote the number of arrivals by time $t$.
+\begin{enumerate}
+\item What is $E[X\mid N(t)]$?
+\item Argue that
+\[
+\operatorname{Var}[X\mid N(t)]=\frac{N(t)t^2}{12}.
+\]
+\item What is $\operatorname{Var}(X)$?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Given that
+\[
+N(t)=n,
+\]
+the $n$ arrival times are distributed as $n$ independent uniform random variables on $(0,t)$, unordered.
+
+If a person arrives at time $U$, that person's waiting time is
+\[
+t-U.
+\]
+Since $U\sim \operatorname{Uniform}(0,t)$,
+\[
+E[t-U]=\frac t2,
+\]
+and
+\[
+\operatorname{Var}(t-U)=\operatorname{Var}(U)=\frac{t^2}{12}.
+\]
+
+\textbf{(a)}
+Given $N(t)$,
+\[
+X
+=
+\sum_{i=1}^{N(t)}(t-U_i).
+\]
+Therefore,
+\[
+{
+E[X\mid N(t)]
+=
+\frac{N(t)t}{2}.
+}
+\]
+
+\textbf{(b)}
+Given $N(t)$, the waiting times are independent and each has variance $\frac{t^2}{12}$. Hence
+\[
+{
+\operatorname{Var}[X\mid N(t)]
+=
+\frac{N(t)t^2}{12}.
+}
+\]
+
+\textbf{(c)}
+Using the conditional variance formula,
+\[
+\operatorname{Var}(X)
+=
+E[\operatorname{Var}(X\mid N(t))]
++
+\operatorname{Var}(E[X\mid N(t)]).
+\]
+Since
+\[
+N(t)\sim \operatorname{Poisson}(\lambda t),
+\]
+we have
+\[
+E[N(t)]=\lambda t,
+\qquad
+\operatorname{Var}(N(t))=\lambda t.
+\]
+Therefore,
+\[
+E[\operatorname{Var}(X\mid N(t))]
+=
+E\left[\frac{N(t)t^2}{12}\right]
+=
+\frac{\lambda t^3}{12}.
+\]
+Also,
+\[
+\operatorname{Var}(E[X\mid N(t)])
+=
+\operatorname{Var}\left(\frac{N(t)t}{2}\right)
+=
+\frac{t^2}{4}\lambda t
+=
+\frac{\lambda t^3}{4}.
+\]
+Thus
+\[
+\operatorname{Var}(X)
+=
+\frac{\lambda t^3}{12}
++
+\frac{\lambda t^3}{4}
+=
+\frac{\lambda t^3}{3}.
+\]
+Hence
+\[
+{
+\operatorname{Var}(X)=\frac{\lambda t^3}{3}.
+}
+\]
+}
+
+\begin{exercise}
+\label{ex:counting-processes-65}
+An average of $500$ people pass the California bar exam each year. A California lawyer practices law, on average, for $30$ years. Assuming these numbers remain steady, how many lawyers would you expect California to have in $2050$?
+\end{exercise}
+
+\solution{
+Under a stationary-population interpretation of the stated steady rates, this is an application of Little's law. The long-run average number of lawyers practicing equals
+\[
+\text{arrival rate}\times \text{average time in system}.
+\]
+Here, the arrival rate of new lawyers is
+\[
+500
+\]
+per year, and the average practicing lifetime is
+\[
+30
+\]
+years. Therefore, the expected number of practicing lawyers is
+\[
+500\cdot 30=15000.
+\]
+Thus,
+\[
+{15000}
+\]
+lawyers would be expected in this stationary approximation. Without a stationary assumption or an initial population and lifetime distribution, the exact expected population in a specified calendar year is not determined by these two averages alone.
+}
+
+\begin{exercise}
+\label{ex:counting-processes-66}
+Policyholders of a certain insurance company have accidents at times distributed according to a Poisson process with rate $\lambda$. The amount of time from when the accident occurs until a claim is made has distribution $G$.
+\begin{enumerate}
+\item Find the probability there are exactly $n$ incurred but as yet unreported claims at time $t$.
+\item Suppose that each claim amount has distribution $F$, and that the claim amount is independent of the time that it takes to report the claim. Find the expected value of the sum of all incurred but as yet unreported claims at time $t$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Assume no outstanding claims at time $0$. Reporting delays are i.i.d.
+with distribution $G$ and independent of the Poisson accident process.
+An accident at time $s\le t$ is still unreported at $t$ with probability
+$1-G(t-s)$.
+
+\textbf{(a)} Independent thinning gives a Poisson count of unreported
+claims with mean
+\[
+m(t)=\lambda\int_0^t[1-G(t-s)]\,ds
+=\lambda\int_0^t[1-G(u)]\,du.
+\]
+Consequently, for $n=0,1,2,\ldots$,
+\[
+P(\text{$n$ incurred but unreported claims at }t)
+=e^{-m(t)}\frac{m(t)^n}{n!}.
+\]
+\textbf{(b)} Let $Y$ be a claim amount with distribution $F$, independent
+of reporting delay and accident time, and assume $E[Y]<\infty$.
+Each unreported claim has the same mean amount $E[Y]$. By conditioning
+on the accident times and independent marks, the expected total amount is
+\[
+E[\text{total unreported claim amount at }t]
+=\lambda E[Y]\int_0^t[1-G(u)]\,du.
+\]
+}

@@ -1,0 +1,70 @@
+\section{Distribution Recursions}
+\label{sec:distribution-recursions}
+
+\setcounter{exercise}{88}
+\begin{exercise}
+\label{ex:distribution-recursions-89}
+Let $I_1,\ldots,I_n$ be independent random variables, each of which is equally likely to be either $0$ or $1$. A well-known nonparametric statistical test, called the signed rank test, is concerned with determining $P_n(k)$ defined by
+\[
+P_n(k)=P\left\{\sum_{j=1}^n jI_j\le k\right\}.
+\]
+Justify the following formula:
+\[
+P_n(k)=\frac12 P_{n-1}(k)+\frac12 P_{n-1}(k-n).
+\]
+\end{exercise}
+
+\solution{
+Let
+\[
+S_n=\sum_{j=1}^n jI_j.
+\]
+Then
+\[
+S_n=S_{n-1}+nI_n,
+\]
+where
+\[
+S_{n-1}=\sum_{j=1}^{n-1}jI_j.
+\]
+
+Since $I_n$ is equally likely to be $0$ or $1$, we condition on the value of $I_n$:
+\[
+P_n(k)
+=
+P(S_n\le k).
+\]
+Thus,
+\[
+P_n(k)
+=
+P(S_n\le k\mid I_n=0)P(I_n=0)
++
+P(S_n\le k\mid I_n=1)P(I_n=1).
+\]
+
+Since
+\[
+P(I_n=0)=P(I_n=1)=\frac12,
+\]
+we get
+\[
+P_n(k)
+=
+\frac12 P(S_{n-1}\le k)
++
+\frac12 P(S_{n-1}+n\le k).
+\]
+The first term is
+\[
+P(S_{n-1}\le k)=P_{n-1}(k),
+\]
+and the second term is
+\[
+P(S_{n-1}+n\le k)=P(S_{n-1}\le k-n)=P_{n-1}(k-n).
+\]
+Therefore,
+\[
+P_n(k)=\frac12 P_{n-1}(k)+\frac12 P_{n-1}(k-n).
+\]
+}

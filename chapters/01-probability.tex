@@ -1,0 +1,1051 @@
+\section{Probability}
+\label{sec:probability}
+
+\setcounter{exercise}{0}
+
+\begin{exercise}
+\label{ex:probability-1}
+    A box contains three marbles: one red, one green, and one blue. Consider an experiment that consists of taking one marble from the box then replacing it in the box and drawing a second marble from the box. What is the sample space? If, at all times, each marble in the box is equally likely to be selected, what is the probability of each point in the sample space?
+\end{exercise}
+
+\solution{
+    Let the marbles be denoted by R (red), G (green), and B (blue). Since the first marble is replaced before drawing the second, the sample space $S$ consists of all possible ordered pairs of these three colors.
+    \[
+    S = \{(R,R), (R,G), (R,B), (G,R), (G,G), (G,B), (B,R), (B,G), (B,B)\}
+    \]
+    There are $3 \times 3 = 9$ possible outcomes in the sample space. Because each marble is equally likely to be selected at all times, every point in the sample space has the same probability:
+    \[
+    P(\text{each point}) = \frac{1}{9}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-2}
+    Repeat Exercise 1 when the second marble is drawn without replacing the first marble.
+\end{exercise}
+
+\solution{
+    Without replacing the first marble, the same marble cannot be drawn twice. The sample space $S$ now consists of all ordered pairs of distinct colors:
+    \[
+    S = \{(R,G), (R,B), (G,R), (G,B), (B,R), (B,G)\}
+    \]
+    There are $3 \times 2 = 6$ possible outcomes. Since the selections are random and equally likely, the probability of each point in this new sample space is:
+    \[
+    P(\text{each point}) = \frac{1}{6}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-3}
+    A coin is to be tossed until a head appears twice in a row. What is the sample space for this experiment? If the coin is fair, what is the probability that it will be tossed exactly four times?
+\end{exercise}
+
+\solution{
+    Let H denote a Head and T denote a Tail. The experiment ends as soon as two consecutive Heads (HH) appear. The sample space $S$ consists of all finite sequences of H and T that end in HH and do not contain HH anywhere prior.
+    \[
+    S = \{HH, THH, HTHH, TTHH, THTHH, HTTHH, TTTHH, \dots\}
+    \]
+    For the coin to be tossed exactly four times, the sequence must have a length of exactly 4 and end in HH. The only possible sequences that fit this criteria are HTHH and TTHH.
+    \noindent
+    Since the coin is fair, the probability of any specific sequence of length 4 is $\left(\frac{1}{2}\right)^4 = \frac{1}{16}$. Therefore, the probability that the coin is tossed exactly four times is the sum of the probabilities of these two specific outcomes:
+    \[
+    P(\text{exactly 4 tosses}) = P(HTHH) + P(TTHH) = \frac{1}{16} + \frac{1}{16} = \frac{2}{16} = \frac{1}{8}
+    \]
+}
+
+\setcounter{exercise}{4}
+
+\begin{exercise}
+\label{ex:probability-5}
+    An individual uses the following gambling system at Las Vegas. He bets \$1 that the roulette wheel will come up red. If he wins, he quits. If he loses then he makes the same bet a second time only this time he bets \$2; and then regardless of the outcome, quits. Assuming that he has a probability of $\frac{1}{2}$ of winning each bet, what is the probability that he goes home a winner? Why is this system not used by everyone?
+\end{exercise}
+
+\solution{
+    Let W represent winning a bet and L represent losing a bet. The possible outcomes of this gambling system are:
+    \begin{itemize}
+        \item \textbf{W}: Wins the first \$1 bet. Net profit: $+\$1$. Probability: $\frac{1}{2}$
+        \item \textbf{LW}: Loses the first \$1 bet, wins the second \$2 bet. Net profit: $-\$1 + \$2 = +\$1$. Probability: $\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}$
+        \item \textbf{LL}: Loses the first \$1 bet, loses the second \$2 bet. Net profit: $-\$1 - \$2 = -\$3$. Probability: $\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}$
+    \end{itemize}
+    The individual goes home a winner in the first two scenarios. Thus, the probability of going home a winner is:
+    \[
+    P(\text{Winner}) = P(W) + P(LW) = \frac{1}{2} + \frac{1}{4} = \frac{3}{4}
+    \]
+
+    \noindent
+    Although the probability of going home a winner is high ($75\%$), this system (a simplified Martingale strategy) is not used by everyone for two main reasons:
+    \begin{enumerate}
+        \item \textbf{Zero or Negative Expected Value:} Even with a high probability of winning, the expected value is zero with fair odds: $E[\text{Profit}] = (+1)\left(\frac{3}{4}\right) + (-3)\left(\frac{1}{4}\right) = 0$. In real Las Vegas roulette, the probability of red is actually less than $\frac{1}{2}$ (usually $\frac{18}{38}$ due to the 0 and 00 green slots), meaning the expected value of this system is mathematically negative. Over time, you will lose money.
+        \item \textbf{Risk of Ruin:} To scale this system for a longer streak of losses, a player would need to keep doubling their bet exponentially. This requires unlimited capital and is ultimately prevented by table maximum bet limits set by casinos to stop this exact strategy.
+    \end{enumerate}
+}
+
+\setcounter{exercise}{10}
+\begin{exercise}
+\label{ex:probability-11}
+    If two fair dice are tossed, what is the probability that the sum is $i$, $i = 2, 3, \dots, 12$?
+\end{exercise}
+
+\solution{
+    When rolling two fair dice, the sample space contains $6 \times 6 = 36$ equally likely ordered outcomes. Let the random variable $X$ represent the sum of the values on the two dice. We count the number of outcomes that yield each sum $i$:
+    \begin{itemize}
+        \item For $i = 2$: \{(1,1)\} $\rightarrow 1$ outcome $\rightarrow P(X=2) = \frac{1}{36}$
+        \item For $i = 3$: \{(1,2), (2,1)\} $\rightarrow 2$ outcomes $\rightarrow P(X=3) = \frac{2}{36} = \frac{1}{18}$
+        \item For $i = 4$: \{(1,3), (2,2), (3,1)\} $\rightarrow 3$ outcomes $\rightarrow P(X=4) = \frac{3}{36} = \frac{1}{12}$
+        \item For $i = 5$: \{(1,4), (2,3), (3,2), (4,1)\} $\rightarrow 4$ outcomes $\rightarrow P(X=5) = \frac{4}{36} = \frac{1}{9}$
+        \item For $i = 6$: \{(1,5), (2,4), (3,3), (4,2), (5,1)\} $\rightarrow 5$ outcomes $\rightarrow P(X=6) = \frac{5}{36}$
+        \item For $i = 7$: \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\} $\rightarrow 6$ outcomes $\rightarrow P(X=7) = \frac{6}{36} = \frac{1}{6}$
+        \item For $i = 8$: \{(2,6), (3,5), (4,4), (5,3), (6,2)\} $\rightarrow 5$ outcomes $\rightarrow P(X=8) = \frac{5}{36}$
+        \item For $i = 9$: \{(3,6), (4,5), (5,4), (6,3)\} $\rightarrow 4$ outcomes $\rightarrow P(X=9) = \frac{4}{36} = \frac{1}{9}$
+        \item For $i = 10$: \{(4,6), (5,5), (6,4)\} $\rightarrow 3$ outcomes $\rightarrow P(X=10) = \frac{3}{36} = \frac{1}{12}$
+        \item For $i = 11$: \{(5,6), (6,5)\} $\rightarrow 2$ outcomes $\rightarrow P(X=11) = \frac{2}{36} = \frac{1}{18}$
+        \item For $i = 12$: \{(6,6)\} $\rightarrow 1$ outcome $\rightarrow P(X=12) = \frac{1}{36}$
+    \end{itemize}
+    In general, the symmetric probability distribution can be compactly expressed via the formula:
+    \[
+    P(X = i) = \frac{6 - |7 - i|}{36}, \quad \text{for } i = 2, 3, \dots, 12
+    \]
+}
+
+\setcounter{exercise}{12}
+
+\begin{exercise}
+\label{ex:probability-13}
+    The dice game craps is played as follows. The player throws two dice, and if the sum is seven or eleven, then she wins. If the sum is two, three, or twelve, then she loses. If the sum is anything else, then she continues throwing until she either throws that number again (in which case she wins) or she throws a seven (in which case she loses). Calculate the probability that the player wins.
+\end{exercise}
+
+\solution{
+    We can compute the total probability of winning by conditioning on the value of the initial roll. Let $P(i)$ represent the probability that the initial sum is $i$. From Exercise 11, we have:
+    \begin{itemize}
+        \item Instant Win: $P(7) + P(11) = \frac{6}{36} + \frac{2}{36} = \frac{8}{36}$
+        \item Instant Loss: $P(2) + P(3) + P(12) = \frac{1}{36} + \frac{2}{36} + \frac{1}{36} = \frac{4}{36}$
+    \end{itemize}
+    If the initial roll results in a "point" $i \in \{4, 5, 6, 8, 9, 10\}$, all subsequent rolls are ignored unless they result in either $i$ (a win) or $7$ (a loss). Therefore, the conditional probability of winning given that point $i$ was established is:
+    \[
+    P(\text{Win} \mid \text{point } i) = \frac{P(i)}{P(i) + P(7)}
+    \]
+    By the Law of Total Probability, the overall probability of winning $P(W)$ is:
+    \[
+    P(W) = P(\text{instant win}) + \sum_{i \in \{4,5,6,8,9,10\}} P(i) \cdot \frac{P(i)}{P(i) + P(7)}
+    \]
+    Using symmetry ($P(4)=P(10)$, $P(5)=P(9)$, and $P(6)=P(8)$), we evaluate each distinct pair:
+    \begin{itemize}
+        \item For $i = 4, 10$: $2 \times \left( \frac{3}{36} \times \frac{3}{3+6} \right) = 2 \times \frac{3}{36} \times \frac{1}{3} = \frac{2}{36}$
+        \item For $i = 5, 9$: $2 \times \left( \frac{4}{36} \times \frac{4}{4+6} \right) = 2 \times \frac{4}{36} \times \frac{2}{5} = \frac{16}{180} = \frac{4}{45}$
+        \item For $i = 6, 8$: $2 \times \left( \frac{5}{36} \times \frac{5}{5+6} \right) = 2 \times \frac{25}{396} = \frac{50}{396} = \frac{25}{198}$
+    \end{itemize}
+    Summing all terms together:
+    \[
+    P(W) = \frac{8}{36} + \frac{2}{36} + \frac{4}{45} + \frac{25}{198} = \frac{10}{36} + \frac{4}{45} + \frac{25}{198} = \frac{5}{18} + \frac{4}{45} + \frac{25}{198}
+    \]
+    Finding a common denominator ($990$):
+    \[
+    P(W) = \frac{275}{990} + \frac{88}{990} + \frac{125}{990} = \frac{488}{990} = \frac{244}{495} \approx 0.4929
+    \]
+    Thus, the player has a $\frac{244}{495}$ (or approximately $49.29\%$) chance of winning.
+}
+
+\begin{exercise}
+\label{ex:probability-14}
+    The probability of winning on a single toss of the dice is $p$. $A$ starts, and if he fails, he passes the dice to $B$, who then attempts to win on her toss. They continue tossing the dice back and forth until one of them wins. What are their respective probabilities of winning?
+\end{exercise}
+
+\solution{
+    Assume $0<p\le1$ and independent attempts. If $p=0$, neither player ever wins. Let $P(A)$ be the probability that $A$ wins the game and $P(B)$ be the probability that $B$ wins the game.
+
+    We can set up a renewal relation by conditioning on the first toss:
+    \begin{enumerate}
+        \item With probability $p$, player $A$ wins on the very first toss.
+        \item With probability $1-p$, player $A$ fails. At this exact moment, the game resets but roles are effectively reversed: it is now $B$'s turn to toss first, meaning $B$ now inherits the exact same probability of winning from this position that $A$ had at the start of the game ($P(A)$).
+    \end{enumerate}
+    Therefore, $A$'s remaining probability of winning if the first toss fails is $1 - P(A)$. This yields the equation:
+    \[
+    P(A) = p + (1-p)(1 - P(A))
+    \]
+    Expanding and solving for $P(A)$:
+    \[
+    P(A) = p + 1 - P(A) - p + pP(A) \implies P(A) = 1 - P(A) + pP(A)
+    \]
+    \[
+    2P(A) - pP(A) = 1 \implies P(A)(2-p) = 1 \implies P(A) = \frac{1}{2-p}
+    \]
+    Since one of the two players must eventually win with probability 1, $B$'s probability of winning is the complement:
+    \[
+    P(B) = 1 - P(A) = 1 - \frac{1}{2-p} = \frac{2-p-1}{2-p} = \frac{1-p}{2-p}
+    \]
+    Thus, $P(A) = \frac{1}{2-p}$ and $P(B) = \frac{1-p}{2-p}$.
+}
+
+\setcounter{exercise}{16}
+
+\begin{exercise}
+\label{ex:probability-17}
+    Suppose each of three persons tosses a coin. If the outcome of one of the tosses differs from the other outcomes, then the game ends. If not, then the persons start over and retoss their coins. Assuming fair coins, what is the probability that the game will end with the first round of tosses? If all three coins are biased and have probability $\frac{1}{4}$ of landing heads, what is the probability that the game will end at the first round?
+\end{exercise}
+
+\solution{
+    The game continues to a new round if and only if all three coins yield identical outcomes (either all Heads or all Tails). Let $C$ be the event that the game continues. The event that the game ends on the first round is the complement, $C^c$.
+
+    \noindent
+    \textbf{Case 1: Fair Coins ($p = \frac{1}{2}$ for Heads, $q = \frac{1}{2}$ for Tails)}
+
+    \noindent
+    The total number of outcomes for 3 fair coins is $2^3 = 8$ equally likely configurations. The game continues only on the outcomes $\{HHH, TTT\}$. Thus:
+    \[
+    P(C) = P(HHH) + P(TTT) = \frac{1}{8} + \frac{1}{8} = \frac{2}{8} = \frac{1}{4}
+    \]
+    The probability that the game ends on the first round is:
+    \[
+    P(C^c) = 1 - P(C) = 1 - \frac{1}{4} = \frac{3}{4}
+    \]
+
+    \noindent
+    \textbf{Case 2: Biased Coins ($p = \frac{1}{4}$ for Heads, $q = \frac{3}{4}$ for Tails)}
+
+    \noindent
+    Since the tosses are independent, we calculate the joint probabilities for the continuing configurations directly:
+    \[
+    P(HHH) = p^3 = \left(\frac{1}{4}\right)^3 = \frac{1}{64}
+    \]
+    \[
+    P(TTT) = q^3 = \left(\frac{3}{4}\right)^3 = \frac{27}{64}
+    \]
+    Therefore, the probability that the game continues is:
+    \[
+    P(C) = \frac{1}{64} + \frac{27}{64} = \frac{28}{64} = \frac{7}{16}
+    \]
+    The probability that the game ends on the first round under this bias is:
+    \[
+    P(C^c) = 1 - P(C) = 1 - \frac{7}{16} = \frac{9}{16}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-18}
+    Assume that each child who is born is equally likely to be a boy or a girl. If a family has two children, what is the probability that both are girls given that (a) the eldest is a girl, (b) at least one is a girl?
+\end{exercise}
+
+\solution{
+    Let the sample space for a family with two children be represented by ordered pairs based on age order: $S = \{(B,B), (B,G), (G,B), (G,G)\}$. Since boys and girls are equally likely, each sample point has an equal probability of $\frac{1}{4}$. Let $A$ be the event that both children are girls: $A = \{(G,G)\}$.
+
+    \noindent
+    \textbf{(a) Given that the eldest is a girl}
+    Let $E$ be the condition that the eldest child is a girl: $E = \{(G,B), (G,G)\}$.
+    \noindent
+    The intersection of our target event and the condition is $A \cap E = \{(G,G)\}$. Using conditional probability:
+    \[
+    P(A \mid E) = \frac{P(A \cap E)}{P(E)} = \frac{1/4}{2/4} = \frac{1}{2}
+    \]
+
+    \noindent
+    \textbf{(b) Given that at least one is a girl}
+    Let $F$ be the condition that at least one child is a girl: $F = \{(B,G), (G,B), (G,G)\}$.
+    \noindent
+    The intersection is $A \cap F = \{(G,G)\}$. Applying the conditional probability definition:
+    \[
+    P(A \mid F) = \frac{P(A \cap F)}{P(F)} = \frac{1/4}{3/4} = \frac{1}{3}
+    \]
+}
+
+\setcounter{exercise}{18}
+
+\begin{exercise}
+\label{ex:probability-19}
+    Two dice are rolled. What is the probability that at least one is a six? If the two faces are different, what is the probability that at least one is a six?
+\end{exercise}
+
+\solution{
+    Let $X_1, X_2$ denote the outcomes of the two fair dice. Total outcomes = $6 \times 6 = 36$.
+
+    \noindent
+    \textbf{Part 1: Probability that at least one is a six}
+    The complement event is that neither die lands on a six. There are $5 \times 5 = 25$ such outcomes.
+    \[
+    P(\text{at least one 6}) = 1 - P(\text{no 6}) = 1 - \frac{25}{36} = \frac{11}{36}
+    \]
+
+    \noindent
+    \textbf{Part 2: Probability that at least one is a six given faces are different}
+    Let $D$ be the event that the two faces are different. Out of 36 outcomes, 6 are duplicates ($(1,1), \dots, (6,6)$), so $|D| = 36 - 6 = 30$.
+    The outcomes in $D$ that include at least one six are: $(1,6), (2,6), (3,6), (4,6), (5,6)$ and their reversals $(6,1), (6,2), (6,3), (6,4), (6,5)$. This yields exactly 10 outcomes.
+    \[
+    P(\text{at least one 6} \mid D) = \frac{10}{30} = \frac{1}{3}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-20}
+    Three dice are thrown. What is the probability the same number appears on exactly two of the three dice?
+\end{exercise}
+
+\solution{
+    When throwing three dice, the total size of the sample space is $6^3 = 216$ equally likely outcomes.
+    To find the number of favorable combinations where exactly two dice show the matching number:
+    \begin{enumerate}
+        \item Choose which value is repeated: $\binom{6}{1} = 6$ choices.
+        \item Choose which value appears on the remaining distinct die: $\binom{5}{1} = 5$ choices.
+        \item Select which two of the three positions host the repeated number: $\binom{3}{2} = 3$ choices.
+    \end{enumerate}
+    Multiplying these independent choices gives the total number of favorable outcomes:
+    \[
+    \text{Favorable Outcomes} = 6 \times 5 \times 3 = 90
+    \]
+    Thus, the calculated probability is:
+    \[
+    P(\text{exactly two identical}) = \frac{90}{216} = \frac{5}{12}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-21}
+    Suppose that 5 percent of men and 0.25 percent of women are color-blind. A color-blind person is chosen at random. What is the probability of this person being male? Assume that there are an equal number of males and females.
+\end{exercise}
+
+\solution{
+    Let $M$ and $F$ represent the events of selecting a male and a female, respectively. We are given $P(M) = 0.5$ and $P(F) = 0.5$. Let $CB$ represent the event that a person is color-blind. The conditional probabilities are $P(CB \mid M) = 0.05$ and $P(CB \mid F) = 0.0025$.
+    We calculate the posterior probability $P(M \mid CB)$ using Bayes' Theorem:
+    \[
+    P(M \mid CB) = \frac{P(CB \mid M)P(M)}{P(CB \mid M)P(M) + P(CB \mid F)P(F)}
+    \]
+    Substitute the known quantities into the equation:
+    \[
+    P(M \mid CB) = \frac{0.05 \times 0.5}{(0.05 \times 0.5) + (0.0025 \times 0.5)} = \frac{0.025}{0.025 + 0.00125} = \frac{0.025}{0.02625}
+    \]
+    Simplifying the fraction reveals:
+    \[
+    P(M \mid CB) = \frac{2500}{2625} = \frac{20}{21} \approx 0.9524
+    \]
+    Thus, there is a $\frac{20}{21}$ (or approximately $95.24\%$) chance that the randomly selected color-blind individual is male.
+}
+
+\begin{exercise}
+\label{ex:probability-22}
+    $A$ and $B$ play until one has 2 more points than the other. Assuming that each point is independently won by $A$ with probability $p$, what is the probability they will play a total of $2n$ points? What is the probability that $A$ will win?
+\end{exercise}
+
+\solution{
+    Because a player must win by 2 points, the match can only end on an even number of total points.
+
+    \noindent
+    \textbf{Part 1: Probability that they will play a total of $2n$ points}
+    For a match to continue exactly to $2n$ points, the score must remain tied after pairs of rounds $2, 4, \dots, 2n-2$. A tie occurs within any distinct pair of points if and only if the points are split (either $A$ wins then $B$ wins, or $B$ wins then $A$ wins).
+    \[
+    P(\text{Split pair}) = p(1-p) + (1-p)p = 2p(1-p)
+    \]
+    For the match to terminate exactly at point $2n$, the game must progress as a tie for the initial $n-1$ pairs of rounds, and then someone must win both points in the $n$-th pair:
+    \[
+    P(\text{End at pair } n) = 1 - 2p(1-p) = p^2 + (1-p)^2
+    \]
+    Thus, the probability that they play exactly $2n$ total points is:
+    \[
+    P(\text{Total } 2n \text{ points}) = [2p(1-p)]^{n-1} [p^2 + (1-p)^2], \quad n = 1, 2, \dots
+    \]
+
+    \noindent
+    \textbf{Part 2: Probability that $A$ will win}
+    Let $P_A$ be the probability that $A$ wins the complete match. We condition on the results of the first two points played:
+    \begin{itemize}
+        \item $A$ wins both points (probability $p^2$): $A$ wins the match immediately.
+        \item $B$ wins both points (probability $(1-p)^2$): $B$ wins the match ($A$ loses).
+        \item The points are split (probability $2p(1-p)$): The score returns to a balanced state, renewing the identical starting match probability $P_A$ for player $A$.
+    \end{itemize}
+    This establishes the following total probability equation:
+    \[
+    P_A = p^2 \cdot 1 + (1-p)^2 \cdot 0 + 2p(1-p) \cdot P_A
+    \]
+    Isolating terms to solve for $P_A$:
+    \[
+    P_A [1 - 2p(1-p)] = p^2 \implies P_A = \frac{p^2}{1 - 2p(1-p)} = \frac{p^2}{p^2 + (1-p)^2}
+    \]
+}
+
+\setcounter{exercise}{24}
+
+\begin{exercise}
+\label{ex:probability-25}
+    Two cards are randomly selected from a deck of 52 playing cards.
+    \begin{enumerate}
+        \item[(a)] What is the probability they constitute a pair (that is, that they are of the same denomination)?
+        \item[(b)] What is the conditional probability they constitute a pair given that they are of different suits?
+    \end{enumerate}
+\end{exercise}
+
+\solution{
+
+    \noindent
+    \textbf{(a)}
+
+    \noindent
+    \textbf{Method 1 (Combinatorics):} Let $P$ be the event of drawing a pair. The total number of ways to draw 2 cards from 52 is $\binom{52}{2}$. A pair consists of 2 cards of the same denomination. There are 13 denominations, and for each denomination, there are $\binom{4}{2}$ ways to select 2 suits out of 4.
+    \[P(P) = \frac{13 \times \binom{4}{2}}{\binom{52}{2}} = \frac{13 \times 6}{1326} = \frac{78}{1326} = \frac{1}{17}\]
+
+    \noindent
+    \textbf{Method 2 (Sequential):} The first card drawn can be any card (probability 1). To form a pair, the second card must match the denomination of the first. There are exactly 3 cards remaining of that denomination out of the 51 remaining cards in the deck.
+    \[P(P) = \frac{3}{51} = \frac{1}{17}\]
+
+    \noindent
+    \textbf{(b)}
+
+    \noindent
+    Let $D$ be the event of drawing two cards of different suits. We want to find $P(P \mid D)$. By definition of conditional probability:
+    \[P(P \mid D) = \frac{P(P \cap D)}{P(D)}\]
+    Since a pair must necessarily be composed of different suits (as there is only one card of each suit per denomination), $P(P \cap D) = P(P) = \frac{1}{17}$.
+    To find $P(D)$, consider drawing sequentially: the first card can be anything. The second card must be a different suit. There are 12 remaining cards of the same suit as the first card, leaving $51 - 12 = 39$ cards of different suits.
+    \[P(D) = \frac{39}{51} = \frac{13}{17}\]
+    Therefore, the conditional probability is:
+    \[P(P \mid D) = \frac{1/17}{13/17} = \frac{1}{13}\]
+}
+
+\begin{exercise}
+\label{ex:probability-26}
+    A deck of 52 playing cards, containing all 4 aces, is randomly divided into 4 piles of 13 cards each. Define events $E_1, E_2, E_3$, and $E_4$ as follows:
+    \begin{align*}
+        E_1 &= \{\text{the first pile has exactly 1 ace}\}, \\
+        E_2 &= \{\text{the second pile has exactly 1 ace}\}, \\
+        E_3 &= \{\text{the third pile has exactly 1 ace}\}, \\
+        E_4 &= \{\text{the fourth pile has exactly 1 ace}\}
+    \end{align*}
+    Find $P(E_1 E_2 E_3 E_4)$, the probability that each pile has an ace.
+\end{exercise}
+
+\solution{
+    The total number of ways to divide 52 distinct cards into 4 distinct piles of 13 cards each is given by the multinomial coefficient: $\frac{52!}{(13!)^4}$.
+
+    To find the number of favorable ways where each pile receives exactly 1 ace, we can break the process into two steps:
+    \begin{enumerate}
+        \item Distribute the 4 aces among the 4 piles. Since the piles are distinct (first, second, third, fourth), there are $4!$ ways to do this.
+        \item Distribute the remaining 48 non-ace cards into the 4 piles so that each pile gets exactly 12 more cards. There are $\frac{48!}{(12!)^4}$ ways to do this.
+    \end{enumerate}
+
+    The total number of favorable outcomes is $4! \times \frac{48!}{(12!)^4}$.
+
+    The probability that each pile has exactly one ace is the ratio of favorable outcomes to total outcomes:
+    \[P(E_1 E_2 E_3 E_4) = \frac{4! \cdot \frac{48!}{(12!)^4}}{\frac{52!}{(13!)^4}} = \frac{4! \cdot 48! \cdot (13!)^4}{52! \cdot (12!)^4}\]
+    Since $\frac{13!}{12!} = 13$, this simplifies to:
+    \[P(E_1 E_2 E_3 E_4) = \frac{24 \cdot 13^4}{52 \cdot 51 \cdot 50 \cdot 49} = \frac{24 \cdot 28561}{6497400} = \frac{2197}{20825} \approx 0.10549\]
+}
+
+\begin{exercise}
+\label{ex:probability-27}
+    Suppose in Exercise 26 we had defined the events $E_i, i = 1, 2, 3, 4$, by
+    \begin{align*}
+        E_1 &= \{\text{one of the piles contains the ace of spades}\}, \\
+        E_2 &= \{\text{the ace of spades and the ace of hearts are in different piles}\}, \\
+        E_3 &= \{\text{the ace of spades, the ace of hearts, and the ace of diamonds are in different piles}\}, \\
+        E_4 &= \{\text{all 4 aces are in different piles}\}
+    \end{align*}
+    Use the general multiplication rule for probabilities to find $P(E_1 E_2 E_3 E_4)$, the probability that each pile has an ace. Compare your answer with the one you obtained in Exercise 26.
+\end{exercise}
+
+\solution{
+    We use the general multiplication rule for probability:
+    \[P(E_1 E_2 E_3 E_4) = P(E_1) P(E_2 \mid E_1) P(E_3 \mid E_1 E_2) P(E_4 \mid E_1 E_2 E_3)\]
+
+    \begin{enumerate}
+        \item $P(E_1) = 1$: The ace of spades is guaranteed to end up in exactly one of the piles.
+        \item $P(E_2 \mid E_1)$: The ace of spades occupies 1 of the 52 spots in the deck, leaving 51 open spots. To be in a different pile, the ace of hearts must be placed in one of the other 3 piles. Those 3 piles collectively contain $3 \times 13 = 39$ open spots.
+        \[P(E_2 \mid E_1) = \frac{39}{51}\]
+        \item $P(E_3 \mid E_1 E_2)$: Given the aces of spades and hearts are in different piles, they occupy 2 spots across 2 different piles, leaving 50 open spots. The ace of diamonds must go into one of the 2 remaining empty piles, which collectively have $2 \times 13 = 26$ open spots.
+        \[P(E_3 \mid E_1 E_2) = \frac{26}{50}\]
+        \item $P(E_4 \mid E_1 E_2 E_3)$: Given three aces are in three different piles, there are 49 open spots remaining. The ace of clubs must go into the single remaining pile that does not yet have an ace. That pile has exactly 13 spots available.
+        \[P(E_4 \mid E_1 E_2 E_3) = \frac{13}{49}\]
+    \end{enumerate}
+
+    Multiplying these probabilities together yields:
+    \[P(E_1 E_2 E_3 E_4) = 1 \cdot \frac{39}{51} \cdot \frac{26}{50} \cdot \frac{13}{49} = \frac{13 \cdot 13 \cdot 13}{17 \cdot 25 \cdot 49} = \frac{2197}{20825} \approx 0.10549\]
+
+    \noindent
+    \textbf{Comparison:}
+    The final probability $\frac{2197}{20825}$ is identical to the one obtained in Exercise 26. However, utilizing the multiplication rule with this alternative sequence of events makes the calculation vastly simpler and more intuitive to compute by hand compared to using raw multinomial coefficients.
+}
+
+\setcounter{exercise}{29}
+
+\begin{exercise}
+\label{ex:probability-30}
+    Bill and George go target shooting together. Both shoot at a target at the same time. Suppose Bill hits the target with probability $0.7$, whereas George, independently, hits the target with probability $0.4$.
+    \begin{enumerate}
+        \item[(a)] Given that exactly one shot hit the target, what is the probability that it was George's shot?
+        \item[(b)] Given that the target is hit, what is the probability that George hit it?
+    \end{enumerate}
+\end{exercise}
+
+\solution{
+    Let $B$ be the event that Bill hits the target, with $P(B) = 0.7$, and let $G$ be the event that George hits the target, with $P(G) = 0.4$. Since their shots are independent, the probabilities of their complements are $P(B^c) = 0.3$ and $P(G^c) = 0.6$.
+
+    \noindent
+    \textbf{(a)}
+
+    \noindent
+    Let $E$ be the event that exactly one shot hits the target. This can happen in two disjoint ways: Bill hits and George misses, or Bill misses and George hits.
+    \[
+    P(E) = P(B \cap G^c) + P(B^c \cap G) = P(B)P(G^c) + P(B^c)P(G)
+    \]
+    \[
+    P(E) = (0.7)(0.6) + (0.3)(0.4) = 0.42 + 0.12 = 0.54
+    \]
+    We want to find the conditional probability $P(B^c \cap G \mid E)$:
+    \[
+    P(B^c \cap G \mid E) = \frac{P(B^c \cap G)}{P(E)} = \frac{0.12}{0.54} = \frac{12}{54} = \frac{2}{9}
+    \]
+
+    \noindent
+    \textbf{(b)}
+
+    \noindent
+    Let $H$ be the event that the target is hit by at least one of them.
+    \[
+    P(H) = 1 - P(B^c \cap G^c) = 1 - P(B^c)P(G^c) = 1 - (0.3)(0.6) = 1 - 0.18 = 0.82
+    \]
+    We want to find the conditional probability that George hit the target given that it was hit, which is $P(G \mid H)$:
+    \[
+    P(G \mid H) = \frac{P(G \cap H)}{P(H)} = \frac{P(G)}{P(H)} = \frac{0.4}{0.82} = \frac{40}{82} = \frac{20}{41}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-31}
+    What is the conditional probability that the first die is six given that the sum of the dice is seven?
+\end{exercise}
+
+\solution{
+    Let $D_1$ and $D_2$ represent the outcomes of the first and second fair six-sided dice, respectively. The total number of outcomes when rolling two dice is $6 \times 6 = 36$.
+
+    Let $S_7$ be the event that the sum of the two dice is $7$. The favorable outcomes for $S_7$ are:
+    \[
+    S_7 = \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}
+    \]
+    Thus, there are 6 possible outcomes, so $P(S_7) = \frac{6}{36} = \frac{1}{6}$.
+
+    Let $F_6$ be the event that the first die is a $6$. The intersection event $F_6 \cap S_7$ contains exactly one outcome: $\{(6,1)\}$. Thus, $P(F_6 \cap S_7) = \frac{1}{36}$.
+
+    Using the definition of conditional probability:
+    \[
+    P(F_6 \mid S_7) = \frac{P(F_6 \cap S_7)}{P(S_7)} = \frac{1/36}{6/36} = \frac{1}{6}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-32}
+    Suppose all $n$ men at a party throw their hats in the center of the room. Each man then randomly selects a hat. Show that the probability that none of the $n$ men selects his own hat is
+    \[
+    \frac{1}{2!} - \frac{1}{3!} + \frac{1}{4!} - \cdots + \frac{(-1)^n}{n!}
+    \]
+    Note that as $n \to \infty$ this converges to $e^{-1}$. Is this surprising?
+\end{exercise}
+
+\solution{
+    This is the classic matching problem, representing the probability of a derangement. Let $E_i$ be the event that the $i$-th man selects his own hat for $i = 1, 2, \dots, n$. We want to find the probability that no man selects his own hat, which is $P(\bigcap_{i=1}^n E_i^c) = 1 - P(\bigcup_{i=1}^n E_i)$.
+
+    By the Inclusion-Exclusion Principle, the probability of the union is:
+    \[
+    P\left(\bigcup_{i=1}^n E_i\right) = \sum_{i=1}^n P(E_i) - \sum_{1 \le i < j \le n} P(E_i \cap E_j) + \cdots + (-1)^{n-1} P(E_1 \cap E_2 \cap \dots \cap E_n)
+    \]
+    Since the hats are selected completely at random, the probability that any specific set of $k$ men all select their own hats is:
+    \[
+    P(E_{i_1} \cap E_{i_2} \cap \dots \cap E_{i_k}) = \frac{(n-k)!}{n!}
+    \]
+    The number of ways to choose $k$ specific men out of $n$ is $\binom{n}{k}$. Therefore, the $k$-th term in the inclusion-exclusion sum is:
+    \[
+    \binom{n}{k} \frac{(n-k)!}{n!} = \frac{n!}{k!(n-k)!} \cdot \frac{(n-k)!}{n!} = \frac{1}{k!}
+    \]
+    Substituting this back into the union formula gives:
+    \[
+    P\left(\bigcup_{i=1}^n E_i\right) = \sum_{k=1}^n (-1)^{k-1} \frac{1}{k!} = 1 - \frac{1}{2!} + \frac{1}{3!} - \cdots + (-1)^{n-1}\frac{1}{n!}
+    \]
+    Thus, the probability that no one gets their own hat is:
+    \[
+    P\left(\bigcap_{i=1}^n E_i^c\right) = 1 - P\left(\bigcup_{i=1}^n E_i\right) = \frac{1}{2!} - \frac{1}{3!} + \frac{1}{4!} - \cdots + \frac{(-1)^n}{n!}
+    \]
+    As $n \to \infty$, this expression matches the Taylor series expansion for $e^{-1}$:
+    \[
+    e^{-1} = \sum_{k=0}^{\infty} \frac{(-1)^k}{k!} = 1 - 1 + \frac{1}{2!} - \frac{1}{3!} + \frac{1}{4!} - \cdots
+    \]
+    \textbf{Is this surprising?} At first glance, it can be intuitive to think that as the number of people $n$ grows larger, the probability of a complete derangement should either drop to $0$ or climb to $1$. However, it rapidly stabilizes to approximately $0.36788$ for any $n \ge 7$, meaning the size of the party has virtually no effect on the probability once $n$ is reasonably large.
+}
+
+\begin{exercise}
+\label{ex:probability-33}
+    In a class there are four freshman boys, six freshman girls, and six sophomore boys. How many sophomore girls must be present if sex and class are to be independent when a student is selected at random?
+\end{exercise}
+
+\solution{
+    Let $x$ be the number of sophomore girls in the class. We can organize the students into a contingency table:
+
+    \begin{center}
+    \begin{tabular}{r|cc|c}
+                   & Boys & Girls & Total \\ \hline
+        Freshmen   & 4    & 6     & 10    \\
+        Sophomores & 6    & $x$   & $6+x$ \\ \hline
+        Total      & 10   & $6+x$ & $16+x$
+    \end{tabular}
+    \end{center}
+
+    For the events ``Sex'' and ``Class'' to be independent when a student is selected at random, the joint probability of selecting a student who is both a Freshman and a Boy must equal the product of their individual probabilities:
+    \[
+    P(\text{Freshman} \cap \text{Boy}) = P(\text{Freshman}) \times P(\text{Boy})
+    \]
+    From the table, we have:
+    \[
+    P(\text{Freshman} \cap \text{Boy}) = \frac{4}{16+x}, \quad P(\text{Freshman}) = \frac{10}{16+x}, \quad P(\text{Boy}) = \frac{10}{16+x}
+    \]
+    Setting up the independence equation:
+    \[
+    \frac{4}{16+x} = \left(\frac{10}{16+x}\right) \left(\frac{10}{16+x}\right)
+    \]
+    Since $16+x \neq 0$, we can multiply both sides by $(16+x)^2$ to simplify:
+    \[
+    4(16+x) = 100 \implies 64 + 4x = 100 \implies 4x = 36 \implies x = 9
+    \]
+    Therefore, there must be $9$ sophomore girls present.
+}
+
+\begin{exercise}
+\label{ex:probability-34}
+    Mr. Jones has devised a gambling system for winning at roulette. When he bets, he bets on red, and places a bet only when the ten previous spins of the roulette have landed on a black number. He reasons that his chance of winning is quite large since the probability of eleven consecutive spins resulting in black is quite small. What do you think of this system?
+\end{exercise}
+
+\solution{
+    Mr. Jones's system is based on a classic misconception known as the \textbf{Gambler's Fallacy}.
+
+    Each spin of a roulette wheel is an independent trial, meaning the outcome of any given spin has no memory of or connection to previous outcomes. Let $R$ be the event of landing on red on the 11th spin, and $B_1, B_2, \dots, B_{10}$ be the events that the first 10 spins land on black. By the definition of independent events, the conditional probability is simply the unconditional probability of hitting red on any single spin:
+    \[
+    P(R \mid B_1 \cap B_2 \cap \dots \cap B_{10}) = P(R)
+    \]
+    On a standard American roulette wheel (containing 18 red, 18 black, and 2 green slots), $P(R) = \frac{18}{38} \approx 0.4737$.
+
+    While it is true that the a priori probability of observing 11 consecutive black spins is very small ($\left(\frac{18}{38}\right)^{11} \approx 0.0005$), once the 10 black spins have already occurred, they belong to the past and their historical probability is $1$. The wheel does not "owe" a red outcome to restore balance. Thus, Mr. Jones's system does absolutely nothing to improve his chances of winning.
+}
+
+\begin{exercise}
+\label{ex:probability-35}
+    A fair coin is continually flipped. What is the probability that the first four flips are
+    \begin{enumerate}
+        \item[(a)] $H, H, H, H$?
+        \item[(b)] $T, H, H, H$?
+        \item[(c)] What is the probability that the pattern $T, H, H, H$ occurs before the pattern $H, H, H, H$?
+    \end{enumerate}
+\end{exercise}
+
+\solution{
+    Since the coin is fair, each flip lands on Heads ($H$) or Tails ($T$) independently with probability $\frac{1}{2}$.
+
+    \noindent
+    \textbf{(a)}
+
+    \noindent
+    The probability of any specific sequence of 4 independent flips is:
+    \[
+    P(HHHH) = \left(\frac{1}{2}\right)^4 = \frac{1}{16}
+    \]
+
+    \noindent
+    \textbf{(b)}
+
+    \noindent
+    Similarly, the probability of this specific ordered sequence is:
+    \[
+    P(THHH) = \left(\frac{1}{2}\right)^4 = \frac{1}{16}
+    \]
+
+    \noindent
+    \textbf{(c)}
+
+    \noindent
+    Let's analyze how the sequence $HHHH$ can appear before $THHH$.
+
+    The pattern $HHHH$ can only win if it occurs as the absolute first four flips of the experiment. If the first four flips are anything else, $THHH$ will inevitably appear first. To see why, suppose $HHHH$ appears for the first time at some later point in the sequence, say starting at flip index $k$ (where $k > 1$), so that flips $k, k+1, k+2, k+3$ are all $H$. Since this is the \textit{first} time $HHHH$ appears, the flip immediately preceding it (flip $k-1$) must have been a $T$ (if it were an $H$, then a sequence of four heads would have already occurred starting at index $k-1$). Consequently, the four consecutive flips from index $k-1$ to $k+2$ form the pattern $THHH$.
+
+    Thus, $THHH$ will always show up before $HHHH$ unless the game starts directly with $HHHH$. Therefore:
+    \[
+    P(THHH \text{ before } HHHH) = 1 - P(\text{first 4 flips are } HHHH) = 1 - \frac{1}{16} = \frac{15}{16}
+    \]
+}
+
+\setcounter{exercise}{35}
+
+\begin{exercise}
+\label{ex:probability-36}
+    Consider two boxes, one containing one black and one white marble, the other, two black and one white marble. A box is selected at random and a marble is drawn at random from the selected box. What is the probability that the marble is black?
+\end{exercise}
+
+\solution{
+    Let $B_1$ be the event that the first box is selected, and $B_2$ be the event that the second box is selected. Since a box is selected at random, we have:
+    \[
+    P(B_1) = \frac{1}{2}, \quad P(B_2) = \frac{1}{2}
+    \]
+    Let $B$ be the event that a black marble is drawn. From the contents of the boxes, the conditional probabilities are:
+    \[
+    P(B \mid B_1) = \frac{1}{2}, \quad P(B \mid B_2) = \frac{2}{3}
+    \]
+    Using the Law of Total Probability, we find the total probability of drawing a black marble:
+    \[
+    P(B) = P(B \mid B_1)P(B_1) + P(B \mid B_2)P(B_2)
+    \]
+    \[
+    P(B) = \left(\frac{1}{2}\right)\left(\frac{1}{2}\right) + \left(\frac{2}{3}\right)\left(\frac{1}{2}\right) = \frac{1}{4} + \frac{1}{3} = \frac{7}{12}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-37}
+    In Exercise 36, what is the probability that the first box was the one selected given that the marble is white?
+\end{exercise}
+
+\solution{
+    Let $W$ be the event that a white marble is drawn. We can find $P(W)$ either as the complement of drawing a black marble, or directly using the Law of Total Probability:
+    \[
+    P(W) = 1 - P(B) = 1 - \frac{7}{12} = \frac{5}{12}
+    \]
+    We want to find the conditional probability $P(B_1 \mid W)$. Using Bayes' Theorem:
+    \[
+    P(B_1 \mid W) = \frac{P(W \mid B_1)P(B_1)}{P(W)}
+    \]
+    Since the first box contains 1 white marble out of 2, $P(W \mid B_1) = \frac{1}{2}$. Substituting the values in:
+    \[
+    P(B_1 \mid W) = \frac{\left(\frac{1}{2}\right)\left(\frac{1}{2}\right)}{\frac{5}{12}} = \frac{\frac{1}{4}}{\frac{5}{12}} = \frac{1}{4} \times \frac{12}{5} = \frac{3}{5}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-38}
+    Urn 1 contains two white balls and one black ball, while urn 2 contains one white ball and five black balls. One ball is drawn at random from urn 1 and placed in urn 2. A ball is then drawn from urn 2. It happens to be white. What is the probability that the transferred ball was white?
+\end{exercise}
+
+\solution{
+    Let $T_W$ be the event that a white ball is transferred from Urn 1 to Urn 2, and $T_B$ be the event that a black ball is transferred. Based on the initial composition of Urn 1 ($2W, 1B$), we have:
+    \[
+    P(T_W) = \frac{2}{3}, \quad P(T_B) = \frac{1}{3}
+    \]
+    Let $W_2$ be the event that a white ball is drawn from Urn 2. We analyze the composition of Urn 2 after the transfer:
+    \begin{itemize}
+        \item If a white ball was transferred ($T_W$), Urn 2 now contains 2 white balls and 5 black balls (7 total). Thus, $P(W_2 \mid T_W) = \frac{2}{7}$.
+        \item If a black ball was transferred ($T_B$), Urn 2 now contains 1 white ball and 6 black balls (7 total). Thus, $P(W_2 \mid T_B) = \frac{1}{7}$.
+    \end{itemize}
+    We want to find $P(T_W \mid W_2)$. Applying Bayes' Theorem:
+    \[
+    P(T_W \mid W_2) = \frac{P(W_2 \mid T_W)P(T_W)}{P(W_2 \mid T_W)P(T_W) + P(W_2 \mid T_B)P(T_B)}
+    \]
+    \[
+    P(T_W \mid W_2) = \frac{\left(\frac{2}{7}\right)\left(\frac{2}{3}\right)}{\left(\frac{2}{7}\right)\left(\frac{2}{3}\right) + \left(\frac{1}{7}\right)\left(\frac{1}{3}\right)} = \frac{\frac{4}{21}}{\frac{4}{21} + \frac{1}{21}} = \frac{\frac{4}{21}}{\frac{5}{21}} = \frac{4}{5}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-39}
+    Stores $A$, $B$, and $C$ have 50, 75, and 100 employees, and, respectively, 50, 60, and 70 percent of these are women. Resignations are equally likely among all employees, regardless of sex. One employee resigns and this is a woman. What is the probability that she works in store C?
+\end{exercise}
+
+\solution{
+    Let $A, B$, and $C$ denote the events that the resigning employee belongs to Store A, Store B, or Store C, respectively. Since resignations are equally likely among all employees, the prior probabilities are proportional to the size of each store's workforce. The total number of employees is $50 + 75 + 100 = 225$. Thus:
+    \[
+    P(A) = \frac{50}{225}, \quad P(B) = \frac{75}{225}, \quad P(C) = \frac{100}{225}
+    \]
+    Let $W$ be the event that the resigning employee is a woman. The given percentages provide the conditional probabilities:
+    \[
+    P(W \mid A) = 0.50, \quad P(W \mid B) = 0.60, \quad P(W \mid C) = 0.70
+    \]
+    We want to calculate the posterior probability $P(C \mid W)$ using Bayes' Theorem:
+    \[
+    P(C \mid W) = \frac{P(W \mid C)P(C)}{P(W \mid A)P(A) + P(W \mid B)P(B) + P(W \mid C)P(C)}
+    \]
+    Substituting the known values:
+    \[
+    P(C \mid W) = \frac{(0.70)\left(\frac{100}{225}\right)}{(0.50)\left(\frac{50}{225}\right) + (0.60)\left(\frac{75}{225}\right) + (0.70)\left(\frac{100}{225}\right)}
+    \]
+    We can cancel out the common denominator of 225 across the expression:
+    \[
+    P(C \mid W) = \frac{0.70 \times 100}{(0.50 \times 50) + (0.60 \times 75) + (0.70 \times 100)} = \frac{70}{25 + 45 + 70} = \frac{70}{140} = \frac{1}{2}
+    \]
+    Therefore, the probability that she works in store C is $\frac{1}{2}$ (or $0.5$).
+}
+
+\setcounter{exercise}{39}
+
+\begin{exercise}
+\label{ex:probability-40}
+    \begin{enumerate}
+        \item[(a)] A gambler has in his pocket a fair coin and a two-headed coin. He selects one of the coins at random, and when he flips it, it shows heads. What is the probability that it is the fair coin?
+        \item[(b)] Suppose that he flips the same coin a second time and again it shows heads. Now what is the probability that it is the fair coin?
+        \item[(c)] Suppose that he flips the same coin a third time and it shows tails. Now what is the probability that it is the fair coin?
+    \end{enumerate}
+\end{exercise}
+
+\solution{
+    Let $F$ be the event that the fair coin is chosen, and let $2H$ be the event that the two-headed coin is chosen. Since the choice is random, the prior probabilities are:
+    \[
+    P(F) = \frac{1}{2}, \quad P(2H) = \frac{1}{2}
+    \]
+
+    \noindent
+    \textbf{(a)}
+
+    \noindent
+    Let $H_1$ be the event that the first flip results in heads. The conditional probabilities are $P(H_1 \mid F) = \frac{1}{2}$ and $P(H_1 \mid 2H) = 1$. Using Bayes' Theorem to find $P(F \mid H_1)$:
+    \[
+    P(F \mid H_1) = \frac{P(H_1 \mid F)P(F)}{P(H_1 \mid F)P(F) + P(H_1 \mid 2H)P(2H)} = \frac{\left(\frac{1}{2}\right)\left(\frac{1}{2}\right)}{\left(\frac{1}{2}\right)\left(\frac{1}{2}\right) + (1)\left(\frac{1}{2}\right)} = \frac{\frac{1}{4}}{\frac{1}{4} + \frac{1}{2}} = \frac{1}{3}
+    \]
+
+    \noindent
+    \textbf{(b)}
+
+    \noindent
+    Let $H_1 H_2$ be the event that both the first and second flips result in heads. The conditional probabilities for independent tosses of the chosen coin are $P(H_1 H_2 \mid F) = \left(\frac{1}{2}\right)^2 = \frac{1}{4}$ and $P(H_1 H_2 \mid 2H) = 1^2 = 1$. Applying Bayes' Theorem:
+    \[
+    P(F \mid H_1 H_2) = \frac{P(H_1 H_2 \mid F)P(F)}{P(H_1 H_2 \mid F)P(F) + P(H_1 H_2 \mid 2H)P(2H)} = \frac{\left(\frac{1}{4}\right)\left(\frac{1}{2}\right)}{\left(\frac{1}{4}\right)\left(\frac{1}{2}\right) + (1)\left(\frac{1}{2}\right)} = \frac{\frac{1}{8}}{\frac{1}{8} + \frac{1}{2}} = \frac{1}{5}
+    \]
+
+    \noindent
+    \textbf{(c)}
+
+    \noindent
+    A two-headed coin can never land on tails. Since a tail is observed on the third flip, the probability that the coin is the two-headed coin drops to $0$, meaning it must be the fair coin with absolute certainty:
+    \[
+    P(F \mid \text{third flip is tails}) = 1
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-41}
+    In a certain species of rats, black dominates over brown. Suppose that a black rat with two black parents has a brown sibling.
+    \begin{enumerate}
+        \item[(a)] What is the probability that this rat is a pure black rat (as opposed to being a hybrid with one black and one brown gene)?
+        \item[(b)] Suppose that when the black rat is mated with a brown rat, all five of their offspring are black. Now, what is the probability that the rat is a pure black rat?
+    \end{enumerate}
+\end{exercise}
+
+\solution{
+    Let $B$ denote the dominant black gene and $b$ denote the recessive brown gene.
+    Since the rat has a brown sibling, that sibling must have the genotype $bb$. This implies that both parents must carry the recessive gene, meaning both parents are hybrids with genotype $Bb$.
+
+    A genetic cross between two $Bb$ parents yields offspring genotypes with the following probabilities:
+    \[
+    P(BB) = \frac{1}{4}, \quad P(Bb) = \frac{1}{2}, \quad P(bb) = \frac{1}{4}
+    \]
+
+    \noindent
+    \textbf{(a)}
+
+    \noindent
+    We are given that the rat in question is black, which rules out the $bb$ genotype. We want to find the conditional probability that it is pure black ($BB$) given that it is black ($BB \cup Bb$):
+    \[
+    P(BB \mid \text{Black}) = \frac{P(BB)}{P(BB) + P(Bb)} = \frac{\frac{1}{4}}{\frac{1}{4} + \frac{1}{2}} = \frac{1}{3}
+    \]
+    Thus, the prior probabilities for our target rat are $P(BB) = \frac{1}{3}$ and $P(Bb) = \frac{2}{3}$.
+
+    \noindent
+    \textbf{(b)}
+
+    \noindent
+    The black rat is mated with a brown rat ($bb$). Let $E$ be the event that all 5 offspring are black.
+    \begin{itemize}
+        \item If the rat is pure black ($BB$), a $BB \times bb$ cross will always produce $Bb$ (black) offspring. Thus, $P(E \mid BB) = 1$.
+        \item If the rat is a hybrid ($Bb$), a $Bb \times bb$ cross gives each offspring a $\frac{1}{2}$ chance of being black ($Bb$). For 5 independent offspring, $P(E \mid Bb) = \left(\frac{1}{2}\right)^5 = \frac{1}{32}$.
+    \end{itemize}
+    Using Bayes' Theorem to find the updated probability $P(BB \mid E)$:
+    \[
+    P(BB \mid E) = \frac{P(E \mid BB)P(BB)}{P(E \mid BB)P(BB) + P(E \mid Bb)P(Bb)} = \frac{(1)\left(\frac{1}{3}\right)}{(1)\left(\frac{1}{3}\right) + \left(\frac{1}{32}\right)\left(\frac{2}{3}\right)}
+    \]
+    \[
+    P(BB \mid E) = \frac{\frac{1}{3}}{\frac{1}{3} + \frac{1}{48}} = \frac{\frac{1}{3}}{\frac{16 + 1}{48}} = \frac{1}{3} \times \frac{48}{17} = \frac{16}{17} \approx 0.9412
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-42}
+    There are three coins in a box. One is a two-headed coin, another is a fair coin, and the third is a biased coin that comes up heads 75 percent of the time. When one of the three coins is selected at random and flipped, it shows heads. What is the probability that it was the two-headed coin?
+\end{exercise}
+
+\solution{
+    Let $C_1, C_2,$ and $C_3$ represent the selection of the two-headed coin, the fair coin, and the biased coin, respectively. Since a coin is selected at random:
+    \[
+    P(C_1) = P(C_2) = P(C_3) = \frac{1}{3}
+    \]
+    Let $H$ be the event that the flipped coin shows heads. The conditional probabilities are:
+    \[
+    P(H \mid C_1) = 1, \quad P(H \mid C_2) = 0.5 = \frac{1}{2}, \quad P(H \mid C_3) = 0.75 = \frac{3}{4}
+    \]
+    We use Bayes' Theorem to find $P(C_1 \mid H)$:
+    \[
+    P(C_1 \mid H) = \frac{P(H \mid C_1)P(C_1)}{P(H \mid C_1)P(C_1) + P(H \mid C_2)P(C_2) + P(H \mid C_3)P(C_3)}
+    \]
+    \[
+    P(C_1 \mid H) = \frac{(1)\left(\frac{1}{3}\right)}{(1)\left(\frac{1}{3}\right) + \left(\frac{1}{2}\right)\left(\frac{1}{3}\right) + \left(\frac{3}{4}\right)\left(\frac{1}{3}\right)}
+    \]
+    Canceling out the common factor of $\frac{1}{3}$ from the numerator and denominator:
+    \[
+    P(C_1 \mid H) = \frac{1}{1 + \frac{1}{2} + \frac{3}{4}} = \frac{1}{\frac{4 + 2 + 3}{4}} = \frac{1}{\frac{9}{4}} = \frac{4}{9}
+    \]
+}
+
+\begin{exercise}
+\label{ex:probability-43}
+    Suppose we have ten coins which are such that if the $i$th one is flipped then heads will appear with probability $i/10, i = 1, 2, \dots, 10$. When one of the coins is randomly selected and flipped, it shows heads. What is the conditional probability that it was the fifth coin?
+\end{exercise}
+
+\solution{
+    Let $C_i$ be the event that the $i$-th coin is selected, where $i \in \{1, 2, \dots, 10\}$. Since the coin choice is completely random:
+    \[
+    P(C_i) = \frac{1}{10} \quad \text{for all } i
+    \]
+    Let $H$ be the event that the flipped coin lands on heads. The conditional probability for the $i$-th coin is given as:
+    \[
+    P(H \mid C_i) = \frac{i}{10}
+    \]
+    We want to find $P(C_5 \mid H)$. First, compute the total probability of landing on heads, $P(H)$, using the Law of Total Probability:
+    \[
+    P(H) = \sum_{i=1}^{10} P(H \mid C_i)P(C_i) = \sum_{i=1}^{10} \left(\frac{i}{10}\right)\left(\frac{1}{10}\right) = \frac{1}{100} \sum_{i=1}^{10} i
+    \]
+    Using the arithmetic series sum formula $\sum_{i=1}^{n} i = \frac{n(n+1)}{2}$:
+    \[
+    \sum_{i=1}^{10} i = \frac{10 \times 11}{2} = 55 \implies P(H) = \frac{55}{100}
+    \]
+    Now, apply Bayes' Theorem for the fifth coin ($C_5$):
+    \[
+    P(C_5 \mid H) = \frac{P(H \mid C_5)P(C_5)}{P(H)} = \frac{\left(\frac{5}{10}\right)\left(\frac{1}{10}\right)}{\frac{55}{100}} = \frac{\frac{5}{100}}{\frac{55}{100}} = \frac{5}{55} = \frac{1}{11}
+    \]
+}
+
+\setcounter{exercise}{43}
+\begin{exercise}
+\label{ex:probability-44}
+    Urn 1 has five white and seven black balls. Urn 2 has three white and twelve black balls. We flip a fair coin. If the outcome is heads, then a ball from urn 1 is selected, while if the outcome is tails, then a ball from urn 2 is selected. Suppose that a white ball is selected. What is the probability that the coin landed tails?
+\end{exercise}
+
+\solution{
+    Let $H$ be the event that the coin lands heads (Urn 1 is chosen), and $T$ be the event that the coin lands tails (Urn 2 is chosen). Since the coin is fair, we have:
+    \[
+    P(H) = \frac{1}{2}, \quad P(T) = \frac{1}{2}
+    \]
+    Let $W$ be the event that a white ball is selected. The conditional probabilities of selecting a white ball given the chosen urn are:
+    \[
+    P(W|H) = \frac{5}{5 + 7} = \frac{5}{12}
+    \]
+    \[
+    P(W|T) = \frac{3}{3 + 12} = \frac{3}{15} = \frac{1}{5}
+    \]
+    We want to find the probability that the coin landed tails given that a white ball was selected, $P(T|W)$. By Bayes' Theorem:
+    \[
+    P(T|W) = \frac{P(W|T)P(T)}{P(W|T)P(T) + P(W|H)P(H)}
+    \]
+    Substituting the known values:
+    \[
+    P(T|W) = \frac{\left(\frac{1}{5}\right)\left(\frac{1}{2}\right)}{\left(\frac{1}{5}\right)\left(\frac{1}{2}\right) + \left(\frac{5}{12}\right)\left(\frac{1}{2}\right)} = \frac{\frac{1}{10}}{\frac{1}{10} + \frac{5}{24}}
+    \]
+    Multiply the numerator and the denominator by 120 (the least common multiple of 10 and 24):
+    \[
+    P(T|W) = \frac{12}{12 + 25} = \frac{12}{37}
+    \]
+}
+
+\setcounter{exercise}{44}
+\begin{exercise}
+\label{ex:probability-45}
+    An urn contains $b$ black balls and $r$ red balls. One of the balls is drawn at random, but when it is put back in the urn $c$ additional balls of the same color are put in with it. Now suppose that we draw another ball. Show that the probability that the first ball drawn was black given that the second ball drawn was red is $b/(b + r + c)$.
+\end{exercise}
+
+\solution{
+    Let $B_1$ be the event that the first ball drawn is black, and $R_1$ be the event that the first ball drawn is red. Their initial probabilities are:
+    \[
+    P(B_1) = \frac{b}{b+r}, \quad P(R_1) = \frac{r}{b+r}
+    \]
+    Let $R_2$ be the event that the second ball drawn is red. We determine the conditional probabilities for the second draw based on the first draw's outcome:
+    \begin{itemize}
+        \item If $B_1$ occurs, the urn contains $b+c$ black balls and $r$ red balls. Thus, $P(R_2|B_1) = \frac{r}{b+r+c}$.
+        \item If $R_1$ occurs, the urn contains $b$ black balls and $r+c$ red balls. Thus, $P(R_2|R_1) = \frac{r+c}{b+r+c}$.
+    \end{itemize}
+    We need to find the probability that the first ball was black given the second was red, $P(B_1|R_2)$. Using Bayes' Theorem:
+    \[
+    P(B_1|R_2) = \frac{P(R_2|B_1)P(B_1)}{P(R_2|B_1)P(B_1) + P(R_2|R_1)P(R_1)}
+    \]
+    Substitute the probabilities:
+    \[
+    P(B_1|R_2) = \frac{\left(\frac{r}{b+r+c}\right)\left(\frac{b}{b+r}\right)}{\left(\frac{r}{b+r+c}\right)\left(\frac{b}{b+r}\right) + \left(\frac{r+c}{b+r+c}\right)\left(\frac{r}{b+r}\right)}
+    \]
+    Since the denominator $(b+r+c)(b+r)$ is common to all terms in the main fraction, we can cancel it out:
+    \[
+    P(B_1|R_2) = \frac{rb}{rb + (r+c)r} = \frac{rb}{rb + r^2 + cr}
+    \]
+    Factor out $r$ from the denominator:
+    \[
+    P(B_1|R_2) = \frac{rb}{r(b + r + c)} = \frac{b}{b+r+c}
+    \]
+    This completes the proof.
+}
+
+\setcounter{exercise}{45}
+\begin{exercise}
+\label{ex:probability-46}
+    Three prisoners are informed by their jailer that one of them has been chosen at random to be executed, and the other two are to be freed. Prisoner $A$ asks the jailer to tell him privately which of his fellow prisoners will be set free, claiming that there would be no harm in divulging this information, since he already knows that at least one will go free. The jailer refuses to answer this question, pointing out that if $A$ knew which of his fellows were to be set free, then his own probability of being executed would rise from $\frac{1}{3}$ to $\frac{1}{2}$, since he would then be one of two prisoners. What do you think of the jailer's reasoning?
+\end{exercise}
+
+\solution{
+    The jailer's conclusion does not follow without specifying how he chooses which freed prisoner to name. Under the usual symmetric reporting rule, A's probability remains $1/3$. We can prove the jailer wrong by calculating the conditional probability of A being executed using Bayes' Theorem.
+
+    \noindent
+    Let $E_A, E_B,$ and $E_C$ be the events that prisoner A, B, or C is executed, respectively. Since the choice is random, the prior probabilities are:
+    \[
+    P(E_A) = P(E_B) = P(E_C) = \frac{1}{3}
+    \]
+    Let $J_B$ be the event that the jailer tells A that prisoner B will go free. We evaluate the probability of the jailer naming B under each condition:
+    \begin{itemize}
+        \item If A is to be executed ($E_A$), both B and C go free. The jailer can randomly choose between B and C. Assuming he picks with equal probability: $P(J_B|E_A) = \frac{1}{2}$.
+        \item If B is to be executed ($E_B$), the jailer must name C to go free (he cannot name A to A, nor can he name the condemned). Thus, $P(J_B|E_B) = 0$.
+        \item If C is to be executed ($E_C$), the jailer must name B to go free. Thus, $P(J_B|E_C) = 1$.
+    \end{itemize}
+
+    \noindent
+    We want to find $P(E_A|J_B)$, the probability that A is executed given the jailer names B. Using Bayes' Theorem:
+    \[
+    P(E_A|J_B) = \frac{P(J_B|E_A)P(E_A)}{P(J_B|E_A)P(E_A) + P(J_B|E_B)P(E_B) + P(J_B|E_C)P(E_C)}
+    \]
+    \[
+    P(E_A|J_B) = \frac{\left(\frac{1}{2}\right)\left(\frac{1}{3}\right)}{\left(\frac{1}{2}\right)\left(\frac{1}{3}\right) + (0)\left(\frac{1}{3}\right) + (1)\left(\frac{1}{3}\right)} = \frac{\frac{1}{6}}{\frac{1}{6} + 0 + \frac{1}{3}} = \frac{\frac{1}{6}}{\frac{3}{6}} = \frac{1}{3}
+    \]
+
+    \noindent
+    Therefore, even after learning that B goes free, prisoner A's probability of being executed remains exactly $\frac{1}{3}$, not $\frac{1}{2}$. More generally, let $a=P(J_B\mid E_A)$. Then Bayes' rule gives $P(E_A\mid J_B)=a/(a+1)$. The value $1/3$ uses $a=1/2$; if the jailer always names B when he can, the posterior after naming B is $1/2$. Thus his reporting protocol matters.
+}
+
+\setcounter{exercise}{47}
+\begin{exercise}
+\label{ex:probability-48}
+    Sixty percent of the families in a certain community own their own car, thirty percent own their own home, and twenty percent own both their own car and their own home. If a family is randomly chosen, what is the probability that this family owns a car or a house but not both?
+\end{exercise}
+
+\solution{
+    Let $C$ be the event that a randomly chosen family owns a car, and $H$ be the event that they own a home. We are given the following probabilities:
+    \[
+    P(C) = 0.60
+    \]
+    \[
+    P(H) = 0.30
+    \]
+    \[
+    P(C \cap H) = 0.20
+    \]
+    We want to find the probability that a family owns a car or a house, but not both. This is mathematically represented by the symmetric difference:
+    \[
+    P(C \text{ only}) + P(H \text{ only}) = P(C \cap H^c) + P(C^c \cap H)
+    \]
+    We can calculate these disjoint probabilities by subtracting the intersection from the individual marginal probabilities:
+    \[
+    P(C \cap H^c) = P(C) - P(C \cap H) = 0.60 - 0.20 = 0.40
+    \]
+    \[
+    P(C^c \cap H) = P(H) - P(C \cap H) = 0.30 - 0.20 = 0.10
+    \]
+    Adding these together gives the final probability:
+    \[
+    P(\text{car or house, not both}) = 0.40 + 0.10 = 0.50
+    \]
+
+    \noindent
+    \textit{Alternative method:} You can also find the probability of the union and subtract the intersection:
+    \[
+    P(C \cup H) - P(C \cap H) = (P(C) + P(H) - P(C \cap H)) - P(C \cap H)
+    \]
+    \[
+    = (0.60 + 0.30 - 0.20) - 0.20 = 0.70 - 0.20 = 0.50
+    \]
+}

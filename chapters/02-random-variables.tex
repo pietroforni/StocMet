@@ -1,0 +1,2123 @@
+\section{Random Variables}
+\label{sec:random-variables}
+
+\setcounter{exercise}{0}
+
+\begin{exercise}
+\label{ex:random-variables-1}
+An urn contains five red, three orange, and two blue balls. Two balls are randomly selected. What is the sample space of this experiment? Let $X$ represent the number of orange balls selected. What are the possible values of $X$? Calculate $P\{X=0\}$.
+\end{exercise}
+
+\solution{
+The experiment consists of selecting two balls from an urn containing red, orange, and blue balls. If we describe outcomes only by color, the sample space is
+\[
+S=\{RR,RO,RB,OO,OB,BB\}.
+\]
+Since $X$ represents the number of orange balls selected, the possible values are
+\[
+X\in\{0,1,2\}.
+\]
+There are $10$ total balls, of which $7$ are not orange. Thus,
+\[
+P\{X=0\}
+=
+\frac{\binom{7}{2}}{\binom{10}{2}}
+=
+\frac{21}{45}
+=
+\frac{7}{15}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-2}
+Let $X$ represent the difference between the number of heads and the number of tails obtained when a coin is tossed $n$ times. What are the possible values of $X$?
+\end{exercise}
+
+\solution{
+Let $H$ be the number of heads and $T$ be the number of tails. Since the coin is tossed $n$ times,
+\[
+H+T=n.
+\]
+The random variable is
+\[
+X=H-T.
+\]
+Since $T=n-H$, we get
+\[
+X=H-(n-H)=2H-n.
+\]
+As $H$ can take the values $0,1,2,\ldots,n$, the possible values of $X$ are
+\[
+X\in\{-n,-n+2,-n+4,\ldots,n-2,n\}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-3}
+In Exercise 2, if the coin is assumed fair, then, for $n=2$, what are the probabilities associated with the values that $X$ can take on?
+\end{exercise}
+
+\solution{
+For $n=2$, the sample space is
+\[
+S=\{HH,HT,TH,TT\}.
+\]
+Each outcome has probability $\frac14$.
+
+The possible values of $X=H-T$ are
+\[
+X\in\{-2,0,2\}.
+\]
+We compute:
+\[
+P\{X=2\}=P(HH)=\frac14,
+\]
+\[
+P\{X=0\}=P(HT\text{ or }TH)=\frac24=\frac12,
+\]
+\[
+P\{X=-2\}=P(TT)=\frac14.
+\]
+Thus,
+\[
+P_X(x)=
+\begin{cases}
+\frac14, & x=-2,\\
+\frac12, & x=0,\\
+\frac14, & x=2,\\
+0, & \text{otherwise}.
+\end{cases}
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-4}
+Suppose a die is rolled twice. What are the possible values that the following random variables can take on?
+\begin{enumerate}
+\item The maximum value to appear in the two rolls.
+\item The minimum value to appear in the two rolls.
+\item The sum of the two rolls.
+\item The value of the first roll minus the value of the second roll.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let the two rolls be denoted by $(i,j)$, where
+\[
+i,j\in\{1,2,3,4,5,6\}.
+\]
+
+\noindent
+\textbf{(a) Maximum value}
+
+The maximum value can be any number from $1$ to $6$, so
+\[
+\{1,2,3,4,5,6\}.
+\]
+
+\noindent
+\textbf{(b) Minimum value}
+
+The minimum value can also be any number from $1$ to $6$, so
+\[
+\{1,2,3,4,5,6\}.
+\]
+
+\noindent
+\textbf{(c) Sum of the two rolls}
+
+The smallest possible sum is $1+1=2$, and the largest possible sum is $6+6=12$. Hence the possible values are
+\[
+\{2,3,4,5,6,7,8,9,10,11,12\}.
+\]
+
+\noindent
+\textbf{(d) First roll minus second roll}
+
+The smallest possible difference is $1-6=-5$, and the largest possible difference is $6-1=5$. Hence the possible values are
+\[
+\{-5,-4,-3,-2,-1,0,1,2,3,4,5\}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-5}
+If the die in Exercise 4 is assumed fair, calculate the probabilities associated with the random variables in (i)--(iv).
+\end{exercise}
+
+\solution{
+Since the die is fair and rolled twice, the sample space has $36$ equally likely outcomes.
+
+\noindent
+\textbf{(i) Maximum value}
+
+Let $M$ be the maximum of the two rolls. For $m=1,2,\ldots,6$,
+\[
+P\{M=m\}
+=
+P\{M\le m\}-P\{M\le m-1\}
+=
+\left(\frac{m}{6}\right)^2-\left(\frac{m-1}{6}\right)^2.
+\]
+Thus,
+\[
+P\{M=m\}=\frac{2m-1}{36}, \qquad m=1,2,\ldots,6.
+\]
+
+\noindent
+\textbf{(ii) Minimum value}
+
+Let $N$ be the minimum of the two rolls. For $n=1,2,\ldots,6$,
+\[
+P\{N=n\}
+=
+P\{N\ge n\}-P\{N\ge n+1\}
+=
+\left(\frac{7-n}{6}\right)^2-\left(\frac{6-n}{6}\right)^2.
+\]
+Thus,
+\[
+P\{N=n\}=\frac{13-2n}{36}, \qquad n=1,2,\ldots,6.
+\]
+
+\noindent
+\textbf{(iii) Sum of the two rolls}
+
+Let $S$ be the sum. Then
+\[
+P\{S=s\}
+=
+\begin{cases}
+\dfrac{s-1}{36}, & s=2,3,4,5,6,7,\\[6pt]
+\dfrac{13-s}{36}, & s=8,9,10,11,12,\\[6pt]
+0, & \text{otherwise}.
+\end{cases}
+\]
+
+\noindent
+\textbf{(iv) First roll minus second roll}
+
+Let $D$ be the first roll minus the second roll. Then $D$ can take values
+\[
+-5,-4,-3,-2,-1,0,1,2,3,4,5.
+\]
+For $d=-5,-4,\ldots,5$,
+\[
+P\{D=d\}=\frac{6-|d|}{36}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-6}
+Suppose five fair coins are tossed. Let $E$ be the event that all coins land heads. Define the random variable $I_E$ by
+\[
+I_E=
+\begin{cases}
+1, & \text{if } E \text{ occurs},\\
+0, & \text{if } E^c \text{ occurs}.
+\end{cases}
+\]
+For what outcomes in the original sample space does $I_E$ equal $1$? What is $P\{I_E=1\}$?
+\end{exercise}
+
+\solution{
+The original sample space consists of all sequences of five coin tosses:
+\[
+S=\{H,T\}^5.
+\]
+The random variable $I_E$ equals $1$ exactly when event $E$ occurs, that is, when all five coins land heads.
+
+Thus,
+\[
+I_E=1
+\]
+only for the outcome
+\[
+HHHHH.
+\]
+Since the coins are fair,
+\[
+P\{I_E=1\}=P(E)=P(HHHHH)=\left(\frac12\right)^5=\frac{1}{32}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-7}
+Suppose a coin having probability $0.7$ of coming up heads is tossed three times. Let $X$ denote the number of heads that appear in the three tosses. Determine the probability mass function of $X$.
+\end{exercise}
+
+\solution{
+Since the coin is tossed three times independently and the probability of heads is $0.7$, the random variable $X$ has a binomial distribution with parameters
+\[
+n=3, \qquad p=0.7.
+\]
+Therefore,
+\[
+P\{X=k\}
+=
+\binom{3}{k}(0.7)^k(0.3)^{3-k},
+\qquad k=0,1,2,3.
+\]
+Calculating each value:
+\[
+P\{X=0\}=\binom{3}{0}(0.7)^0(0.3)^3=0.027,
+\]
+\[
+P\{X=1\}=\binom{3}{1}(0.7)^1(0.3)^2=0.189,
+\]
+\[
+P\{X=2\}=\binom{3}{2}(0.7)^2(0.3)^1=0.441,
+\]
+\[
+P\{X=3\}=\binom{3}{3}(0.7)^3(0.3)^0=0.343.
+\]
+Thus, the probability mass function is
+\[
+P_X(k)=
+\begin{cases}
+\binom{3}{k}(0.7)^k(0.3)^{3-k}, & k=0,1,2,3,\\
+0, & \text{otherwise}.
+\end{cases}
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-8}
+Suppose the distribution function of $X$ is given by
+\[
+F(b)=
+\begin{cases}
+0, & b<0,\\
+\dfrac12, & 0\le b<1,\\
+1, & b\ge 1.
+\end{cases}
+\]
+What is the probability mass function of $X$?
+\end{exercise}
+
+\solution{
+For a discrete random variable, the probability mass at a point equals the jump of the distribution function at that point:
+\[
+P(X=x)=F(x)-\lim_{t\to x^-}F(t).
+\]
+
+The distribution function has jumps at $x=0$ and $x=1$.
+
+At $x=0$:
+\[
+P(X=0)=F(0)-F(0^-)
+=\frac12-0
+=\frac12.
+\]
+
+At $x=1$:
+\[
+P(X=1)=F(1)-F(1^-)
+=1-\frac12
+=\frac12.
+\]
+
+Hence the probability mass function is
+\[
+p_X(x)=
+\begin{cases}
+\dfrac12, & x=0,\\[6pt]
+\dfrac12, & x=1,\\[6pt]
+0, & \text{otherwise}.
+\end{cases}
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-9}
+If the distribution function of $X$ is given by
+\[
+F(b)=
+\begin{cases}
+0, & b<0,\\[4pt]
+\dfrac12, & 0\le b<1,\\[4pt]
+\dfrac35, & 1\le b<2,\\[4pt]
+\dfrac45, & 2\le b<3,\\[4pt]
+\dfrac9{10}, & 3\le b<3.5,\\[4pt]
+1, & b\ge 3.5,
+\end{cases}
+\]
+calculate the probability mass function of $X$.
+\end{exercise}
+
+\solution{
+The probability masses are obtained from the jumps of the distribution function.
+
+\[
+P(X=0)=\frac12-0=\frac12.
+\]
+
+\[
+P(X=1)=\frac35-\frac12=\frac1{10}.
+\]
+
+\[
+P(X=2)=\frac45-\frac35=\frac15.
+\]
+
+\[
+P(X=3)=\frac9{10}-\frac45=\frac1{10}.
+\]
+
+\[
+P(X=3.5)=1-\frac9{10}=\frac1{10}.
+\]
+
+Checking:
+\[
+\frac12+\frac1{10}+\frac15+\frac1{10}+\frac1{10}
+=1.
+\]
+
+Therefore,
+\[
+p_X(x)=
+\begin{cases}
+\dfrac12, & x=0,\\[6pt]
+\dfrac1{10}, & x=1,\\[6pt]
+\dfrac15, & x=2,\\[6pt]
+\dfrac1{10}, & x=3,\\[6pt]
+\dfrac1{10}, & x=3.5,\\[6pt]
+0, & \text{otherwise}.
+\end{cases}
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-10}
+Suppose three fair dice are rolled. What is the probability that at most one six appears?
+\end{exercise}
+
+\solution{
+Let $X$ denote the number of sixes obtained in the three rolls.
+
+Since each die is fair,
+\[
+P(\text{six})=\frac16,
+\qquad
+P(\text{not six})=\frac56.
+\]
+
+We want
+\[
+P(X\le 1)=P(X=0)+P(X=1).
+\]
+
+First,
+\[
+P(X=0)=\left(\frac56\right)^3=\frac{125}{216}.
+\]
+
+Next,
+\[
+P(X=1)
+=
+\binom31\left(\frac16\right)\left(\frac56\right)^2
+=
+3\cdot\frac16\cdot\frac{25}{36}
+=
+\frac{75}{216}.
+\]
+
+Therefore,
+\[
+P(X\le1)
+=
+\frac{125}{216}+\frac{75}{216}
+=
+\frac{200}{216}
+=
+\frac{25}{27}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-11}
+A ball is drawn from an urn containing three white and three black balls. After the ball is drawn, it is replaced and another ball is drawn. This goes on indefinitely. What is the probability that of the first four balls drawn, exactly two are white?
+\end{exercise}
+
+\solution{
+Since the ball is replaced after each draw, the draws are independent.
+
+Let $X$ denote the number of white balls among the first four draws.
+
+Since
+\[
+P(\text{white})=\frac36=\frac12,
+\]
+we have
+\[
+X\sim \operatorname{Binomial}(4,\tfrac12).
+\]
+
+Therefore,
+\[
+P(X=2)
+=
+\binom42
+\left(\frac12\right)^2
+\left(\frac12\right)^2
+=
+\binom42\left(\frac12\right)^4.
+\]
+
+Since
+\[
+\binom42=6,
+\]
+we obtain
+\[
+P(X=2)
+=
+6\cdot\frac1{16}
+=
+\frac38.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-12}
+On a multiple-choice exam with three possible answers for each of the five questions, what is the probability that a student would get four or more correct answers just by guessing?
+\end{exercise}
+
+\solution{
+Let $X$ be the number of correct answers.
+
+Each question is answered correctly with probability
+\[
+p=\frac13.
+\]
+
+Thus
+\[
+X\sim \operatorname{Binomial}(5,\tfrac13).
+\]
+
+We seek
+\[
+P(X\ge4)=P(X=4)+P(X=5).
+\]
+
+Compute:
+\[
+P(X=4)
+=
+\binom54
+\left(\frac13\right)^4
+\left(\frac23\right)
+=
+5\cdot\frac1{81}\cdot\frac23
+=
+\frac{10}{243}.
+\]
+
+\[
+P(X=5)
+=
+\binom55
+\left(\frac13\right)^5
+=
+\frac1{243}.
+\]
+
+Hence
+\[
+P(X\ge4)
+=
+\frac{10}{243}+\frac1{243}
+=
+\frac{11}{243}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-13}
+An individual claims to have extrasensory perception (ESP). As a test, a fair coin is flipped ten times, and he is asked to predict in advance the outcome. Our individual gets seven out of ten correct. What is the probability he would have done at least this well if he had no ESP?
+\end{exercise}
+
+\solution{
+If the individual has no ESP, each prediction is simply a random guess.
+
+Let $X$ denote the number of correct predictions among the ten flips.
+
+Since each prediction is correct with probability
+\[
+p=\frac12,
+\]
+we have
+\[
+X\sim \operatorname{Binomial}(10,\tfrac12).
+\]
+
+The phrase ``at least this well'' means obtaining seven or more correct predictions. Therefore the relevant probability is
+\[
+P(X\ge7),
+\]
+not merely $P(X=7)$, because outcomes with $8$, $9$, or $10$ correct predictions would provide at least as much evidence in favor of ESP as getting exactly $7$ correct.
+
+Thus,
+\[
+P(X\ge7)
+=
+P(X=7)+P(X=8)+P(X=9)+P(X=10).
+\]
+
+Using the binomial formula,
+\[
+P(X\ge7)
+=
+\sum_{k=7}^{10}
+\binom{10}{k}
+\left(\frac12\right)^{10}.
+\]
+
+Hence
+\[
+P(X\ge7)
+=
+\frac{\binom{10}{7}+\binom{10}{8}+\binom{10}{9}+\binom{10}{10}}
+{2^{10}}.
+\]
+
+Substituting the binomial coefficients,
+\[
+P(X\ge7)
+=
+\frac{120+45+10+1}{1024}
+=
+\frac{176}{1024}
+=
+\frac{11}{64}.
+\]
+
+Therefore,
+\[
+{P(X\ge7)=\frac{11}{64}\approx0.1719.}
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-14}
+Suppose $X$ has a binomial distribution with parameters $6$ and $\frac12$. Show that $X=3$ is the most likely outcome.
+\end{exercise}
+
+\solution{
+Since $X\sim \operatorname{Binomial}(6,\frac12)$,
+\[
+P(X=k)=\binom{6}{k}\left(\frac12\right)^6,
+\qquad k=0,1,\ldots,6.
+\]
+Thus the probabilities are proportional to $\binom{6}{k}$.
+
+The binomial coefficients are
+\[
+\binom60=1,\quad
+\binom61=6,\quad
+\binom62=15,\quad
+\binom63=20,\quad
+\binom64=15,\quad
+\binom65=6,\quad
+\binom66=1.
+\]
+The largest coefficient is
+\[
+\binom63=20.
+\]
+Therefore,
+\[
+P(X=3)
+\]
+is the largest probability, so $X=3$ is the most likely outcome.
+}
+
+\begin{exercise}
+\label{ex:random-variables-15}
+Let $X$ be binomially distributed with parameters $n$ and $p$. Show that as $k$ goes from $0$ to $n$, $P(X=k)$ increases monotonically, then decreases monotonically, reaching its largest value
+\begin{enumerate}
+\item when $(n+1)p$ is an integer, at $k=(n+1)p-1$ and $k=(n+1)p$,
+\item when $(n+1)p$ is not an integer, at the unique integer $k$ satisfying
+\[
+(n+1)p-1<k<(n+1)p.
+\]
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Assume $0<p<1$. At $p=0$ or $p=1$ the variable is constant with its unique mode at $0$ or $n$, respectively. For $X\sim \operatorname{Binomial}(n,p)$,
+\[
+P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}.
+\]
+Consider the ratio
+\[
+\frac{P(X=k)}{P(X=k-1)}
+=
+\frac{\binom{n}{k}p^k(1-p)^{n-k}}
+{\binom{n}{k-1}p^{k-1}(1-p)^{n-k+1}}.
+\]
+Simplifying,
+\[
+\frac{P(X=k)}{P(X=k-1)}
+=
+\frac{n-k+1}{k}\cdot \frac{p}{1-p}.
+\]
+Therefore,
+\[
+\frac{P(X=k)}{P(X=k-1)}>1
+\]
+if and only if
+\[
+\frac{n-k+1}{k}\cdot \frac{p}{1-p}>1.
+\]
+This is equivalent to
+\[
+(n-k+1)p>k(1-p).
+\]
+Expanding,
+\[
+np-kp+p>k-kp.
+\]
+Hence
+\[
+(n+1)p>k.
+\]
+So
+\[
+P(X=k)>P(X=k-1)
+\]
+if and only if
+\[
+k<(n+1)p.
+\]
+
+Similarly,
+\[
+P(X=k)<P(X=k-1)
+\]
+if and only if
+\[
+k>(n+1)p.
+\]
+
+Thus the probabilities increase while $k<(n+1)p$ and decrease after $k>(n+1)p$.
+
+If $(n+1)p$ is an integer, then at $k=(n+1)p$,
+\[
+\frac{P(X=k)}{P(X=k-1)}=1.
+\]
+Thus the two adjacent values
+\[
+k=(n+1)p-1
+\qquad\text{and}\qquad
+k=(n+1)p
+\]
+have equal largest probability.
+
+If $(n+1)p$ is not an integer, then there is a unique integer $k$ satisfying
+\[
+(n+1)p-1<k<(n+1)p.
+\]
+This value of $k$ gives the unique largest probability.
+}
+
+\begin{exercise}
+\label{ex:random-variables-16}
+An airline knows that $5$ percent of the people making reservations on a certain flight will not show up. Consequently, their policy is to sell $52$ tickets for a flight that can hold only $50$ passengers. What is the probability that there will be a seat available for every passenger who shows up?
+\end{exercise}
+
+\solution{
+Let $X$ be the number of passengers who show up. Since each ticketed passenger shows up with probability
+\[
+0.95,
+\]
+we have
+\[
+X\sim \operatorname{Binomial}(52,0.95).
+\]
+
+There will be a seat available for every passenger if and only if at most $50$ passengers show up. Therefore, we want
+\[
+P(X\le 50).
+\]
+It is easier to compute the complement:
+\[
+P(X\le 50)=1-P(X=51)-P(X=52).
+\]
+Now,
+\[
+P(X=51)=\binom{52}{51}(0.95)^{51}(0.05),
+\]
+and
+\[
+P(X=52)=\binom{52}{52}(0.95)^{52}.
+\]
+Therefore,
+\[
+P(X\le 50)
+=
+1-\binom{52}{51}(0.95)^{51}(0.05)
+-(0.95)^{52}.
+\]
+Since $\binom{52}{51}=52$, this becomes
+\[
+P(X\le 50)
+=
+1-52(0.95)^{51}(0.05)-(0.95)^{52}.
+\]
+Thus,
+\[
+{
+P(X\le 50)
+=
+1-52(0.95)^{51}(0.05)-(0.95)^{52}
+}
+\]
+and numerically,
+\[
+P(X\le 50)\approx 0.7405.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-17}
+Suppose that an experiment can result in one of $r$ possible outcomes, the $i$th outcome having probability $p_i$, $i=1,\ldots,r$, with
+\[
+\sum_{i=1}^r p_i=1.
+\]
+If $n$ of these experiments are performed independently, show that the probability that the first outcome appears $x_1$ times, the second $x_2$ times, and the $r$th $x_r$ times is
+\[
+\frac{n!}{x_1!x_2!\cdots x_r!}p_1^{x_1}p_2^{x_2}\cdots p_r^{x_r},
+\]
+where
+\[
+x_1+x_2+\cdots+x_r=n.
+\]
+\end{exercise}
+
+\solution{
+Consider any particular ordering in which outcome $1$ appears $x_1$ times, outcome $2$ appears $x_2$ times, and so on, up to outcome $r$ appearing $x_r$ times.
+
+By independence, the probability of one such particular ordering is
+\[
+p_1^{x_1}p_2^{x_2}\cdots p_r^{x_r}.
+\]
+
+It remains to count how many such orderings are possible. We must arrange $n$ outcomes, with $x_1$ of type $1$, $x_2$ of type $2$, and so on. The number of such arrangements is the multinomial coefficient
+\[
+\frac{n!}{x_1!x_2!\cdots x_r!}.
+\]
+
+Therefore, multiplying the probability of one ordering by the number of orderings gives
+\[
+P(X_1=x_1,\ldots,X_r=x_r)
+=
+\frac{n!}{x_1!x_2!\cdots x_r!}
+p_1^{x_1}p_2^{x_2}\cdots p_r^{x_r},
+\]
+where
+\[
+x_1+x_2+\cdots+x_r=n.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-18}
+Show that when $r=2$ the multinomial reduces to the binomial.
+\end{exercise}
+
+\solution{
+When $r=2$, there are only two possible outcomes. Let their probabilities be
+\[
+p_1=p
+\qquad\text{and}\qquad
+p_2=1-p.
+\]
+Let
+\[
+x_1=k
+\qquad\text{and}\qquad
+x_2=n-k.
+\]
+The multinomial formula becomes
+\[
+P(X_1=k,X_2=n-k)
+=
+\frac{n!}{k!(n-k)!}p^k(1-p)^{n-k}.
+\]
+Since
+\[
+\frac{n!}{k!(n-k)!}=\binom{n}{k},
+\]
+we get
+\[
+P(X=k)=\binom{n}{k}p^k(1-p)^{n-k},
+\]
+which is exactly the binomial probability mass function.
+}
+
+\begin{exercise}
+\label{ex:random-variables-19}
+In Exercise 17, let $X_i$ denote the number of times the $i$th outcome appears, $i=1,\ldots,r$. What is the probability mass function of
+\[
+X_1+X_2+\cdots+X_k?
+\]
+\end{exercise}
+
+\solution{
+Let
+\[
+Y=X_1+X_2+\cdots+X_k.
+\]
+This random variable counts the number of experiments whose outcome is one of the first $k$ possible outcomes.
+
+For each experiment, define ``success'' as obtaining one of the first $k$ outcomes. Then
+\[
+P(\text{success})=p_1+p_2+\cdots+p_k.
+\]
+Let
+\[
+p=p_1+p_2+\cdots+p_k.
+\]
+Since the $n$ experiments are independent,
+\[
+Y\sim \operatorname{Binomial}(n,p).
+\]
+Therefore, the probability mass function of $Y$ is
+\[
+P(Y=j)
+=
+\binom{n}{j}
+\left(p_1+p_2+\cdots+p_k\right)^j
+\left(1-p_1-p_2-\cdots-p_k\right)^{n-j},
+\]
+for
+\[
+j=0,1,\ldots,n.
+\]
+Thus,
+\[
+P(X_1+\cdots+X_k=j)
+=
+\binom{n}{j}
+\left(\sum_{i=1}^k p_i\right)^j
+\left(1-\sum_{i=1}^k p_i\right)^{n-j}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-20}
+A television store owner figures that $50$ percent of the customers entering his store will purchase an ordinary television set, $20$ percent will purchase a color television set, and $30$ percent will just be browsing. If five customers enter his store on a certain day, what is the probability that two customers purchase color sets, one customer purchases an ordinary set, and two customers purchase nothing?
+\end{exercise}
+
+\solution{
+There are three possible customer outcomes:
+\[
+\text{ordinary set}: 0.5,
+\qquad
+\text{color set}: 0.2,
+\qquad
+\text{nothing}: 0.3.
+\]
+We want exactly $1$ ordinary purchase, $2$ color purchases, and $2$ customers purchasing nothing.
+
+Using the multinomial distribution,
+\[
+P
+=
+\frac{5!}{1!2!2!}
+(0.5)^1(0.2)^2(0.3)^2.
+\]
+Now,
+\[
+\frac{5!}{1!2!2!}=30.
+\]
+Thus,
+\[
+P
+=
+30(0.5)(0.04)(0.09).
+\]
+Therefore,
+\[
+P=0.054.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-21}
+In Exercise 20, what is the probability that our store owner sells three or more televisions on that day?
+\end{exercise}
+
+\solution{
+A television is sold if the customer purchases either an ordinary set or a color set. Hence
+\[
+P(\text{sale})=0.5+0.2=0.7.
+\]
+Let $X$ be the number of televisions sold among the five customers. Then
+\[
+X\sim \operatorname{Binomial}(5,0.7).
+\]
+We want
+\[
+P(X\ge 3).
+\]
+Thus,
+\[
+P(X\ge 3)
+=
+\sum_{k=3}^{5}
+\binom{5}{k}(0.7)^k(0.3)^{5-k}.
+\]
+Compute:
+\[
+P(X=3)=\binom53(0.7)^3(0.3)^2
+=10(0.343)(0.09)=0.3087,
+\]
+\[
+P(X=4)=\binom54(0.7)^4(0.3)
+=5(0.2401)(0.3)=0.36015,
+\]
+\[
+P(X=5)=\binom55(0.7)^5
+=0.16807.
+\]
+Therefore,
+\[
+P(X\ge3)=0.3087+0.36015+0.16807=0.83692.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-22}
+If a fair coin is successively flipped, find the probability that a head first appears on the fifth trial.
+\end{exercise}
+
+\solution{
+For the first head to appear on the fifth trial, the first four flips must be tails and the fifth flip must be heads.
+
+Thus the required outcome is
+\[
+TTTTH.
+\]
+Since the coin is fair and flips are independent,
+\[
+P(TTTTH)
+=
+\left(\frac12\right)^4\left(\frac12\right)
+=
+\left(\frac12\right)^5
+=
+\frac1{32}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-23}
+A coin having probability $p$ of coming up heads is successively flipped until the $r$th head appears. Argue that $X$, the number of flips required, will be $n$, $n\ge r$, with probability
+\[
+P(X=n)=\binom{n-1}{r-1}p^r(1-p)^{n-r}.
+\]
+\end{exercise}
+
+\solution{
+For the $r$th head to appear on the $n$th flip, two things must happen:
+
+\begin{enumerate}
+\item In the first $n-1$ flips, there must be exactly $r-1$ heads.
+\item The $n$th flip must be a head.
+\end{enumerate}
+
+The number of ways to arrange exactly $r-1$ heads among the first $n-1$ flips is
+\[
+\binom{n-1}{r-1}.
+\]
+
+For any such arrangement, the probability of having $r-1$ heads and $n-r$ tails in the first $n-1$ flips is
+\[
+p^{r-1}(1-p)^{n-r}.
+\]
+The probability that the $n$th flip is a head is
+\[
+p.
+\]
+Therefore,
+\[
+P(X=n)
+=
+\binom{n-1}{r-1}
+p^{r-1}(1-p)^{n-r}p.
+\]
+Hence
+\[
+P(X=n)
+=
+\binom{n-1}{r-1}
+p^r(1-p)^{n-r},
+\qquad n\ge r.
+\]
+}
+
+\setcounter{exercise}{23}
+
+\begin{exercise}
+\label{ex:random-variables-24}
+The probability mass function of $X$ is given by
+\[
+p(k) = \binom{r+k-1}{r-1} p^r (1-p)^k, \quad k = 0, 1, \ldots
+\]
+Give a possible interpretation of the random variable $X$.
+\end{exercise}
+
+\solution{
+From Exercise 23, $X$ can be interpreted as the \textbf{number of failures} (tails) that occur before the $r$-th success (head) when a biased coin with probability $p$ of heads is successively flipped. For the $r$-th head to appear after exactly $k$ tails, the first $r+k-1$ flips must contain exactly $r-1$ heads (in $\binom{r+k-1}{r-1}$ arrangements), and the $(r+k)$-th flip must be a head. This yields:
+\[
+p(k) = \binom{r+k-1}{r-1}p^{r-1}(1-p)^k \cdot p = \binom{r+k-1}{r-1}p^r(1-p)^k.
+\]
+This is the \textbf{negative binomial distribution} with parameters $r$ and $p$.
+}
+
+\noindent
+\textit{In Exercises 25 and 26, suppose that two teams are playing a series of games, each of which is independently won by team $A$ with probability $p$ and by team $B$ with probability $1-p$. The winner of the series is the first team to win $i$ games.}
+
+\begin{exercise}
+\label{ex:random-variables-25}
+If $i = 4$, find the probability that a total of $7$ games are played. Also show that this probability is maximized when $p = \frac{1}{2}$.
+\end{exercise}
+
+\solution{
+For the series to last exactly 7 games, the score after 6 games must be tied at $3$--$3$, after which game 7 is decisive. The probability that exactly 3 of the first 6 games are won by team $A$ is $\binom{6}{3}p^3(1-p)^3$, so:
+\[
+P(\text{7 games played}) = \binom{6}{3}p^3(1-p)^3 = 20\,p^3(1-p)^3.
+\]
+To maximise, let $f(p) = [p(1-p)]^3$. Differentiating:
+\[
+f'(p) = 3[p(1-p)]^2(1-2p) = 0 \implies p = \tfrac{1}{2}.
+\]
+Since $f''(1/2) < 0$, $p = \frac{1}{2}$ is a global maximum (on $(0,1)$), giving
+$P = 20 \cdot \left(\frac{1}{2}\right)^6 = \frac{20}{64} = \frac{5}{16}$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-26}
+Find the expected number of games that are played when
+\begin{enumerate}
+    \item [(a)] $i = 2$;
+    \item [(b)] $i = 3$.
+\end{enumerate}
+In both cases, show that this number is maximized when $p = \frac{1}{2}$.
+\end{exercise}
+
+\solution{
+\textbf{(a) $i = 2$ (first to win 2 games).} The series lasts 2 games if one team wins both immediately (probability $p^2+(1-p)^2$), and 3 games if the first two split (probability $2p(1-p)$, after which game 3 is decisive). Thus:
+\[
+E[N] = 2\bigl(p^2+(1-p)^2\bigr) + 3\cdot 2p(1-p) = -2p^2+2p+2.
+\]
+Differentiating: $\frac{d}{dp}(-2p^2+2p+2) = -4p+2 = 0 \Rightarrow p = \frac{1}{2}$. Since the second derivative is $-4 < 0$, $p = \frac{1}{2}$ is a maximum, giving $E[N] = 5/2$.
+
+\textbf{(b) $i = 3$ (first to win 3 games).} The series can last 3, 4, or 5 games:
+\begin{align*}
+P(3\text{ games}) &= p^3+(1-p)^3,\\
+P(4\text{ games}) &= 3\bigl[p^3(1-p)+p(1-p)^3\bigr] = 3p(1-p)\bigl[p^2+(1-p)^2\bigr],\\
+P(5\text{ games}) &= 6p^2(1-p)^2.
+\end{align*}
+Therefore:
+\[
+E[N] = 3\bigl[p^3+(1-p)^3\bigr] + 12p(1-p)\bigl[p^2+(1-p)^2\bigr] + 30\,p^2(1-p)^2.
+\]
+Since $E[N]$ is symmetric in $p$ and $1-p$, it has a critical point at $p = \frac{1}{2}$. Verifying it is a maximum (rather than a minimum) by evaluating: at $p = \frac{1}{2}$,
+\[
+E[N] = 3\cdot\tfrac{1}{4} + 4\cdot\tfrac{3}{8} + 5\cdot\tfrac{3}{8} = \tfrac{3}{4}+\tfrac{3}{2}+\tfrac{15}{8} = \frac{33}{8}.
+\]
+To prove global maximality, put $u=p(1-p)\in[0,1/4]$. The expression simplifies to $E[N]=3+3u+6u^2$, which is strictly increasing in $u$. Hence its maximum is attained at $u=1/4$, or $p=1/2$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-27}
+A fair coin is independently flipped $n$ times, $k$ times by $A$ and $n-k$ times by $B$. Show that the probability that $A$ and $B$ flip the same number of heads is equal to the probability that there are a total of $k$ heads.
+\end{exercise}
+
+\solution{
+Let $H_A \sim \mathrm{Bin}(k,\tfrac{1}{2})$ and $H_B \sim \mathrm{Bin}(n-k,\tfrac{1}{2})$ be independent. Then:
+\[
+P(H_A = H_B) = \sum_{i=0}^{\min(k,n-k)} P(H_A=i)\,P(H_B=i) = \sum_{i=0}^{\min(k,n-k)} \frac{\binom{k}{i}}{2^k}\cdot\frac{\binom{n-k}{i}}{2^{n-k}} = \frac{1}{2^n}\sum_i \binom{k}{i}\binom{n-k}{i}.
+\]
+Using the Vandermonde identity $\sum_i \binom{k}{i}\binom{n-k}{n-k-i} = \binom{n}{n-k} = \binom{n}{k}$ (and noting $\binom{n-k}{i} = \binom{n-k}{n-k-i}$):
+\[
+P(H_A = H_B) = \frac{\binom{n}{k}}{2^n}.
+\]
+The probability of exactly $k$ heads in $n$ fair flips is $\binom{n}{k}/2^n$. The two quantities are equal. 
+}
+
+\begin{exercise}
+\label{ex:random-variables-28}
+Suppose that we want to generate a random variable $X$ equally likely to be either $0$ or $1$, and all we have at our disposal is a biased coin with (unknown) probability $p$ of landing heads. Consider the following procedure:
+\begin{enumerate}
+    \item Flip the coin, and let $O_1$ be the result.
+    \item Flip the coin again, and let $O_2$ be the result.
+    \item If $O_1$ and $O_2$ are the same, return to step 1.
+    \item If $O_2$ is heads, set $X = 0$; otherwise set $X = 1$.
+\end{enumerate}
+\begin{enumerate}
+    \item [(a)] Show that $X$ is equally likely to be either $0$ or $1$.
+    \item [(b)] Could we use a simpler procedure that continues to flip the coin until the last two flips are different, and then sets $X=0$ if the final flip is a head, and $X=1$ if it is a tail?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Assume $0<p<1$ and independent flips; for $p=0$ or $p=1$, neither procedure terminates.\par
+\textbf{(a)} The procedure terminates only when the two outcomes differ (either HT or TH). Conditional on the outcomes being different, each configuration is equally likely:
+\[P(O_1 = T, O_2 = H \mid O_1 \neq O_2) = \frac{P(TH)}{P(TH) + P(HT)} = \frac{p(1-p)}{p(1-p) + p(1-p)} = \frac{p(1-p)}{2p(1-p)} = \frac{1}{2}\]
+Since $X=0$ iff $O_2=H$ and $X=1$ iff $O_2=T$, it follows that $P(X=0) = P(X=1) = \frac{1}{2}$. Because the procedure starts over whenever $O_1=O_2$, it terminates in finite time (with probability 1) and the output is unbiased regardless of $p$.
+
+\textbf{(b)} No, except when $p=1/2$. The first change is from tails to heads exactly when the initial flip is tails, so $P(X=0)=1-p$ and $P(X=1)=p$. Overlapping pairs therefore produce a biased output.
+}
+
+\begin{exercise}
+\label{ex:random-variables-29}
+Consider $n$ independent flips of a coin having probability $p$ of landing heads. Say a \emph{changeover} occurs whenever an outcome differs from the one preceding it. If $p = \frac{1}{2}$, what is the probability there are $k$ changeovers?
+\end{exercise}
+
+\solution{
+Let $Y_i = \mathbf{1}[\text{flip } i \text{ differs from flip } i-1]$ for $i = 2, \ldots, n$. When $p = \frac{1}{2}$, adjacent flips are i.i.d.\ Bernoulli$(\frac{1}{2})$, so $P(Y_i = 1) = 2 \cdot \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{2}$.
+
+Moreover, for any specified vector $(y_2,\ldots,y_n)\in\{0,1\}^{n-1}$, exactly two flip sequences produce that vector: choosing the first flip determines every subsequent flip. Thus each changeover vector has probability $2/2^n=2^{-(n-1)}$. This proves mutual independence of the $Y_i$, not merely pairwise independence.
+
+Therefore the total number of changeovers $K = \sum_{i=2}^n Y_i \sim \mathrm{Bin}(n-1,\tfrac{1}{2})$, and:
+\[
+P(K = k) = \binom{n-1}{k}\left(\frac{1}{2}\right)^{n-1}, \quad k = 0, 1, \ldots, n-1.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-30}
+Let $X$ be a Poisson random variable with parameter $\lambda$. Show that $P\{X = i\}$ increases monotonically and then decreases monotonically as $i$ increases, reaching its maximum when $i$ is the largest integer not exceeding $\lambda$.
+\end{exercise}
+
+\solution{
+Assume $\lambda>0$; for $\lambda=0$, the unique mode is $0$. Consider the ratio of successive Poisson probabilities:
+\[
+\frac{P\{X=i\}}{P\{X=i-1\}} = \frac{e^{-\lambda}\lambda^i/i!}{e^{-\lambda}\lambda^{i-1}/(i-1)!} = \frac{\lambda}{i}.
+\]
+This ratio exceeds $1$ iff $i < \lambda$, equals $1$ iff $i = \lambda$ (integer), and is less than $1$ iff $i > \lambda$. Therefore:
+\begin{itemize}
+    \item $P\{X=i\}$ is strictly increasing while $i < \lambda$;
+    \item $P\{X=i\}$ is strictly decreasing for $i > \lambda$.
+\end{itemize}
+If $\lambda$ is not an integer, the unique maximum is attained at $k = \lfloor\lambda\rfloor$. If $\lambda$ is an integer, then $P\{X=\lambda\}/P\{X=\lambda-1\} = 1$, so both $k = \lambda-1$ and $k = \lambda$ achieve the same (largest) probability. 
+}
+
+\begin{exercise}
+\label{ex:random-variables-31}
+Compare the Poisson approximation with the correct binomial probability for the following cases:
+\begin{enumerate}
+    \item [(a)] $P\{X=2\}$ when $n=8$, $p=0.1$.
+    \item [(b)] $P\{X=9\}$ when $n=10$, $p=0.95$.
+    \item [(c)] $P\{X=0\}$ when $n=10$, $p=0.1$.
+    \item [(d)] $P\{X=4\}$ when $n=9$, $p=0.2$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+For the Poisson approximation we use parameter $\lambda = np$ in each case.
+
+\textbf{(a)} $n=8$, $p=0.1$, $\lambda=0.8$:
+\[
+\text{Binomial: }\binom{8}{2}(0.1)^2(0.9)^6 \approx 0.14880, \qquad \text{Poisson: } \frac{e^{-0.8}(0.8)^2}{2!}\approx 0.14379.
+\]
+The approximation is very accurate ($\approx 3\%$ relative error).
+
+\textbf{(b)} $n=10$, $p=0.95$, $\lambda=9.5$:
+\[
+\text{Binomial: }\binom{10}{9}(0.95)^9(0.05)^1 \approx 0.31512, \qquad \text{Poisson: }\frac{e^{-9.5}(9.5)^9}{9!}\approx 0.13000.
+\]
+The approximation is very poor, as the Poisson approximation is valid only when $p$ is small and $n$ is large, not when $p \approx 1$.
+
+\textbf{(c)} $n=10$, $p=0.1$, $\lambda=1$:
+\[
+\text{Binomial: }(0.9)^{10}\approx 0.34868, \qquad \text{Poisson: }e^{-1}\approx 0.36788.
+\]
+A reasonable approximation.
+
+\textbf{(d)} $n=9$, $p=0.2$, $\lambda=1.8$:
+\[
+\text{Binomial: }\binom{9}{4}(0.2)^4(0.8)^5\approx 0.06606, \qquad \text{Poisson: }\frac{e^{-1.8}(1.8)^4}{4!}\approx 0.07230.
+\]
+A fair approximation.
+}
+
+\begin{exercise}
+\label{ex:random-variables-32}
+If you buy a lottery ticket in 50 lotteries, in each of which your chance of winning a prize is $\frac{1}{100}$, what is the (approximate) probability that you will win a prize (a) at least once, (b) exactly once, (c) at least twice?
+\end{exercise}
+
+\solution{
+The number of prizes won $X \sim \mathrm{Bin}(50, \frac{1}{100})$ is well approximated by $X \sim \mathrm{Poisson}(\lambda)$ with $\lambda = 50 \times \frac{1}{100} = \frac{1}{2}$.
+
+\begin{enumerate}
+    \item [(a)] $P(X \geq 1) = 1 - P(X=0) \approx 1 - e^{-1/2} \approx 0.3935$.
+    \item [(b)] $P(X = 1) \approx e^{-1/2} \cdot \frac{1}{2} \approx 0.3033$.
+    \item [(c)] $P(X \geq 2) = 1 - P(X=0) - P(X=1) \approx 1 - e^{-1/2} - \frac{1}{2}e^{-1/2} = 1 - \frac{3}{2}e^{-1/2} \approx 0.0902$.
+\end{enumerate}
+}
+
+\begin{exercise}
+\label{ex:random-variables-33}
+Let $X$ be a random variable with probability density
+\[
+f(x) = \begin{cases} c(1-x^2), & -1 < x < 1, \\ 0, & \text{otherwise.} \end{cases}
+\]
+\begin{enumerate}
+    \item [(a)] What is the value of $c$?
+    \item [(b)] What is the cumulative distribution function of $X$?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Normalising the density:
+\[
+1 = \int_{-1}^{1}c(1-x^2)\,dx = c\left[x - \frac{x^3}{3}\right]_{-1}^{1} = c\left[\left(1-\frac{1}{3}\right)-\left(-1+\frac{1}{3}\right)\right] = c\cdot\frac{4}{3}.
+\]
+Hence $c = \dfrac{3}{4}$.
+
+\textbf{(b)} For $-1 < x < 1$:
+\[
+F(x) = \int_{-1}^{x}\frac{3}{4}(1-t^2)\,dt = \frac{3}{4}\left[t-\frac{t^3}{3}\right]_{-1}^{x} = \frac{3}{4}\left(x-\frac{x^3}{3}+\frac{2}{3}\right).
+\]
+The complete CDF is $F(x) = 0$ for $x \leq -1$, the expression above for $-1 < x < 1$, and $F(x) = 1$ for $x \geq 1$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-34}
+Let the probability density of $X$ be given by
+\[
+f(x) = \begin{cases} c(4x-2x^2), & 0 < x < 2, \\ 0, & \text{otherwise.}\end{cases}
+\]
+\begin{enumerate}
+    \item [(a)] What is the value of $c$?
+    \item [(b)] $P\!\left\{\frac{1}{2} < X < \frac{3}{2}\right\} = ?$
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Normalising:
+\[
+1 = \int_0^2 c(4x-2x^2)\,dx = c\left[2x^2-\frac{2x^3}{3}\right]_0^2 = c\left(8-\frac{16}{3}\right) = \frac{8c}{3}.
+\]
+Hence $c = \dfrac{3}{8}$.
+
+\textbf{(b)}
+\[
+P\!\left\{\tfrac{1}{2}<X<\tfrac{3}{2}\right\} = \frac{3}{8}\int_{1/2}^{3/2}(4x-2x^2)\,dx = \frac{3}{8}\left[2x^2-\frac{2x^3}{3}\right]_{1/2}^{3/2}.
+\]
+Evaluating at $x=\frac{3}{2}$: $2\cdot\frac{9}{4}-\frac{2}{3}\cdot\frac{27}{8} = \frac{9}{2}-\frac{9}{4} = \frac{9}{4}$.
+Evaluating at $x=\frac{1}{2}$: $2\cdot\frac{1}{4}-\frac{2}{3}\cdot\frac{1}{8} = \frac{1}{2}-\frac{1}{12} = \frac{5}{12}$.
+Therefore:
+\[
+P\!\left\{\tfrac{1}{2}<X<\tfrac{3}{2}\right\} = \frac{3}{8}\cdot\frac{11}{6} = \frac{11}{16}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-35}
+The density of $X$ is given by
+\[
+f(x) = \begin{cases} 10/x^2, & x > 10,\\ 0, & x \leq 10.\end{cases}
+\]
+What is the distribution of $X$? Find $P\{X>20\}$.
+\end{exercise}
+
+\solution{
+This is a \textbf{Pareto distribution}. The CDF for $x > 10$ is:
+\[
+F(x) = \int_{10}^{x}\frac{10}{t^2}\,dt = \left[-\frac{10}{t}\right]_{10}^{x} = 1 - \frac{10}{x}.
+\]
+Therefore:
+\[
+P\{X > 20\} = 1 - F(20) = \frac{10}{20} = \frac{1}{2}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-36}
+A point is uniformly distributed within the disk of radius $1$. That is, its density is
+\[
+f(x,y) = C, \quad 0 \leq x^2+y^2 \leq 1.
+\]
+Find the probability that its distance from the origin is less than $x$, $0 \leq x \leq 1$.
+\end{exercise}
+
+\solution{
+Since the disk has area $\pi$, the normalising constant is $C = 1/\pi$. Let $R = \sqrt{X^2+Y^2}$ be the distance from the origin. By symmetry, the probability that $R < x$ equals the ratio of the area of a disk of radius $x$ to the area of the unit disk:
+\[
+P\{R < x\} = \frac{\pi x^2}{\pi} = x^2, \quad 0 \leq x \leq 1.
+\]
+So the distribution function of $R$ is $F_R(x) = x^2$, and the corresponding density is $f_R(x) = 2x$ for $0 \leq x \leq 1$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-37}
+Let $X_1, X_2, \ldots, X_n$ be independent random variables, each having a uniform distribution over $(0,1)$. Let $M = \max(X_1, \ldots, X_n)$. Show that the distribution function of $M$ is given by $F_M(x) = x^n$ for $0 \leq x \leq 1$. What is the probability density function of $M$?
+\end{exercise}
+
+\solution{
+Since the $X_i$ are independent and each has CDF $F_{X_i}(x) = x$ on $[0,1]$:
+\[
+F_M(x) = P(M \leq x) = P(X_1 \leq x, \ldots, X_n \leq x) = \prod_{i=1}^n P(X_i \leq x) = x^n, \quad 0 \leq x \leq 1.
+\]
+Differentiating gives the probability density function:
+\[
+f_M(x) = nx^{n-1}, \quad 0 \leq x \leq 1. \qquad
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-38}
+If the density function of $X$ equals
+\[
+f(x) = \begin{cases} ce^{-2x}, & 0 < x < \infty,\\ 0, & x < 0,\end{cases}
+\]
+find $c$. What is $P\{X > 2\}$?
+\end{exercise}
+
+\solution{
+Normalising: $\int_0^{\infty}ce^{-2x}\,dx = \frac{c}{2} = 1$, so $c = 2$.
+Thus $X \sim \mathrm{Exp}(2)$, and:
+\[
+P\{X > 2\} = \int_2^{\infty}2e^{-2x}\,dx = \left[-e^{-2x}\right]_2^{\infty} = e^{-4}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-39}
+The random variable $X$ has the following probability mass function:
+\[
+p(1) = \tfrac{1}{2},\quad p(2) = \tfrac{1}{3},\quad p(24) = \tfrac{1}{6}.
+\]
+Calculate $E[X]$.
+\end{exercise}
+
+\solution{
+By definition:
+\[
+E[X] = 1\cdot\frac{1}{2} + 2\cdot\frac{1}{3} + 24\cdot\frac{1}{6} = \frac{1}{2}+\frac{2}{3}+4 = \frac{3}{6}+\frac{4}{6}+\frac{24}{6} = \frac{31}{6}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-40}
+Suppose that two teams are playing a series of games, each of which is independently won by team $A$ with probability $p$ and by team $B$ with probability $1-p$. The winner of the series is the first team to win four games. Find the expected number of games that are played, and evaluate this quantity when $p = \frac{1}{2}$.
+\end{exercise}
+
+\solution{
+The series can last 4, 5, 6, or 7 games. For team $A$ to win the series in exactly $k$ games, $A$ must win the $k$-th game and exactly 3 of the first $k-1$ games. By symmetry with team $B$:
+\begin{align*}
+P(4\text{ games}) &= p^4+(1-p)^4,\\
+P(5\text{ games}) &= 4\bigl[p^4(1-p)+p(1-p)^4\bigr],\\
+P(6\text{ games}) &= 10\bigl[p^4(1-p)^2+p^2(1-p)^4\bigr],\\
+P(7\text{ games}) &= 20\,p^3(1-p)^3.
+\end{align*}
+Therefore:
+\[
+E[N] = 4P(4) + 5P(5) + 6P(6) + 7P(7).
+\]
+At $p = \tfrac{1}{2}$, the probabilities simplify to:
+\[
+P(4)=\tfrac{1}{8},\quad P(5)=\tfrac{1}{4},\quad P(6)=\tfrac{5}{16},\quad P(7)=\tfrac{5}{16},
+\]
+giving:
+\[
+E[N] = 4\cdot\frac{1}{8}+5\cdot\frac{1}{4}+6\cdot\frac{5}{16}+7\cdot\frac{5}{16} = \frac{8+20+30+35}{16} = \frac{93}{16} \approx 5.81.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-41}
+Consider the case of arbitrary $p$ in Exercise 29. Compute the expected number of changeovers.
+\end{exercise}
+
+\solution{
+A changeover occurs at position $i$ (for $i=2,\ldots,n$) with probability:
+\[
+P(\text{changeover at } i) = p(1-p)+(1-p)p = 2p(1-p).
+\]
+Let $Y_i = \mathbf{1}[\text{changeover at position } i]$. By linearity of expectation, the expected number of changeovers is:
+\[
+E\!\left[\sum_{i=2}^n Y_i\right] = (n-1)\cdot 2p(1-p).
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-42}
+Suppose that each coupon obtained is, independent of what has been previously obtained, equally likely to be any of $m$ different types. Find the expected number of coupons one needs to obtain in order to have at least one of each type.
+\end{exercise}
+
+\solution{
+Let $X_j$ be the additional number of coupons needed to obtain a new type after having collected $j-1$ distinct types. When $j-1$ types have been seen, the probability that the next coupon is new is $\frac{m-(j-1)}{m}$, so $X_j \sim \mathrm{Geom}\!\left(\frac{m-j+1}{m}\right)$ and:
+\[
+E[X_j] = \frac{m}{m-j+1}.
+\]
+The total number $X = X_1 + X_2 + \cdots + X_m$ satisfies:
+\[
+E[X] = \sum_{j=1}^m \frac{m}{m-j+1} = m\sum_{k=1}^m \frac{1}{k} = m\,H_m,
+\]
+where $H_m = \sum_{k=1}^m \frac{1}{k}$ is the $m$-th harmonic number.
+}
+
+\begin{exercise}
+\label{ex:random-variables-43}
+An urn contains $n+m$ balls, of which $n$ are red and $m$ are black. They are withdrawn one at a time without replacement. Let $X$ be the number of red balls removed before the first black ball is chosen.
+\begin{enumerate}
+    \item [(a)] Express $X$ in terms of indicator random variables $X_i$, $i = 1,\ldots,n$, where $X_i = 1$ if red ball $i$ is taken before any black ball.
+    \item  [(b)] Find $E[X]$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Define $X_i = 1$ if red ball $i$ is drawn before all black balls, and $X_i = 0$ otherwise. Then $X = \sum_{i=1}^n X_i$.
+
+\textbf{(b)} Consider the $m+1$ balls consisting of red ball $i$ and the $m$ black balls. In a uniformly random ordering of all $n+m$ balls, each of the $m+1$ positions within this sub-sequence is equally likely to be first. Therefore:
+\[
+E[X_i] = P(\text{red ball } i \text{ precedes all black balls}) = \frac{1}{m+1}.
+\]
+By linearity of expectation:
+\[
+E[X] = \sum_{i=1}^n E[X_i] = \frac{n}{m+1}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-44}
+In Exercise 43, let $Y$ denote the number of red balls chosen after the first but before the second black ball has been chosen.
+\begin{enumerate}
+    \item [(a)] Express $Y$ as the sum of $n$ indicator random variables.
+    \item [(b)] Find $E[Y]$.
+    \item [(c)] Compare $E[Y]$ to $E[X]$ obtained in Exercise 43.
+    \item [(d)]Can you explain the result obtained in (c)?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Define $X_i = 1$ if red ball $i$ appears between the first and second black ball (i.e., after the first black but before the second). Then $Y = \sum_{i=1}^n X_i$.
+
+\textbf{(b)} Among the $m+1$ objects consisting of red ball $i$ and the $m$ black balls, each of the $m+1$ relative positions is equally likely. Red ball $i$ is exactly second in this sub-sequence (i.e., immediately after the first black ball, before the second) with probability $\frac{1}{m+1}$. Therefore:
+\[
+E[Y] = \sum_{i=1}^n \frac{1}{m+1} = \frac{n}{m+1}.
+\]
+
+\textbf{(c)} $E[Y] = E[X] = \dfrac{n}{m+1}$.
+
+\textbf{(d)} By symmetry, in a random permutation of $n+m$ balls, for each red ball $i$, the position of red ball $i$ relative to the $m$ black balls (i.e., before ball 1, between ball 1 and 2, \ldots, after ball $m$) is equally likely to be any of the $m+1$ gaps. Hence the expected number of red balls falling in each particular gap is the same: $\frac{n}{m+1}$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-45}
+A total of $r$ keys are to be put, one at a time, in $k$ boxes, with each key independently being put in box $i$ with probability $p_i$, $\sum_{i=1}^k p_i = 1$. Each time a key is put in a nonempty box, a collision occurs. Find the expected number of collisions.
+\end{exercise}
+
+\solution{
+A collision occurs if and only if a key is placed in an already-occupied box. The expected number of collisions equals $r$ minus the expected number of distinct boxes used:
+\[
+E[\text{collisions}] = r - E[\text{distinct boxes used}].
+\]
+Box $i$ is occupied after $r$ keys are placed with probability $1-(1-p_i)^r$ (complementary to all $r$ keys avoiding box $i$). By linearity:
+\[
+E[\text{distinct boxes used}] = \sum_{i=1}^k \bigl[1-(1-p_i)^r\bigr] = k - \sum_{i=1}^k (1-p_i)^r.
+\]
+Therefore:
+\[
+E[\text{collisions}] = r - k + \sum_{i=1}^k (1-p_i)^r.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-46}
+If $X$ is a nonnegative integer-valued random variable, show that
+\[
+E[X] = \sum_{n=1}^{\infty} P\{X \geq n\} = \sum_{n=0}^{\infty} P\{X > n\}.
+\]
+Also, if $X$ and $Y$ are both nonnegative integer-valued, show that
+\[
+E[XY] = \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} P(X \geq n,\, Y \geq m).
+\]
+\end{exercise}
+
+\solution{
+\textbf{(a)} Define $I_n = \mathbf{1}[n \leq X]$ for $n \geq 1$. Then $X = \sum_{n=1}^{\infty} I_n$, so by linearity of expectation:
+\[
+E[X] = \sum_{n=1}^{\infty} E[I_n] = \sum_{n=1}^{\infty} P\{X \geq n\}.
+\]
+Re-indexing with $n' = n-1$ gives the second formula $\sum_{n=0}^{\infty} P\{X > n\}$.
+
+\textbf{(b)} Write $X = \sum_{n=1}^{\infty} I_n^X$ and $Y = \sum_{m=1}^{\infty} I_m^Y$ with $I_n^X = \mathbf{1}[X \geq n]$ and $I_m^Y = \mathbf{1}[Y \geq m]$. Then:
+\[
+XY = \Bigl(\sum_{n=1}^{\infty} I_n^X\Bigr)\Bigl(\sum_{m=1}^{\infty} I_m^Y\Bigr) = \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} I_n^X I_m^Y.
+\]
+Taking expectations and exchanging with the nonnegative sum by Tonelli's theorem (equivalently, monotone convergence):
+\[
+E[XY] = \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} E[I_n^X I_m^Y] = \sum_{n=1}^{\infty}\sum_{m=1}^{\infty} P(X \geq n,\, Y \geq m). \qquad
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-47}
+Consider three trials, each of which is either a success or not. Let $X$ denote the number of successes. Suppose that $E[X] = 1.8$.
+\begin{enumerate}
+    \item [(a)] What is the largest possible value of $P\{X = 3\}$?
+    \item [(b)] What is the smallest possible value of $P\{X = 3\}$?
+\end{enumerate}
+In both cases, construct a probability scenario that results in $P\{X=3\}$ having the desired value.
+\end{exercise}
+
+\solution{
+Write $X = X_1 + X_2 + X_3$ where $X_i$ are Bernoulli with $p_i = E[X_i]$, and $p_1+p_2+p_3 = 1.8$.
+
+\textbf{(a) Maximum:} Since $P\{X=3\} = P\{X_1=1, X_2=1, X_3=1\} \leq \min(p_1,p_2,p_3)$, to maximise, take all $p_i$ equal: $p_1=p_2=p_3=0.6$. Let $X_1=X_2=X_3$ (perfectly correlated), so $X \in \{0,3\}$ with $P(X=3) = P(X_i=1) = 0.6$ and $E[X] = 1.8$.
+\[{P\{X=3\}_{\max} = 0.6.}\]
+
+\textbf{(b) Minimum:} $P\{X=3\} \geq 0$ trivially. Setting $p_3 = 0$ (trial 3 always fails) with $p_1 = 1$, $p_2 = 0.8$ gives $p_1+p_2+p_3 = 1.8$ and $X_3 = 0$ always, so $X \leq 2$ and thus $P\{X=3\} = 0$.
+\[{P\{X=3\}_{\min} = 0.}\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-48}
+If $X$ is a nonnegative random variable and $g$ is a differentiable function with $g(0) = 0$, then
+\[
+E[g(X)] = \int_0^{\infty} P(X > t)\, g'(t)\, dt.
+\]
+Prove the above when $X$ is a continuous random variable.
+\end{exercise}
+
+\solution{
+To justify the interchange, assume $g$ is locally absolutely continuous (for example, continuously differentiable), $g(0)=0$, and $\int_0^\infty P(X>t)|g'(t)|\,dt<\infty$. If $g'\ge0$, Tonelli also gives the identity with value $+\infty$. Differentiability alone does not ensure these conditions. Since $X\ge0$ has density $f$:
+\begin{align*}
+\int_0^{\infty} P(X > t)\, g'(t)\, dt &= \int_0^{\infty} g'(t) \left[\int_t^{\infty} f(x)\, dx\right] dt.
+\end{align*}
+Switching the order of integration (Fubini's theorem, noting $0 \leq t \leq x$):
+\begin{align*}
+&= \int_0^{\infty} f(x) \left[\int_0^x g'(t)\, dt\right] dx = \int_0^{\infty} f(x)\, g(x)\, dx = E[g(X)]. \qquad
+\end{align*}
+}
+
+\begin{exercise}
+\label{ex:random-variables-49}
+Prove that $E[X^2] \geq (E[X])^2$. When do we have equality?
+\end{exercise}
+
+\solution{
+The variance $\mathrm{Var}(X) = E[X^2] - (E[X])^2$ satisfies $\mathrm{Var}(X) = E[(X - E[X])^2] \geq 0$ since it is an expectation of a nonnegative quantity. Therefore:
+\[
+E[X^2] \geq (E[X])^2,
+\]
+with equality if and only if $(X - E[X])^2 = 0$ with probability 1, i.e., $X$ is a \textbf{degenerate} (constant) random variable. 
+}
+
+\begin{exercise}
+\label{ex:random-variables-50}
+Let $c$ be a constant. Show that
+\begin{enumerate}
+    \item [(a)] $\mathrm{Var}(cX) = c^2\,\mathrm{Var}(X)$;
+    \item [(b)] $\mathrm{Var}(c+X) = \mathrm{Var}(X)$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Assume $E[X^2]<\infty$.
+\textbf{(a)} Since $cX-E[cX]=c(X-E[X])$,
+\[
+\operatorname{Var}(cX)=E[c^2(X-E[X])^2]=c^2\operatorname{Var}(X).
+\]
+\textbf{(b)} Adding $c$ shifts the mean by $c$, so
+\[
+\operatorname{Var}(c+X)=E[(c+X-(c+E[X]))^2]
+=\operatorname{Var}(X).
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-51}
+A coin having probability $p$ of landing heads is flipped until a head appears for the $r$-th time. Let $N$ denote the number of flips required. Calculate $E[N]$.
+\end{exercise}
+
+\solution{
+Write $N = G_1 + G_2 + \cdots + G_r$, where $G_j$ is the number of additional flips needed to get the $j$-th head, given $j-1$ heads have already been obtained. Each $G_j$ is independent and has a $\mathrm{Geom}(p)$ distribution (geometric with success probability $p$), so $E[G_j] = 1/p$. By linearity:
+\[
+E[N] = \sum_{j=1}^r E[G_j] = \frac{r}{p}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-52}
+\begin{enumerate}
+    \item [(a)] Calculate $E[X]$ for the maximum random variable $M$ of Exercise 37.
+    \item [(b)] Calculate $E[X]$ for $X$ as in Exercise 33.
+    \item [(c)] Calculate $E[X]$ for $X$ as in Exercise 34.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} From Exercise 37, $M$ has density $f_M(x) = nx^{n-1}$ on $[0,1]$:
+\[
+E[M] = \int_0^1 x \cdot nx^{n-1}\,dx = n\int_0^1 x^n\,dx = \frac{n}{n+1}.
+\]
+
+\textbf{(b)} From Exercise 33, $f(x) = \frac{3}{4}(1-x^2)$ on $(-1,1)$, which is symmetric about $0$. Since $x \cdot f(x)$ is an odd function:
+\[
+E[X] = \int_{-1}^1 x\cdot\frac{3}{4}(1-x^2)\,dx = 0.
+\]
+
+\textbf{(c)} From Exercise 34, $f(x) = \frac{3}{8}(4x-2x^2)$ on $(0,2)$:
+\[
+E[X] = \frac{3}{8}\int_0^2 x(4x-2x^2)\,dx = \frac{3}{8}\int_0^2 (4x^2-2x^3)\,dx = \frac{3}{8}\left[\frac{4x^3}{3}-\frac{x^4}{2}\right]_0^2 = \frac{3}{8}\cdot\left(\frac{32}{3}-8\right) = \frac{3}{8}\cdot\frac{8}{3} = 1.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-53}
+If $X$ is uniform over $(0,1)$, calculate $E[X^n]$ and $\mathrm{Var}(X^n)$.
+\end{exercise}
+
+\solution{
+Since $X \sim \mathrm{Uniform}(0,1)$ with density $f(x) = 1$:
+\[
+E[X^n] = \int_0^1 x^n\,dx = \frac{1}{n+1}, \qquad E[X^{2n}] = \int_0^1 x^{2n}\,dx = \frac{1}{2n+1}.
+\]
+Therefore:
+\[
+\mathrm{Var}(X^n) = E[X^{2n}] - \left(E[X^n]\right)^2 = \frac{1}{2n+1} - \frac{1}{(n+1)^2} = \frac{(n+1)^2-(2n+1)}{(n+1)^2(2n+1)} = \frac{n^2}{(n+1)^2(2n+1)}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-54}
+Let $X$ and $Y$ each take on either the value $1$ or $-1$. Let $p(1,1)$, $p(1,-1)$, $p(-1,1)$, $p(-1,-1)$ be the joint probabilities. Suppose $E[X] = E[Y] = 0$. Show that:
+\begin{enumerate}
+    \item  [(a)] $p(1,1) = p(-1,-1)$;
+    \item [(b)] $p(1,-1) = p(-1,1)$.
+\end{enumerate}
+Let $p = 2p(1,1)$. Find $\mathrm{(c)}\ \mathrm{Var}(X)$; $\mathrm{(d)}\ \mathrm{Var}(Y)$; $\mathrm{(e)}\ \mathrm{Cov}(X,Y)$.
+\end{exercise}
+
+\solution{
+\textbf{(a) and (b).} $E[X]=0$ implies $P(X=1)=P(X=-1)=\frac{1}{2}$, so $p(1,1)+p(1,-1)=p(-1,1)+p(-1,-1)=\frac{1}{2}$. Similarly, $E[Y]=0$ gives $p(1,1)+p(-1,1)=p(1,-1)+p(-1,-1)=\frac{1}{2}$. Summing the first and second pairs of equations and using total probability:
+\[
+p(1,-1)=\tfrac{1}{2}-p(1,1), \quad p(-1,1)=\tfrac{1}{2}-p(1,1), \quad p(-1,-1)=p(1,1).
+\]
+Thus $p(1,1)=p(-1,-1)$ and $p(1,-1)=p(-1,1)$.
+
+With $p = 2p(1,1)$: $p(1,1)=p(-1,-1)=\frac{p}{2}$, $p(1,-1)=p(-1,1)=\frac{1-p}{2}$.
+
+\textbf{(c)} Since $X^2 = 1$ always, $E[X^2]=1$ and $\mathrm{Var}(X) = 1-(E[X])^2 = 1$.
+
+\textbf{(d)} Similarly, $\mathrm{Var}(Y) = 1$.
+
+\textbf{(e)}
+\[
+E[XY] = (1)(1)\tfrac{p}{2}+(1)(-1)\tfrac{1-p}{2}+(-1)(1)\tfrac{1-p}{2}+(-1)(-1)\tfrac{p}{2} = p - (1-p) = 2p-1.
+\]
+Since $E[X]E[Y]=0$:
+\[
+\mathrm{Cov}(X,Y) = E[XY] - E[X]E[Y] = 2p-1.
+\]
+}
+\begin{exercise}
+\label{ex:random-variables-55}
+Suppose that the joint probability mass function of $X$ and $Y$ is
+\[
+P(X=i,\,Y=j) = \binom{j}{i}e^{-2\lambda}\frac{\lambda^j}{j!}, \quad 0 \leq i \leq j, \quad j=0,1,2,\ldots
+\]
+\begin{enumerate}
+    \item[(a)] Find the probability mass function of $Y$.
+    \item[(b)] Find the probability mass function of $X$.
+    \item[(c)] Find the probability mass function of $Y - X$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Summing over $i = 0, 1, \ldots, j$:
+\[P(Y=j) = \sum_{i=0}^j \binom{j}{i}e^{-2\lambda}\frac{\lambda^j}{j!} = e^{-2\lambda}\frac{\lambda^j}{j!}\cdot 2^j = e^{-2\lambda}\frac{(2\lambda)^j}{j!}.
+\]
+Thus $Y \sim \mathrm{Poisson}(2\lambda)$.
+
+\textbf{(b)} Summing over $j = i, i+1, \ldots$ and using $\binom{j}{i}/j! = 1/(i!\,(j-i)!)$:
+\[
+P(X=i) = \sum_{j=i}^{\infty}\binom{j}{i}e^{-2\lambda}\frac{\lambda^j}{j!} = \frac{e^{-2\lambda}\lambda^i}{i!}\sum_{k=0}^{\infty}\frac{\lambda^k}{k!} = \frac{e^{-2\lambda}\lambda^i e^{\lambda}}{i!} = \frac{e^{-\lambda}\lambda^i}{i!}.
+\]
+Thus $X \sim \mathrm{Poisson}(\lambda)$.
+
+\textbf{(c)} For $k = 0, 1, 2, \ldots$, letting $Z = Y - X \geq 0$:
+\[
+P(Z=k) = \sum_{i=0}^{\infty}P(X=i,\,Y=i+k) = \sum_{i=0}^{\infty}\binom{i+k}{i}e^{-2\lambda}\frac{\lambda^{i+k}}{(i+k)!} = \frac{e^{-2\lambda}\lambda^k}{k!}\sum_{i=0}^{\infty}\frac{\lambda^i}{i!} = \frac{e^{-\lambda}\lambda^k}{k!}.
+\]
+Thus $Z = Y-X \sim \mathrm{Poisson}(\lambda)$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-56}
+There are $n$ types of coupons. Each newly obtained coupon is, independently, type $i$ with probability $p_i$, $i=1,\ldots,n$. Find the expected number and the variance of the number of distinct types obtained in a collection of $k$ coupons.
+\end{exercise}
+
+\solution{
+Let $D$ be the number of distinct types and $X_i = \mathbf{1}[\text{type } i \text{ appears in the collection}]$. Then $D = \sum_{i=1}^n X_i$.
+
+\textbf{Expected value:} $P(X_i=1)=1-(1-p_i)^k$, so:
+\[
+E[D] = \sum_{i=1}^n \bigl[1-(1-p_i)^k\bigr].
+\]
+
+\textbf{Variance:} Since $\mathrm{Var}(D) = \sum_i\mathrm{Var}(X_i) + 2\sum_{i<j}\mathrm{Cov}(X_i,X_j)$, with:
+\[
+\mathrm{Var}(X_i) = (1-p_i)^k\bigl[1-(1-p_i)^k\bigr],
+\]
+\[
+E[X_iX_j] = P(\text{types } i \text{ and } j \text{ both appear}) = 1-(1-p_i)^k-(1-p_j)^k+(1-p_i-p_j)^k,
+\]
+\[
+\mathrm{Cov}(X_i,X_j) = (1-p_i-p_j)^k - (1-p_i)^k(1-p_j)^k,
+\]
+we obtain:
+\[
+\mathrm{Var}(D) = \sum_{i=1}^n(1-p_i)^k\bigl[1-(1-p_i)^k\bigr] + 2\sum_{i<j}\bigl[(1-p_i-p_j)^k-(1-p_i)^k(1-p_j)^k\bigr].
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-57}
+Suppose that $X$ and $Y$ are independent binomial random variables with parameters $(n,p)$ and $(m,p)$, respectively. Argue probabilistically (no computations necessary) that $X+Y$ is binomial with parameters $(n+m,p)$.
+\end{exercise}
+
+\solution{
+$X$ counts the number of successes in $n$ independent Bernoulli$(p)$ trials, and $Y$ counts the successes in $m$ additional independent Bernoulli$(p)$ trials, with $X$ and $Y$ independent. Therefore $X+Y$ counts the total number of successes in $n+m$ independent Bernoulli$(p)$ trials, which by definition has a $\mathrm{Bin}(n+m,p)$ distribution. 
+}
+
+\begin{exercise}
+\label{ex:random-variables-58}
+An urn contains $2n$ balls, of which $r$ are red. The balls are randomly removed in $n$ successive pairs. Let $X$ denote the number of pairs in which both balls are red.
+\begin{enumerate}
+    \item[(a)] Find $E[X]$.
+    \item[(b)] Find $\mathrm{Var}(X)$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let $X_i = \mathbf{1}[\text{pair } i \text{ consists of two red balls}]$, so $X = \sum_{i=1}^n X_i$.
+
+\textbf{(a)} Consider the two balls assigned to pair $i$: the first is red with probability $r/(2n)$ and given that, the second is red with probability $(r-1)/(2n-1)$, so:
+\[
+E[X_i] = \frac{r(r-1)}{2n(2n-1)}, \qquad E[X] = \frac{n\,r(r-1)}{2n(2n-1)} = \frac{r(r-1)}{2(2n-1)}.
+\]
+
+\textbf{(b)} For $i \neq j$, the probability that pairs $i$ and $j$ are both all-red is:
+\[
+E[X_iX_j] = \frac{r(r-1)(r-2)(r-3)}{2n(2n-1)(2n-2)(2n-3)}.
+\]
+For $n=1$, $X$ is deterministic and its variance is $0$. For $n\ge2$, let $p = E[X_i]$ and $q = E[X_iX_j]$. Then $\mathrm{Var}(X_i) = p(1-p)$ and $\mathrm{Cov}(X_i,X_j) = q - p^2$, giving:
+\[
+\mathrm{Var}(X) = n\,p(1-p) + n(n-1)(q-p^2).
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-59}
+Let $X_1, X_2, X_3, X_4$ be independent continuous random variables with a common distribution function $F$ and let
+\[
+p = P\{X_1 < X_2 > X_3 < X_4\}.
+\]
+\begin{enumerate}
+    \item[(a)] Argue that the value of $p$ is the same for all continuous distribution functions $F$.
+    \item[(b)] Find $p$ by integrating the joint density function over the appropriate region.
+    \item[(c)] Find $p$ by using the fact that all $4!$ possible orderings of $X_1,\ldots,X_4$ are equally likely.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Since $F$ is continuous, the probability integral transform $U_i = F(X_i)$ gives i.i.d.\ $\mathrm{Uniform}(0,1)$ random variables, and the event $\{X_1<X_2>X_3<X_4\}$ is equivalent to $\{U_1<U_2>U_3<U_4\}$. The probability of this event depends only on the joint density of $(U_1,\ldots,U_4)$, which is always uniform on $[0,1]^4$ regardless of $F$. Hence $p$ is the same for all continuous $F$.
+
+\textbf{(b)} Taking $F = \mathrm{Uniform}(0,1)$ and integrating over the region $x_1 < x_2$, $x_2 > x_3$, $x_3 < x_4$ (with all variables in $[0,1]$):
+\begin{align*}
+p &= \int_0^1\!\int_0^{x_2}\!\int_0^{x_2}\!\int_{x_3}^1 dx_4\,dx_1\,dx_3\,dx_2 = \int_0^1 x_2(x_2 - x_2^2/2)\,dx_2 = \int_0^1\!\left(x_2^2 - \frac{x_2^3}{2}\right)\!dx_2 = \frac{1}{3}-\frac{1}{8} = \frac{5}{24}.
+\end{align*}
+
+\textbf{(c)} All $4! = 24$ orderings of $(X_1,X_2,X_3,X_4)$ are equally likely. Enumerating permutations of $\{1,2,3,4\}$ satisfying $a < b$, $b > c$, $c < d$:
+\[
+(1,3,2,4),\;(1,4,2,3),\;(2,3,1,4),\;(2,4,1,3),\;(3,4,1,2).
+\]
+There are exactly 5 such permutations, so $p = 5/24$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-60}
+Calculate the moment generating function of the uniform distribution on $(0,1)$. Obtain $E[X]$ and $\mathrm{Var}[X]$ by differentiating.
+\end{exercise}
+
+\solution{
+For $X \sim \mathrm{Uniform}(0,1)$ and $t \neq 0$:
+\[
+M(t) = E[e^{tX}] = \int_0^1 e^{tx}\,dx = \frac{e^t - 1}{t}.
+\]
+Using the Taylor expansion $e^t - 1 = t + t^2/2 + t^3/6 + \cdots$, we have $M(t) = 1 + t/2 + t^2/6 + \cdots$.
+
+Differentiating $M(t) = (e^t-1)/t$ using L'Hôpital or the Taylor expansion:
+\[
+M'(t) = \frac{te^t - (e^t-1)}{t^2} \xrightarrow{t\to 0} \frac{1}{2} = E[X].
+\]
+\[
+M''(t) = \frac{(t^2-2t+2)e^t - 2}{t^3} \xrightarrow{t\to 0} \frac{1}{3} = E[X^2].
+\]
+Therefore: $\mathrm{Var}(X) = E[X^2] - (E[X])^2 = \dfrac{1}{3} - \dfrac{1}{4} = \dfrac{1}{12}$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-61}
+Let $X$ and $W$ be the working and subsequent repair times of a certain machine. Let $Y = X + W$ and suppose the joint density of $X$ and $Y$ is
+\[
+f_{X,Y}(x,y) = \lambda^2 e^{-\lambda y}, \quad 0 < x < y < \infty.
+\]
+\begin{enumerate}
+    \item[(a)] Find the density of $X$.
+    \item[(b)] Find the density of $Y$.
+    \item[(c)] Find the joint density of $X$ and $W$.
+    \item[(d)] Find the density of $W$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} $f_X(x) = \int_x^{\infty}\lambda^2 e^{-\lambda y}\,dy = \lambda e^{-\lambda x}$ for $x > 0$. Thus $X \sim \mathrm{Exp}(\lambda)$.
+
+\textbf{(b)} $f_Y(y) = \int_0^y \lambda^2 e^{-\lambda y}\,dx = \lambda^2 y e^{-\lambda y}$ for $y > 0$. Thus $Y \sim \mathrm{Gamma}(2,\lambda)$.
+
+\textbf{(c)} Since $W = Y - X$, use the change of variables $(x, y) \mapsto (x, w)$ with Jacobian
+\[
+\left|\frac{\partial(x,y)}{\partial(x,w)}\right|=1.
+\]
+The transformed density is
+\[
+f_{X,W}(x,w) = f_{X,Y}(x, x+w) = \lambda^2 e^{-\lambda(x+w)} = \bigl(\lambda e^{-\lambda x}\bigr)\bigl(\lambda e^{-\lambda w}\bigr)
+\]
+for $x, w > 0$. Since this factors, $X$ and $W$ are independent with each having an $\mathrm{Exp}(\lambda)$ distribution.
+
+\textbf{(d)} From (c), $f_W(w) = \lambda e^{-\lambda w}$ for $w > 0$. Thus $W \sim \mathrm{Exp}(\lambda)$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-62}
+Insurance companies sometimes use the exponential principle: with $X$ the random amount to be paid in claims, the premium is $P = \frac{1}{a}\ln E[e^{aX}]$. Find $P$ when $X$ is exponential with parameter $\lambda$, and $a = \alpha\lambda$ where $0 < \alpha < 1$.
+\end{exercise}
+
+\solution{
+Here $X\sim\mathrm{Exp}(\lambda)$ and $a=\alpha\lambda<\lambda$. Using its density,
+\[
+E[e^{aX}] = \int_0^{\infty}e^{ax}\lambda e^{-\lambda x}\,dx = \frac{\lambda}{\lambda - a} = \frac{\lambda}{\lambda - \alpha\lambda} = \frac{1}{1-\alpha}.
+\]
+Therefore the premium is:
+\[
+P = \frac{1}{a}\ln\!\left(\frac{1}{1-\alpha}\right) = \frac{-\ln(1-\alpha)}{\alpha\lambda}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-63}
+Calculate the moment generating function of a geometric random variable.
+\end{exercise}
+
+\solution{
+For $p=1$, $X=1$ almost surely and its MGF is $e^t$ for all real $t$. Otherwise assume $0<p<1$. Let $X \sim \mathrm{Geom}(p)$ with $P(X=n) = p(1-p)^{n-1}$ for $n = 1, 2, \ldots$ Then:
+\[
+M(t) = E[e^{tX}] = \sum_{n=1}^{\infty} e^{tn}\,p(1-p)^{n-1} = pe^t\sum_{n=1}^{\infty}\bigl[(1-p)e^t\bigr]^{n-1} = \frac{pe^t}{1-(1-p)e^t},
+\]
+provided $(1-p)e^t < 1$, i.e., $t < -\ln(1-p)$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-64}
+Show that the sum of independent identically distributed exponential random variables has a gamma distribution.
+\end{exercise}
+
+\solution{
+Let $X_1, \ldots, X_n \stackrel{\text{i.i.d.}}{\sim} \mathrm{Exp}(\lambda)$ with MGF $M_{X_i}(t) = \lambda/(\lambda - t)$ for $t < \lambda$. Since the $X_i$ are independent, the MGF of $S = X_1 + \cdots + X_n$ is:
+\[
+M_S(t) = \prod_{i=1}^n M_{X_i}(t) = \left(\frac{\lambda}{\lambda - t}\right)^n.
+\]
+This is precisely the MGF of a $\mathrm{Gamma}(n, \lambda)$ distribution (which has density $f(x) = \lambda e^{-\lambda x}(\lambda x)^{n-1}/(n-1)!$ for $x > 0$). Since MGFs uniquely determine distributions, $S \sim \mathrm{Gamma}(n, \lambda)$. 
+}
+
+\begin{exercise}
+\label{ex:random-variables-65}
+Let $Z_1,\ldots,Z_n$ be independent standard normal random variables.
+For fixed real coefficients $a_{rs}$ and constants $\mu_r$, define
+$X_r=\mu_r+\sum_{s=1}^n a_{rs}Z_s$. Find
+$\operatorname{Cov}(X_i,X_j)$ in terms of the coefficients.
+\end{exercise}
+
+\solution{
+By the given representation, $X_i = \sum_{s=1}^n a_{is} Z_s + \mu_i$ and $X_j = \sum_{s=1}^n a_{js}Z_s + \mu_j$, where $Z_1, \ldots, Z_n$ are independent standard normal random variables. Since $\mathrm{Cov}(Z_r, Z_s) = \mathbf{1}[r=s]$:
+\[
+\mathrm{Cov}(X_i, X_j) = \mathrm{Cov}\!\left(\sum_{r=1}^n a_{ir}Z_r,\; \sum_{s=1}^n a_{js}Z_s\right) = \sum_{r=1}^n\sum_{s=1}^n a_{ir}\,a_{js}\,\mathrm{Cov}(Z_r, Z_s) = \sum_{r=1}^n a_{ir}\,a_{jr}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-66}
+Use Chebyshev's inequality to prove the weak law of large numbers: if $X_1, X_2, \ldots$ are i.i.d.\ with mean $\mu$ and variance $\sigma^2$, then for any $\varepsilon > 0$,
+\[
+P\!\left\{\left|\frac{X_1+\cdots+X_n}{n}-\mu\right| > \varepsilon\right\} \to 0 \quad \text{as } n \to \infty.
+\]
+\end{exercise}
+
+\solution{
+Let $\bar{X}_n = (X_1+\cdots+X_n)/n$. Then $E[\bar{X}_n] = \mu$ and $\mathrm{Var}(\bar{X}_n) = \sigma^2/n$. By Chebyshev's inequality:
+\[
+P\!\left\{\left|\bar{X}_n - \mu\right| > \varepsilon\right\} \leq \frac{\mathrm{Var}(\bar{X}_n)}{\varepsilon^2} = \frac{\sigma^2}{n\varepsilon^2} \to 0 \quad \text{as } n \to \infty. \qquad
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-67}
+Suppose that $X$ is a random variable with mean $10$ and variance $15$. What can we say about $P\{5 < X < 15\}$?
+\end{exercise}
+
+\solution{
+By Chebyshev's inequality, with $E[X] = \mu = 10$ and $\mathrm{Var}(X) = \sigma^2 = 15$:
+\[
+P\{|X - 10| \geq 5\} \leq \frac{\mathrm{Var}(X)}{5^2} = \frac{15}{25} = \frac{3}{5}.
+\]
+Therefore:
+\[
+P\{5 < X < 15\} = P\{|X - 10| < 5\} \geq 1 - \frac{3}{5} = \frac{2}{5}.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-68}
+Let $X_1, X_2, \ldots, X_{10}$ be independent Poisson random variables with mean $1$.
+\begin{enumerate}
+    \item[(a)] Use the Markov inequality to obtain a bound on $P\{X_1+\cdots+X_{10} \geq 15\}$.
+    \item[(b)] Use the central limit theorem to approximate $P\{X_1+\cdots+X_{10} \geq 15\}$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Put $S=\sum_{i=1}^{10}X_i$. Then $S\sim\operatorname{Poisson}(10)$,
+with mean and variance both $10$.
+\textbf{(a)} Markov's inequality gives $P(S\ge15)\le10/15=2/3$.
+
+\textbf{(b)} Approximate $S$ by a normal random variable with mean
+$10$ and variance $10$. Without a continuity correction,
+\[
+P(S\ge15)\approx1-\Phi\left(\frac{15-10}{\sqrt{10}}\right)
+\approx0.0569.
+\]
+Using the continuity correction instead gives
+\[
+P(S\ge15)\approx1-\Phi\left(\frac{14.5-10}{\sqrt{10}}\right)
+\approx0.0774.
+\]
+These are normal approximations; the exact Poisson tail is about $0.0835$.
+}
+
+\begin{exercise}
+\label{ex:random-variables-69}
+If $X$ is normally distributed with mean $1$ and variance $4$, use the tables to find $P\{2 < X < 3\}$.
+\end{exercise}
+
+\solution{
+With $Z=(X-1)/2\sim N(0,1)$,
+\[
+P(2<X<3)=P(0.5<Z<1)=\Phi(1)-\Phi(0.5)
+\approx0.8413-0.6915=0.1498.
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-70}
+Show that
+\[
+\lim_{n\to\infty} e^{-n}\sum_{k=0}^n \frac{n^k}{k!} = \frac{1}{2}.
+\]
+\end{exercise}
+
+\solution{
+Let $X_n \sim \mathrm{Poisson}(n)$. Then:
+\[
+P\{X_n \leq n\} = e^{-n}\sum_{k=0}^n \frac{n^k}{k!}.
+\]
+By the central limit theorem, $\frac{X_n - n}{\sqrt{n}} \xrightarrow{d} Z \sim N(0,1)$, so:
+\[
+P\{X_n \leq n\} = P\!\left\{\frac{X_n - n}{\sqrt{n}} \leq 0\right\} \to P\{Z \leq 0\} = \Phi(0) = \frac{1}{2}. \qquad
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-71}
+Let $X$ denote the number of white balls selected when $k$ balls are chosen at random from an urn containing $n$ white and $m$ black balls.
+\begin{enumerate}
+    \item[(a)] Compute $P\{X = i\}$.
+    \item[(b)] Let $X_i = \mathbf{1}[\text{$i$-th ball selected is white}]$ and $Y_j = \mathbf{1}[\text{white ball $j$ is selected}]$. Compute $E[X]$ using first $X_i$'s then $Y_j$'s.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} This is the hypergeometric distribution:
+\[
+P\{X = i\} = \frac{\binom{n}{i}\binom{m}{k-i}}{\binom{n+m}{k}}, \quad \max(0,k-m) \leq i \leq \min(n,k).
+\]
+
+\textbf{(b) Via $X_i$'s:} $X = \sum_{i=1}^k X_i$ and $E[X_i] = P(\text{$i$-th selected ball is white}) = \frac{n}{n+m}$ (by symmetry). So:
+\[
+E[X] = k\cdot\frac{n}{n+m}.
+\]
+\textbf{Via $Y_j$'s:} $X = \sum_{j=1}^n Y_j$ and $E[Y_j] = P(\text{white ball $j$ is among the $k$ chosen}) = \frac{k}{n+m}$. So:
+\[
+E[X] = n\cdot\frac{k}{n+m} = \frac{kn}{n+m}.
+\]
+Both methods give the same result.
+}
+
+\begin{exercise}
+\label{ex:random-variables-72}
+Show that $\mathrm{Var}(X) = 1$ when $X$ is the number of men who select their own hats (as in the hat-matching problem with $n$ men).
+\end{exercise}
+
+\solution{
+Assume $n\ge2$; for $n=1$ the variance is $0$. Let $X_i = \mathbf{1}[\text{man $i$ gets his own hat}]$, so $X = \sum_{i=1}^n X_i$. By symmetry, $E[X_i] = 1/n$ and $E[X_iX_j] = P(\text{both $i$ and $j$ get own hats}) = 1/[n(n-1)]$ for $i \neq j$. Then:
+\[
+\mathrm{Var}(X_i) = \frac{1}{n} - \frac{1}{n^2} = \frac{n-1}{n^2}, \qquad \mathrm{Cov}(X_i,X_j) = \frac{1}{n(n-1)}-\frac{1}{n^2} = \frac{1}{n^2(n-1)}.
+\]
+Therefore:
+\[
+\mathrm{Var}(X) = n\cdot\frac{n-1}{n^2} + n(n-1)\cdot\frac{1}{n^2(n-1)} = \frac{n-1}{n}+\frac{1}{n} = 1. \qquad
+\]
+}
+
+\begin{exercise}
+\label{ex:random-variables-73}
+For the multinomial distribution (Exercise 17), let $N_i$ denote the number of times outcome $i$ occurs. Find:
+\begin{enumerate}
+    \item[(a)] $E[N_i]$;
+    \item[(b)] $\mathrm{Var}(N_i)$;
+    \item[(c)] $\mathrm{Cov}(N_i, N_j)$ for $i \neq j$;
+    \item[(d)] the expected number of outcomes that do not occur.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Each of the $n$ experiments independently produces outcome $i$ with probability $p_i$, so $N_i \sim \mathrm{Bin}(n, p_i)$.
+
+\textbf{(a)} $E[N_i] = np_i$.
+
+\textbf{(b)} $\mathrm{Var}(N_i) = np_i(1-p_i)$.
+
+\textbf{(c)} $N_i + N_j \sim \mathrm{Bin}(n, p_i+p_j)$, so $\mathrm{Var}(N_i+N_j) = n(p_i+p_j)(1-p_i-p_j)$. Since $\mathrm{Var}(N_i+N_j) = \mathrm{Var}(N_i)+\mathrm{Var}(N_j)+2\mathrm{Cov}(N_i,N_j)$:
+\[
+\mathrm{Cov}(N_i,N_j) = \frac{n(p_i+p_j)(1-p_i-p_j)-np_i(1-p_i)-np_j(1-p_j)}{2} = -np_ip_j.
+\]
+
+\textbf{(d)} Let $A_i = \mathbf{1}[N_i = 0]$ for $i=1,\ldots,r$. Then $P(A_i=1) = (1-p_i)^n$ and:
+\[
+E[\text{outcomes that don't occur}] = \sum_{i=1}^r (1-p_i)^n.
+\]
+}

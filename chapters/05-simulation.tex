@@ -1,0 +1,1126 @@
+\section{Monte Carlo and Simulation Methods}
+\label{sec:simulation}
+
+\setcounter{exercise}{4}
+\begin{exercise}
+\label{ex:simulation-5}
+Suppose it is relatively easy to simulate from $F_i$ for each $i=1,\ldots,n$. How can we simulate from
+\begin{enumerate}
+\item $F(x)=\prod_{i=1}^n F_i(x)$?
+\item $F(x)=1-\prod_{i=1}^n (1-F_i(x))$?
+\item Give two methods for simulating from the distribution $F(x)=x^n$, $0<x<1$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Generate independent random variables
+\[
+X_1,\ldots,X_n,
+\]
+where
+\[
+X_i\sim F_i.
+\]
+Then set
+\[
+X=\max\{X_1,\ldots,X_n\}.
+\]
+Indeed,
+\[
+P(X\le x)
+=
+P(X_1\le x,\ldots,X_n\le x)
+=
+\prod_{i=1}^n F_i(x).
+\]
+Thus $X$ has distribution function
+\[
+F(x)=\prod_{i=1}^n F_i(x).
+\]
+
+\textbf{(b)} Generate independent random variables
+\[
+X_1,\ldots,X_n,
+\]
+where
+\[
+X_i\sim F_i.
+\]
+Then set
+\[
+X=\min\{X_1,\ldots,X_n\}.
+\]
+Then
+\[
+P(X>x)
+=
+P(X_1>x,\ldots,X_n>x)
+=
+\prod_{i=1}^n (1-F_i(x)).
+\]
+Therefore,
+\[
+P(X\le x)
+=
+1-P(X>x)
+=
+1-\prod_{i=1}^n (1-F_i(x)).
+\]
+
+\textbf{(c)} We want to simulate from
+\[
+F(x)=x^n,\qquad 0<x<1.
+\]
+
+\noindent
+\textbf{Method 1: Maximum of uniforms.}
+
+Generate independent random variables
+\[
+U_1,\ldots,U_n\sim \operatorname{Uniform}(0,1),
+\]
+and set
+\[
+X=\max\{U_1,\ldots,U_n\}.
+\]
+Then, for $0<x<1$,
+\[
+P(X\le x)
+=
+P(U_1\le x,\ldots,U_n\le x)
+=
+x^n.
+\]
+
+\noindent
+\textbf{Method 2: Inverse transform method.}
+
+Generate
+\[
+U\sim \operatorname{Uniform}(0,1),
+\]
+and set
+\[
+X=U^{1/n}.
+\]
+Then, for $0<x<1$,
+\[
+P(X\le x)
+=
+P(U^{1/n}\le x)
+=
+P(U\le x^n)
+=
+x^n.
+\]
+Hence $X$ has distribution function $F(x)=x^n$.
+}
+
+\setcounter{exercise}{5}
+\begin{exercise}
+\label{ex:simulation-6}
+Consider simulating the absolute value of a standard normal random variable using rejection sampling with an exponential proposal. For a positive rate $\lambda$, the proposal density is
+\[
+g(x)=\lambda e^{-\lambda x}.
+\]
+Show that the mean number of iterations needed in the rejection scheme is minimized when $\lambda=1$.
+\end{exercise}
+
+\solution{
+The density of the absolute value of a standard normal random variable is
+\[
+f(x)=\sqrt{\frac{2}{\pi}}e^{-x^2/2},
+\qquad x>0.
+\]
+We use the exponential proposal density
+\[
+g(x)=\lambda e^{-\lambda x},
+\qquad x>0.
+\]
+
+In the rejection method, the mean number of iterations is the rejection constant
+\[
+c_\lambda=\sup_{x>0}\frac{f(x)}{g(x)}.
+\]
+Now,
+\[
+\frac{f(x)}{g(x)}
+=
+\frac{\sqrt{\frac{2}{\pi}}e^{-x^2/2}}{\lambda e^{-\lambda x}}
+=
+\frac{\sqrt{\frac{2}{\pi}}}{\lambda}
+e^{-x^2/2+\lambda x}.
+\]
+The exponent is
+\[
+-\frac{x^2}{2}+\lambda x.
+\]
+This is maximized at
+\[
+x=\lambda.
+\]
+Therefore,
+\[
+c_\lambda
+=
+\frac{\sqrt{\frac{2}{\pi}}}{\lambda}
+e^{\lambda^2/2}.
+\]
+
+To minimize $c_\lambda$, minimize
+\[
+\log c_\lambda
+=
+\text{constant}-\log \lambda+\frac{\lambda^2}{2}.
+\]
+Differentiate:
+\[
+\frac{d}{d\lambda}\log c_\lambda
+=
+-\frac1\lambda+\lambda.
+\]
+Set this equal to $0$:
+\[
+-\frac1\lambda+\lambda=0.
+\]
+Hence
+\[
+\lambda^2=1.
+\]
+Since $\lambda>0$, we get
+\[
+\lambda=1.
+\]
+Also,
+\[
+\frac{d^2}{d\lambda^2}\log c_\lambda
+=
+\frac1{\lambda^2}+1>0,
+\]
+so this critical point is a minimum.
+
+Therefore, the mean number of iterations in the rejection scheme is minimized when
+\[
+{\lambda=1.}
+\]
+}
+
+\setcounter{exercise}{6}
+\begin{exercise}
+\label{ex:simulation-7}
+Give an algorithm for simulating a random variable having density function
+\[
+f(x)=30(x^2-2x^3+x^4),\qquad 0<x<1.
+\]
+\end{exercise}
+
+\solution{
+First note that
+\[
+f(x)=30x^2(1-x)^2,
+\qquad 0<x<1.
+\]
+This is the density of a Beta random variable with parameters $3$ and $3$.
+
+A simple way to simulate such a random variable is to use order statistics.
+
+Generate independent random variables
+\[
+U_1,U_2,U_3,U_4,U_5\sim \operatorname{Uniform}(0,1).
+\]
+Let
+\[
+U_{(1)}\le U_{(2)}\le U_{(3)}\le U_{(4)}\le U_{(5)}
+\]
+be their order statistics. Then set
+\[
+X=U_{(3)}.
+\]
+
+The density of the third order statistic from five independent uniforms is
+\[
+f_{U_{(3)}}(x)
+=
+\frac{5!}{2!2!}x^2(1-x)^2,
+\qquad 0<x<1.
+\]
+Since
+\[
+\frac{5!}{2!2!}=30,
+\]
+we have
+\[
+f_{U_{(3)}}(x)=30x^2(1-x)^2.
+\]
+Thus the algorithm is:
+
+\[
+{
+\text{Generate five independent uniforms and return their median.}
+}
+\]
+}
+
+\setcounter{exercise}{7}
+\begin{exercise}
+\label{ex:simulation-8}
+Consider the technique of simulating a gamma $(n,\lambda)$ random variable by using the rejection method with $g$ being an exponential density with rate $\lambda/n$.
+\begin{enumerate}
+\item Show that the average number of iterations of the algorithm needed to generate a gamma is
+\[
+\frac{n^n e^{1-n}}{(n-1)!}.
+\]
+\item Use Stirling's approximation to show that for large $n$ the answer to part (a) is approximately equal to
+\[
+e\left[\frac{n-1}{2\pi}\right]^{1/2}.
+\]
+\item Show that the procedure is equivalent to the following:
+\[
+\text{Step 1: Generate }Y_1\text{ and }Y_2\text{ independent exponentials with rate }1.
+\]
+\[
+\text{Step 2: If }Y_1<(n-1)[Y_2-\log(Y_2)-1],\text{ return to step 1.}
+\]
+\[
+\text{Step 3: Set }X=\frac{nY_2}{\lambda}.
+\]
+\item Explain how to obtain an independent exponential along with a gamma from the preceding algorithm.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} The gamma density with parameters $n$ and $\lambda$ is
+\[
+f(x)=\frac{\lambda^n x^{n-1}e^{-\lambda x}}{(n-1)!},
+\qquad x>0.
+\]
+The proposal density is exponential with rate $\lambda/n$, so
+\[
+g(x)=\frac{\lambda}{n}e^{-\lambda x/n},
+\qquad x>0.
+\]
+In the rejection method, the average number of iterations is
+\[
+c=\sup_{x>0}\frac{f(x)}{g(x)}.
+\]
+Now
+\[
+\frac{f(x)}{g(x)}
+=
+\frac{\lambda^n x^{n-1}e^{-\lambda x}}{(n-1)!}
+\cdot
+\frac{n}{\lambda}e^{\lambda x/n}.
+\]
+Thus
+\[
+\frac{f(x)}{g(x)}
+=
+\frac{n\lambda^{n-1}x^{n-1}}{(n-1)!}
+e^{-\lambda x(1-1/n)}.
+\]
+Let
+\[
+y=\frac{\lambda x}{n}.
+\]
+Then
+\[
+x=\frac{ny}{\lambda},
+\]
+and so
+\[
+\frac{f(x)}{g(x)}
+=
+\frac{n^n}{(n-1)!}y^{n-1}e^{-(n-1)y}.
+\]
+The function
+\[
+y^{n-1}e^{-(n-1)y}
+\]
+is maximized at
+\[
+y=1.
+\]
+Therefore,
+\[
+c
+=
+\frac{n^n}{(n-1)!}e^{-(n-1)}
+=
+\frac{n^n e^{1-n}}{(n-1)!}.
+\]
+Hence the average number of iterations is
+\[
+{
+\frac{n^n e^{1-n}}{(n-1)!}
+}.
+\]
+
+\textbf{(b)} By Stirling's approximation,
+\[
+(n-1)!\sim \sqrt{2\pi(n-1)}
+\left(\frac{n-1}{e}\right)^{n-1}.
+\]
+Therefore,
+\[
+\frac{n^n e^{1-n}}{(n-1)!}
+\sim
+\frac{n^n e^{1-n}}
+{\sqrt{2\pi(n-1)}
+\left(\frac{n-1}{e}\right)^{n-1}}.
+\]
+Since
+\[
+\left(\frac{n-1}{e}\right)^{n-1}
+=
+(n-1)^{n-1}e^{-(n-1)},
+\]
+we get
+\[
+\frac{n^n e^{1-n}}{(n-1)!}
+\sim
+\frac{n^n}
+{\sqrt{2\pi(n-1)}(n-1)^{n-1}}.
+\]
+Thus
+\[
+\frac{n^n e^{1-n}}{(n-1)!}
+\sim
+\frac{n}{\sqrt{2\pi(n-1)}}
+\left(\frac{n}{n-1}\right)^{n-1}.
+\]
+For large $n$,
+\[
+\left(\frac{n}{n-1}\right)^{n-1}\to e,
+\]
+and
+\[
+\frac{n}{\sqrt{n-1}}\sim \sqrt{n-1}.
+\]
+Therefore,
+\[
+\frac{n^n e^{1-n}}{(n-1)!}
+\approx
+e\left[\frac{n-1}{2\pi}\right]^{1/2}.
+\]
+
+\textbf{(c)} In the rejection method, generate
+\[
+X\sim g,
+\]
+where $g$ is exponential with rate $\lambda/n$. Equivalently, generate
+\[
+Y_2\sim \operatorname{Exponential}(1)
+\]
+and set
+\[
+X=\frac{nY_2}{\lambda}.
+\]
+
+The acceptance probability is
+\[
+\frac{f(X)}{cg(X)}.
+\]
+From part (a),
+\[
+\frac{f(X)}{g(X)}
+=
+\frac{n^n}{(n-1)!}Y_2^{n-1}e^{-(n-1)Y_2},
+\]
+and
+\[
+c=\frac{n^n e^{1-n}}{(n-1)!}.
+\]
+Hence
+\[
+\frac{f(X)}{cg(X)}
+=
+Y_2^{n-1}e^{-(n-1)Y_2}e^{n-1}.
+\]
+Therefore,
+\[
+\frac{f(X)}{cg(X)}
+=
+\exp\{(n-1)(\log Y_2-Y_2+1)\}.
+\]
+
+In the usual rejection method, if $U\sim \operatorname{Uniform}(0,1)$, we accept when
+\[
+U
+\le
+\exp\{(n-1)(\log Y_2-Y_2+1)\}.
+\]
+Let
+\[
+Y_1=-\log U.
+\]
+Then
+\[
+Y_1\sim \operatorname{Exponential}(1).
+\]
+Taking negative logarithms, the acceptance condition becomes
+\[
+Y_1\ge (n-1)(Y_2-\log Y_2-1).
+\]
+Therefore, the rejection condition is
+\[
+Y_1<(n-1)(Y_2-\log Y_2-1).
+\]
+Thus the rejection method is equivalent to:
+
+\[
+\text{Generate }Y_1,Y_2\text{ independent exponentials with rate }1.
+\]
+Reject and start again if
+\[
+Y_1<(n-1)(Y_2-\log Y_2-1).
+\]
+Otherwise set
+\[
+X=\frac{nY_2}{\lambda}.
+\]
+
+\textbf{(d)} Suppose the algorithm accepts a pair $(Y_1,Y_2)$. Define
+\[
+h(Y_2)=(n-1)(Y_2-\log Y_2-1).
+\]
+The acceptance condition is
+\[
+Y_1\ge h(Y_2).
+\]
+By the memoryless property of the exponential distribution,
+\[
+Y_1-h(Y_2)\mid \{Y_1\ge h(Y_2)\}
+\]
+has an exponential distribution with rate $1$.
+
+Thus, after acceptance, define
+\[
+Z=Y_1-h(Y_2).
+\]
+Then
+\[
+Z\sim \operatorname{Exponential}(1),
+\]
+and $Z$ is independent of the accepted value of $Y_2$, hence independent of
+\[
+X=\frac{nY_2}{\lambda}.
+\]
+
+Therefore, the algorithm produces both
+\[
+X\sim \operatorname{Gamma}(n,\lambda)
+\]
+and an independent exponential random variable
+\[
+Z\sim \operatorname{Exponential}(1).
+\]
+If an exponential with rate $\lambda$ is desired, use
+\[
+\frac{Z}{\lambda}.
+\]
+}
+
+\setcounter{exercise}{12}
+\begin{exercise}
+\label{ex:simulation-13}
+The Discrete Rejection Method. Suppose we want to simulate $X$ having probability mass function
+\[
+P\{X=i\}=P_i,\qquad i=1,\ldots,n,
+\]
+and suppose we can easily simulate from the probability mass function $Q_i$, where
+\[
+\sum_i Q_i=1,\qquad Q_i\ge 0.
+\]
+Let $C$ be such that
+\[
+P_i\le CQ_i,\qquad i=1,\ldots,n.
+\]
+Show that the following algorithm generates the desired random variable:
+
+\[
+\text{Step 1: Generate }Y\text{ having mass function }Q\text{ and }U\text{ an independent random number.}
+\]
+\[
+\text{Step 2: If }U\le \frac{P_Y}{CQ_Y},\text{ set }X=Y.
+\text{ Otherwise return to step 1.}
+\]
+\end{exercise}
+
+\solution{
+For proposal states with $Q_i>0$, assume that
+\[
+U\sim \operatorname{Uniform}(0,1)
+\]
+and that $U$ is independent of $Y$.
+
+Let $A$ denote the event that the proposed value is accepted. Conditional on $Y=i$, the probability of acceptance is
+\[
+P(A\mid Y=i)=\frac{P_i}{CQ_i}.
+\]
+Therefore,
+\[
+P(A,Y=i)
+=
+P(A\mid Y=i)P(Y=i)
+=
+\frac{P_i}{CQ_i}Q_i
+=
+\frac{P_i}{C}.
+\]
+Thus the total probability of acceptance is
+\[
+P(A)
+=
+\sum_{i=1}^n P(A,Y=i)
+=
+\sum_{i=1}^n \frac{P_i}{C}
+=
+\frac{1}{C}\sum_{i=1}^n P_i
+=
+\frac1C.
+\]
+
+Now compute the conditional distribution of the accepted value:
+\[
+P(Y=i\mid A)
+=
+\frac{P(A,Y=i)}{P(A)}
+=
+\frac{\frac{P_i}{C}}{\frac1C}
+=
+P_i.
+\]
+States with $Q_i=0$ also have $P_i=0$ and are never proposed, so no acceptance ratio is evaluated there. Hence the distribution of the accepted value is exactly
+\[
+P\{X=i\}=P_i,\qquad i=1,\ldots,n.
+\]
+Therefore, the algorithm generates a random variable having the desired probability mass function.
+}
+
+\setcounter{exercise}{15}
+\begin{exercise}
+\label{ex:simulation-16}
+Suppose $n$ balls having weights $w_1,w_2,\ldots,w_n$ are in an urn. These balls are sequentially removed in the following manner: At each selection, a given ball in the urn is chosen with probability equal to its weight divided by the sum of the weights of all balls still in the urn (including the chosen ball). Let $I_1,I_2,\ldots,I_n$ denote the order in which the balls are removed, so that $I_1,\ldots,I_n$ is a random permutation with weights.
+\begin{enumerate}
+\item Give a method for simulating $I_1,\ldots,I_n$.
+\item Let $X_i$ be independent exponentials with rates $w_i$, $i=1,\ldots,n$. Explain how $X_i$ can be utilized to simulate $I_1,\ldots,I_n$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Assume all weights $w_i>0$. A direct simulation method is as follows.
+
+At the first step, choose ball $i$ with probability
+\[
+\frac{w_i}{w_1+\cdots+w_n}.
+\]
+Remove that ball from the urn.
+
+At a later step, if the remaining set of balls is $S$, choose ball $i\in S$ with probability
+\[
+\frac{w_i}{\sum_{j\in S}w_j}.
+\]
+Remove the chosen ball and continue until all balls have been removed.
+
+The sequence of selected indices is
+\[
+I_1,I_2,\ldots,I_n.
+\]
+
+Equivalently, at each step one may generate a uniform random variable and use the cumulative probabilities
+\[
+\frac{w_i}{\sum_{j\in S}w_j},\qquad i\in S,
+\]
+to choose the next ball.
+
+\textbf{(b)} Generate independent exponential random variables
+\[
+X_i\sim \operatorname{Exponential}(w_i),
+\qquad i=1,\ldots,n.
+\]
+Then order them from smallest to largest:
+\[
+X_{I_1}<X_{I_2}<\cdots<X_{I_n}.
+\]
+The indices
+\[
+I_1,I_2,\ldots,I_n
+\]
+give the desired weighted random permutation.
+
+To justify this, for any remaining set $S$ and any $i\in S$,
+\[
+P(X_i=\min_{j\in S}X_j)
+=
+\int_0^\infty
+w_i e^{-w_it}
+\prod_{\substack{j\in S\\ j\ne i}}
+e^{-w_jt}\,dt.
+\]
+Hence
+\[
+P(X_i=\min_{j\in S}X_j)
+=
+\int_0^\infty
+w_i e^{-\left(\sum_{j\in S}w_j\right)t}\,dt
+=
+\frac{w_i}{\sum_{j\in S}w_j}.
+\]
+Thus the first selected ball has the correct weighted probability.
+
+After the smallest exponential time occurs, the memoryless property of exponentials implies that the remaining residual times are still independent exponentials with the same rates. Therefore, the same argument applies repeatedly. Hence ordering independent exponentials with rates $w_i$ simulates the desired sequence
+\[
+I_1,\ldots,I_n.
+\]
+}
+
+\setcounter{exercise}{22}
+\begin{exercise}
+\label{ex:simulation-23}
+For a nonhomogeneous Poisson process with intensity function $\lambda(t)$, $t\ge 0$, where
+\[
+\int_0^\infty \lambda(t)\,dt=\infty,
+\]
+let $X_1,X_2,\ldots$ denote the sequence of times at which events occur.
+\begin{enumerate}
+\item Show that
+\[
+\int_0^{X_1}\lambda(t)\,dt
+\]
+is exponential with rate $1$.
+\item Show that
+\[
+\int_{X_{i-1}}^{X_i}\lambda(t)\,dt,\qquad i\ge 1,
+\]
+are independent exponentials with rate $1$, where $X_0=0$.
+\end{enumerate}
+In words, independent of the past, the additional amount of hazard that must be experienced until an event occurs is exponential with rate $1$.
+\end{exercise}
+
+\solution{
+Assume $\lambda$ is nonnegative and locally integrable, and put
+$\Lambda(t)=\int_0^t\lambda(s)\,ds$. It is continuous, nondecreasing,
+and tends to infinity. Let $\tau(y)=\inf\{t:\Lambda(t)\ge y\}$.
+For fixed hazard times $0\le a<b$, the count in the corresponding
+physical-time interval is Poisson with mean
+$\Lambda(\tau(b))-\Lambda(\tau(a))=b-a$. Disjoint hazard intervals
+correspond to disjoint physical intervals, so their counts are independent.
+Flat portions of $\Lambda$ have zero intensity and contain no events.
+Thus the time-changed process is a rate-$1$ Poisson process.
+
+\textbf{(a)} Its first arrival occurs at hazard time $\Lambda(X_1)$,
+so $P(\Lambda(X_1)>y)=e^{-y}$ for $y\ge0$.
+
+\textbf{(b)} Its successive interarrival times are
+\[
+\Lambda(X_i)-\Lambda(X_{i-1})
+=\int_{X_{i-1}}^{X_i}\lambda(t)\,dt.
+\]
+As interarrival times of a rate-$1$ Poisson process, these are independent
+exponentials with rate $1$. This argument uses deterministic transformed
+intervals; independence on random intervals does not follow directly
+from independent increments alone.
+}
+
+\setcounter{exercise}{24}
+\begin{exercise}
+\label{ex:simulation-25}
+Let $(X,Y)$ be uniformly distributed in a circle of radius $r$ about the origin. That is, their joint density is given by
+\[
+f(x,y)=\frac1{\pi r^2},
+\qquad 0\le x^2+y^2\le r^2.
+\]
+Let
+\[
+R=\sqrt{X^2+Y^2}
+\qquad\text{and}\qquad
+\theta=\operatorname{atan2}(Y,X)\pmod{2\pi}
+\]
+denote their polar coordinates. Show that $R$ and $\theta$ are independent with $\theta$ being uniform on $(0,2\pi)$ and
+\[
+P\{R<a\}=\frac{a^2}{r^2},
+\qquad 0<a<r.
+\]
+\end{exercise}
+
+\solution{
+Use the polar coordinate transformation
+\[
+X=R\cos\theta,
+\qquad
+Y=R\sin\theta.
+\]
+The Jacobian of this transformation is
+\[
+\left|\frac{\partial(x,y)}{\partial(r,\theta)}\right|=R.
+\]
+Therefore, the joint density of $R$ and $\theta$ is
+\[
+f_{R,\theta}(\rho,\theta)
+=
+\frac1{\pi r^2}\rho,
+\]
+for
+\[
+0<\rho<r,\qquad 0<\theta<2\pi.
+\]
+Thus
+\[
+f_{R,\theta}(\rho,\theta)
+=
+\frac{\rho}{\pi r^2}.
+\]
+We can factor this as
+\[
+f_{R,\theta}(\rho,\theta)
+=
+\left(\frac{2\rho}{r^2}\right)
+\left(\frac1{2\pi}\right),
+\qquad 0<\rho<r,\quad 0<\theta<2\pi.
+\]
+Hence
+\[
+f_R(\rho)=\frac{2\rho}{r^2},
+\qquad 0<\rho<r,
+\]
+and
+\[
+f_\theta(\theta)=\frac1{2\pi},
+\qquad 0<\theta<2\pi.
+\]
+Since the joint density factors into a function of $\rho$ times a function of $\theta$, $R$ and $\theta$ are independent.
+
+Also, $\theta$ is uniform on $(0,2\pi)$.
+
+Finally, for $0<a<r$,
+\[
+P(R<a)
+=
+\int_0^a \frac{2\rho}{r^2}\,d\rho
+=
+\frac{2}{r^2}\cdot \frac{a^2}{2}
+=
+\frac{a^2}{r^2}.
+\]
+Therefore,
+\[
+{
+P\{R<a\}=\frac{a^2}{r^2},\qquad 0<a<r.
+}
+\]
+}
+
+\setcounter{exercise}{30}
+\begin{exercise}
+\label{ex:simulation-31}
+Consider a queueing system in which each service time, independent of the past, has mean $\mu$. Let $W_n$ and $D_n$ denote, respectively, the amounts of time customer $n$ spends in the system and in queue. Hence,
+\[
+D_n=W_n-S_n,
+\]
+where $S_n$ is the service time of customer $n$. Therefore,
+\[
+E[D_n]=E[W_n]-\mu.
+\]
+If we use simulation to estimate $E[D_n]$, should we
+\begin{enumerate}
+\item use the simulated data to determine $D_n$, which is then used as an estimate of $E[D_n]$, or
+\item use the simulated data to determine $W_n$ and then use this quantity minus $\mu$ as an estimate of $E[D_n]$?
+\end{enumerate}
+Repeat for when we want to estimate $E[W_n]$.
+\end{exercise}
+
+\solution{
+Since
+\[
+W_n=D_n+S_n,
+\]
+and the service time $S_n$ is independent of the past, $S_n$ is independent of $D_n$. Hence
+\[
+\operatorname{Cov}(D_n,S_n)=0.
+\]
+Therefore,
+\[
+\operatorname{Var}(W_n)
+=
+\operatorname{Var}(D_n+S_n)
+=
+\operatorname{Var}(D_n)+\operatorname{Var}(S_n).
+\]
+Thus,
+\[
+\operatorname{Var}(W_n)\ge \operatorname{Var}(D_n).
+\]
+
+\noindent
+\textbf{Estimating $E[D_n]$}
+
+There are two possible unbiased estimators:
+\[
+D_n
+\]
+or
+\[
+W_n-\mu.
+\]
+Since subtracting a constant does not change variance,
+\[
+\operatorname{Var}(W_n-\mu)=\operatorname{Var}(W_n).
+\]
+But
+\[
+\operatorname{Var}(W_n)\ge \operatorname{Var}(D_n).
+\]
+Therefore, it is better to estimate $E[D_n]$ directly using the simulated values of $D_n$.
+
+\[
+{\text{Use the simulated values of }D_n.}
+\]
+
+\noindent
+\textbf{Estimating $E[W_n]$}
+
+Now we can estimate $E[W_n]$ either by using
+\[
+W_n
+\]
+directly, or by using
+\[
+D_n+\mu.
+\]
+Both are unbiased because
+\[
+E[W_n]=E[D_n]+\mu.
+\]
+However,
+\[
+\operatorname{Var}(D_n+\mu)=\operatorname{Var}(D_n),
+\]
+whereas
+\[
+\operatorname{Var}(W_n)=\operatorname{Var}(D_n)+\operatorname{Var}(S_n).
+\]
+Thus
+\[
+\operatorname{Var}(D_n+\mu)\le \operatorname{Var}(W_n).
+\]
+Therefore, it is better to estimate $E[W_n]$ by using the simulated values of $D_n$ and then adding $\mu$.
+
+\[
+{\text{Use }D_n+\mu\text{ to estimate }E[W_n].}
+\]
+}
+
+\begin{exercise}
+\label{ex:simulation-32}
+Show that if $X$ and $Y$ have the same distribution, then
+\[
+\operatorname{Var}\left(\frac{X+Y}{2}\right)\le \operatorname{Var}(X).
+\]
+Hence, conclude that the use of antithetic variables can never increase variance, though it need not be as efficient as generating an independent set of random numbers.
+\end{exercise}
+
+\solution{
+Since $X$ and $Y$ have the same distribution,
+\[
+\operatorname{Var}(X)=\operatorname{Var}(Y).
+\]
+Now,
+\[
+\operatorname{Var}\left(\frac{X+Y}{2}\right)
+=
+\frac14\operatorname{Var}(X+Y).
+\]
+Expanding,
+\[
+\operatorname{Var}\left(\frac{X+Y}{2}\right)
+=
+\frac14\left[\operatorname{Var}(X)+\operatorname{Var}(Y)+2\operatorname{Cov}(X,Y)\right].
+\]
+Since $\operatorname{Var}(X)=\operatorname{Var}(Y)$,
+\[
+\operatorname{Var}\left(\frac{X+Y}{2}\right)
+=
+\frac12\operatorname{Var}(X)+\frac12\operatorname{Cov}(X,Y).
+\]
+By Cauchy's inequality,
+\[
+\operatorname{Cov}(X,Y)\le
+\sqrt{\operatorname{Var}(X)\operatorname{Var}(Y)}
+=
+\operatorname{Var}(X).
+\]
+Therefore,
+\[
+\operatorname{Var}\left(\frac{X+Y}{2}\right)
+\le
+\frac12\operatorname{Var}(X)+\frac12\operatorname{Var}(X)
+=
+\operatorname{Var}(X).
+\]
+
+Hence,
+\[
+{
+\operatorname{Var}\left(\frac{X+Y}{2}\right)\le \operatorname{Var}(X).
+}
+\]
+
+Thus, averaging antithetic variables cannot increase the variance compared with using just one of them. However, it need not be as efficient as using two independent random variables. If $X_1$ and $X_2$ are independent with the same distribution as $X$, then
+\[
+\operatorname{Var}\left(\frac{X_1+X_2}{2}\right)
+=
+\frac12\operatorname{Var}(X).
+\]
+For antithetic variables,
+\[
+\operatorname{Var}\left(\frac{X+Y}{2}\right)
+=
+\frac12\operatorname{Var}(X)+\frac12\operatorname{Cov}(X,Y),
+\]
+which may be larger than $\frac12\operatorname{Var}(X)$ if $\operatorname{Cov}(X,Y)>0$.
+}
+
+\begin{exercise}
+\label{ex:simulation-33}
+If $0\le X\le a$, show that
+\begin{enumerate}
+\item $E[X^2]\le aE[X]$,
+\item $\operatorname{Var}(X)\le E[X](a-E[X])$,
+\item $\operatorname{Var}(X)\le a^2/4$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Since
+\[
+0\le X\le a,
+\]
+we have
+\[
+X^2\le aX.
+\]
+Taking expectations gives
+\[
+E[X^2]\le aE[X].
+\]
+This proves part (a).
+
+For part (b), recall that
+\[
+\operatorname{Var}(X)=E[X^2]-(E[X])^2.
+\]
+Using part (a),
+\[
+\operatorname{Var}(X)
+\le
+aE[X]-(E[X])^2.
+\]
+Therefore,
+\[
+\operatorname{Var}(X)
+\le
+E[X](a-E[X]).
+\]
+
+For part (c), let
+\[
+m=E[X].
+\]
+Since $0\le X\le a$, we have
+\[
+0\le m\le a.
+\]
+From part (b),
+\[
+\operatorname{Var}(X)\le m(a-m).
+\]
+The quadratic function
+\[
+m(a-m)
+\]
+is maximized on $0\le m\le a$ at
+\[
+m=\frac a2.
+\]
+Thus,
+\[
+m(a-m)\le \frac a2\left(a-\frac a2\right)=\frac{a^2}{4}.
+\]
+Hence,
+\[
+{\operatorname{Var}(X)\le \frac{a^2}{4}.}
+\]
+}
+
+\setcounter{exercise}{34}
+\begin{exercise}
+\label{ex:simulation-35}
+Suppose we are able to simulate independent random variables $X$ and $Y$. If we simulate $2k$ independent random variables
+\[
+X_1,\ldots,X_k
+\]
+and
+\[
+Y_1,\ldots,Y_k,
+\]
+where the $X_i$ have the same distribution as does $X$ and the $Y_j$ have the same distribution as does $Y$, how would you use them to estimate
+\[
+P(X<Y)?
+\]
+\end{exercise}
+
+\solution{
+Use all possible pairs $(X_i,Y_j)$ rather than only the $k$ pairs $(X_i,Y_i)$.
+
+Define
+\[
+I_{ij}=
+\begin{cases}
+1, & X_i<Y_j,\\
+0, & X_i\ge Y_j.
+\end{cases}
+\]
+Then
+\[
+E[I_{ij}]=P(X_i<Y_j).
+\]
+Since $X_i$ has the same distribution as $X$, $Y_j$ has the same distribution as $Y$, and they are independent,
+\[
+P(X_i<Y_j)=P(X<Y).
+\]
+Therefore,
+\[
+E[I_{ij}]=P(X<Y).
+\]
+
+A natural estimator is
+\[
+\widehat{p}
+=
+\frac{1}{k^2}\sum_{i=1}^k\sum_{j=1}^k I_{ij}.
+\]
+That is,
+\[
+{
+\widehat{p}
+=
+\frac{1}{k^2}
+\sum_{i=1}^k\sum_{j=1}^k
+\mathbf{1}\{X_i<Y_j\}.
+}
+\]
+This estimator is unbiased because
+\[
+E[\widehat{p}]
+=
+\frac{1}{k^2}
+\sum_{i=1}^k\sum_{j=1}^k
+E[I_{ij}]
+=
+\frac{1}{k^2}
+\sum_{i=1}^k\sum_{j=1}^k
+P(X<Y)
+=
+P(X<Y).
+\]
+}

@@ -1,0 +1,120 @@
+\documentclass[11pt,a4paper]{article}
+% Typography and shared environments for all chapters.
+\usepackage[T1]{fontenc}
+\usepackage{iftex}
+\ifPDFTeX\usepackage[utf8]{inputenc}\fi
+\usepackage{lmodern}
+\usepackage[margin=25mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{xcolor}
+\usepackage{etoolbox}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\definecolor{solutiontext}{RGB}{25,55,85}
+\definecolor{linkcolor}{RGB}{25,75,115}
+\hypersetup{colorlinks=true,linkcolor=linkcolor,urlcolor=linkcolor,
+  pdftitle={Stochastic Methods: Selected Exercises},
+  pdfauthor={Pietro Forni and Riccardo Visconti},bookmarksnumbered=true}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em}
+\setlength{\emergencystretch}{2em}
+\setlist{itemsep=0.2em,topsep=0.4em}
+\allowdisplaybreaks[1]
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Stochastic Methods}
+\fancyhead[R]{\small\iftoggle{showsolutions}{Exercises and Solutions}{Exercises}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\newtoggle{showsolutions}
+\toggletrue{showsolutions}
+% Set \togglefalse{showsolutions} above to build the practice edition.
+% The optional \hideanswers override is also supported.
+\ifdefined\hideanswers\togglefalse{showsolutions}\fi
+\newtheoremstyle{exercisestyle}{1em}{0.5em}{\normalfont}{}%
+  {\bfseries}{.}{0.5em}{}
+\theoremstyle{exercisestyle}
+\newtheorem{exercise}{Exercise}
+% Preserve the supplied numbers; make PDF destinations unique across topics.
+\providecommand{\theHexercise}{}
+\renewcommand{\theHexercise}{\thesection.\arabic{exercise}}
+\AtBeginEnvironment{exercise}{\setlist[enumerate,1]{label=(\alph*)}}
+\newenvironment{solutionbody}{%
+  \par\smallskip\begingroup\color{solutiontext}%
+  \noindent\textbf{Solution.}\enspace\ignorespaces
+}{\par\endgroup\medskip}
+\newcommand{\solution}[1]{%
+  \iftoggle{showsolutions}{\begin{solutionbody}#1\end{solutionbody}}{}%
+}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\centering
+\vspace*{12mm}
+{\Large\iftoggle{showsolutions}{Selected Exercises and Solutions}{Selected Exercises}\par}
+\vspace{8mm}
+{\Huge\bfseries Stochastic Methods\par}
+\vspace{28mm}
+{\Large Pietro Forni\par}
+\vspace{3mm}
+{\Large Riccardo Visconti\par}
+\vfill
+{\normalsize Independently written solutions to selected exercises from\par
+\emph{Introduction to Probability Models}\par
+by Sheldon M. Ross\par}
+\vspace{10mm}
+{\small Faculty of Informatics\par
+Institute of Computational Science and Artificial Intelligence\par
+Universit\`a della Svizzera italiana\par
+Lugano, Switzerland\par}
+\vspace{10mm}
+{\large June 2026\par}
+\end{titlepage}
+
+\pagenumbering{roman}
+\hypersetup{pageanchor=true}
+\section*{About these notes}
+\addcontentsline{toc}{section}{About these notes}
+These notes collect selected exercises and independently written solutions
+by Pietro Forni and Riccardo Visconti, prepared while studying stochastic
+methods. They are based on \emph{Introduction to Probability Models}
+by Sheldon M. Ross and are unofficial study notes. No university or
+publisher endorsement is claimed.
+
+Exercise numbers are retained from the original manuscript and restart
+within each topic. Cite a topic title and exercise number together.
+Some statements have been adapted or expanded with explicit assumptions
+so that the exercises can be read without the textbook. In particular,
+the two-ball urn and insurance premium models in Markov Chains
+Exercises~9 and~53 are fully specified versions chosen for these notes;
+they are not asserted to reproduce a particular textbook edition.
+
+The collection has received a first mathematical review. Corrections and
+further improvements are welcome.
+
+\section*{Conventions}
+Exponential and gamma distributions use rate parameters. Geometric
+random variables count trials through the first success and take values
+$1,2,\ldots$, unless explicitly defined otherwise. Rates are positive.
+Conditioning formulas apply where the conditioning event has positive
+probability or the marginal density is positive; conditional expectations
+for continuous variables are defined almost everywhere. Variance
+identities assume finite second moments. Queueing models use independent
+service times and arrival processes unless stated otherwise.
+\clearpage
+
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+\include{chapters/01-probability}
+\include{chapters/02-random-variables}
+\include{chapters/03-conditioning-expectation}
+\include{chapters/04-distribution-recursions}
+\include{chapters/05-simulation}
+\include{chapters/06-markov-chains}
+\include{chapters/07-counting-processes}
+\end{document}

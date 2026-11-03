@@ -1,0 +1,2378 @@
+\section{Conditioning and Expectation}
+\label{sec:conditioning-expectation}
+
+\setcounter{exercise}{0}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-1}
+If $X$ and $Y$ are both discrete, show that $\sum_x p_{X|Y}(x|y) = 1$ for all $y$ such that $p_Y(y) > 0$.
+\end{exercise}
+
+\solution{
+By definition, the conditional probability mass function of $X$ given $Y=y$ is:
+\[
+p_{X|Y}(x|y) = \frac{p(x,y)}{p_Y(y)}
+\]
+Summing this over all possible values of $x$ gives:
+\[
+\sum_x p_{X|Y}(x|y) = \sum_x \frac{p(x,y)}{p_Y(y)} = \frac{1}{p_Y(y)} \sum_x p(x,y)
+\]
+Since $\sum_x p(x,y) = p_Y(y)$ by the definition of marginal probability, we have:
+\[
+\sum_x p_{X|Y}(x|y) = \frac{p_Y(y)}{p_Y(y)} = 1
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-2}
+Let $X_1$ and $X_2$ be independent geometric random variables having the same parameter $p$. Guess the value of $P\{X_1 = i \mid X_1 + X_2 = n\}$.
+
+\textbf{Hint:} Suppose a coin having probability $p$ of coming up heads is continually flipped. If the second head occurs on flip number $n$, what is the conditional probability that the first head was on flip number $i$, $i = 1, \ldots, n-1$? Verify your guess analytically.
+\end{exercise}
+
+\solution{
+\textbf{Guess:} Given that the second head occurs exactly at flip $n$, the first head must have occurred equally likely at any of the preceding $n-1$ flips. Thus, we guess the probability is $\frac{1}{n-1}$ for $i = 1, \dots, n-1$.
+
+\textbf{Analytical Verification:}
+Using the definition of conditional probability:
+\[
+P\{X_1 = i \mid X_1 + X_2 = n\} = \frac{P\{X_1 = i, X_2 = n-i\}}{P\{X_1 + X_2 = n\}}
+\]
+Since $X_1$ and $X_2$ are independent geometric random variables:
+\[
+P\{X_1 = i\} = (1-p)^{i-1}p \quad \text{and} \quad P\{X_2 = n-i\} = (1-p)^{n-i-1}p
+\]
+The numerator becomes:
+\[
+P\{X_1 = i\} P\{X_2 = n-i\} = (1-p)^{i-1}p \cdot (1-p)^{n-i-1}p = (1-p)^{n-2}p^2
+\]
+The denominator is the sum over all possible values of $i$ from $1$ to $n-1$:
+\[
+P\{X_1 + X_2 = n\} = \sum_{j=1}^{n-1} P\{X_1 = j, X_2 = n-j\} = \sum_{j=1}^{n-1} (1-p)^{n-2}p^2 = (n-1)(1-p)^{n-2}p^2
+\]
+Dividing the numerator by the denominator:
+\[
+P\{X_1 = i \mid X_1 + X_2 = n\} = \frac{(1-p)^{n-2}p^2}{(n-1)(1-p)^{n-2}p^2} = \frac{1}{n-1}
+\]
+for $i = 1, \ldots, n-1$.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-3}
+The joint probability mass function of $X$ and $Y$, $p(x,y)$, is given by
+\begin{align*}
+    p(1,1) &= \frac{1}{9}, & p(2,1) &= \frac{1}{3}, & p(3,1) &= \frac{1}{9}, \\
+    p(1,2) &= \frac{1}{9}, & p(2,2) &= 0,           & p(3,2) &= \frac{1}{18}, \\
+    p(1,3) &= 0,           & p(2,3) &= \frac{1}{6}, & p(3,3) &= \frac{1}{9}
+\end{align*}
+Compute $E[X \mid Y = i]$ for $i = 1, 2, 3$.
+\end{exercise}
+
+\solution{
+First, compute the marginal probabilities $p_Y(i) = \sum_x p(x,i)$:
+\begin{itemize}
+    \item $p_Y(1) = \frac{1}{9} + \frac{1}{3} + \frac{1}{9} = \frac{5}{9}$
+    \item $p_Y(2) = \frac{1}{9} + 0 + \frac{1}{18} = \frac{3}{18} = \frac{1}{6}$
+    \item $p_Y(3) = 0 + \frac{1}{6} + \frac{1}{9} = \frac{5}{18}$
+\end{itemize}
+
+Now compute $E[X \mid Y = i] = \sum_x x \frac{p(x,i)}{p_Y(i)}$:
+\begin{itemize}
+    \item For $i = 1$:
+    \[
+    E[X \mid Y = 1] = 1\left(\frac{1/9}{5/9}\right) + 2\left(\frac{1/3}{5/9}\right) + 3\left(\frac{1/9}{5/9}\right) = 1\left(\frac{1}{5}\right) + 2\left(\frac{3}{5}\right) + 3\left(\frac{1}{5}\right) = \frac{10}{5} = 2
+    \]
+    \item For $i = 2$:
+    \[
+    E[X \mid Y = 2] = 1\left(\frac{1/9}{1/6}\right) + 2\left(\frac{0}{1/6}\right) + 3\left(\frac{1/18}{1/6}\right) = 1\left(\frac{2}{3}\right) + 0 + 3\left(\frac{1}{3}\right) = \frac{5}{3}
+    \]
+    \item For $i = 3$:
+    \[
+    E[X \mid Y = 3] = 1\left(\frac{0}{5/18}\right) + 2\left(\frac{1/6}{5/18}\right) + 3\left(\frac{1/9}{5/18}\right) = 0 + 2\left(\frac{3}{5}\right) + 3\left(\frac{2}{5}\right) = \frac{12}{5}
+    \]
+\end{itemize}
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-4}
+In Exercise 3, are the random variables $X$ and $Y$ independent?
+\end{exercise}
+
+\solution{
+No, $X$ and $Y$ are not independent. For independence, we must have $p(x,y) = p_X(x)p_Y(y)$ for all $x, y$.
+
+Let's check $x=1, y=3$:
+From the table, $p(1,3) = 0$.
+However, the marginal probabilities are:
+\[
+p_X(1) = p(1,1) + p(1,2) + p(1,3) = \frac{1}{9} + \frac{1}{9} + 0 = \frac{2}{9} > 0
+\]
+\[
+p_Y(3) = \frac{5}{18} > 0
+\]
+Since $p(1,3) = 0 \neq p_X(1)p_Y(3) = \frac{10}{162}$, $X$ and $Y$ are dependent.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-5}
+An urn contains three white, six red, and five black balls. Six of these balls are randomly selected from the urn. Let $X$ and $Y$ denote respectively the number of white and black balls selected. Compute the conditional probability mass function of $X$ given that $Y = 3$. Also compute $E[X \mid Y = 1]$.
+\end{exercise}
+
+\solution{
+The total number of balls is $3 + 6 + 5 = 14$.
+
+Given $Y = 3$, we know exactly 3 black balls are selected out of the 5 available. The remaining $6 - 3 = 3$ choices must be selected from the remaining non-black balls ($3 \text{ white} + 6 \text{ red} = 9$ balls total). Thus, $X \mid Y=3$ follows a hypergeometric distribution:
+\[
+P\{X = x \mid Y = 3\} = \frac{\binom{3}{x}\binom{6}{3-x}}{\binom{9}{3}} \quad \text{for } x = 0, 1, 2, 3
+\]
+
+To compute $E[X \mid Y = 1]$, we note that given $Y = 1$, 1 black ball is chosen, so the remaining $6 - 1 = 5$ balls are chosen from the 9 non-black balls (3 white, 6 red). The distribution of $X \mid Y = 1$ is hypergeometric with sample size $n = 5$, from a population of $N = 9$ containing $K = 3$ white balls. The expected value is:
+\[
+E[X \mid Y = 1] = n \cdot \frac{K}{N} = 5 \cdot \frac{3}{9} = \frac{5}{3}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-6}
+Repeat Exercise 5 but under the assumption that when a ball is selected its color is noted, and it is then replaced in the urn before the next selection is made.
+\end{exercise}
+
+\solution{
+With replacement, the selections become independent trials. The probability of picking a white, red, or black ball on any trial is:
+\[
+P(W) = \frac{3}{14}, \quad P(R) = \frac{6}{14} = \frac{3}{7}, \quad P(B) = \frac{5}{14}
+\]
+Given that $Y = 3$ (exactly 3 black balls are chosen in 6 trials), the remaining $6 - 3 = 3$ trials must result in non-black balls. The conditional probability that a non-black ball is white is:
+\[
+P(W \mid \text{not } B) = \frac{P(W)}{P(W) + P(R)} = \frac{3/14}{9/14} = \frac{1}{3}
+\]
+Thus, given $Y=3$, the distribution of $X$ is Binomial$(3, 1/3)$:
+\[
+P\{X = x \mid Y = 3\} = \binom{3}{x} \left(\frac{1}{3}\right)^x \left(\frac{2}{3}\right)^{3-x} \quad \text{for } x = 0, 1, 2, 3
+\]
+
+For $E[X \mid Y = 1]$, given that 1 black ball is selected, the remaining $6 - 1 = 5$ trials must be non-black balls. Thus, $X \mid Y = 1 \sim \text{Binomial}(5, 1/3)$, yielding:
+\[
+E[X \mid Y = 1] = 5 \cdot \frac{1}{3} = \frac{5}{3}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-7}
+Suppose $p(x,y,z)$, the joint probability mass function of the random variables $X$, $Y$, and $Z$, is given by
+\begin{align*}
+    p(1,1,1) &= \frac{1}{8},  & p(2,1,1) &= \frac{1}{4}, \\
+    p(1,1,2) &= \frac{1}{8},  & p(2,1,2) &= \frac{3}{16}, \\
+    p(1,2,1) &= \frac{1}{16}, & p(2,2,1) &= 0, \\
+    p(1,2,2) &= 0,           & p(2,2,2) &= \frac{1}{4}
+\end{align*}
+What is $E[X \mid Y = 2]$? What is $E[X \mid Y = 2, Z = 1]$?
+\end{exercise}
+
+\solution{
+First, to find $E[X \mid Y = 2]$, we calculate $P\{Y = 2\}$:
+\[
+P\{Y = 2\} = p(1,2,1) + p(1,2,2) + p(2,2,1) + p(2,2,2) = \frac{1}{16} + 0 + 0 + \frac{1}{4} = \frac{5}{16}
+\]
+Now compute the conditional probabilities for $X$ given $Y=2$:
+\[
+P\{X = 1 \mid Y = 2\} = \frac{p(1,2,1) + p(1,2,2)}{P\{Y = 2\}} = \frac{1/16 + 0}{5/16} = \frac{1}{5}
+\]
+\[
+P\{X = 2 \mid Y = 2\} = \frac{p(2,2,1) + p(2,2,2)}{P\{Y = 2\}} = \frac{0 + 1/4}{5/16} = \frac{4}{5}
+\]
+Thus:
+\[
+E[X \mid Y = 2] = 1\left(\frac{1}{5}\right) + 2\left(\frac{4}{5}\right) = \frac{9}{5}
+\]
+
+Next, to find $E[X \mid Y = 2, Z = 1]$, we check the entries where $Y=2$ and $Z=1$:
+\[
+P\{Y=2, Z=1\} = p(1,2,1) + p(2,2,1) = \frac{1}{16} + 0 = \frac{1}{16}
+\]
+The conditional probabilities are:
+\[
+P\{X = 1 \mid Y = 2, Z = 1\} = \frac{1/16}{1/16} = 1, \quad P\{X = 2 \mid Y = 2, Z = 1\} = 0
+\]
+Thus:
+\[
+E[X \mid Y = 2, Z = 1] = 1(1) + 2(0) = 1
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-8}
+An unbiased die is successively rolled. Let $X$ and $Y$ denote, respectively, the number of rolls necessary to obtain a six and a five. Find (a) $E[X]$, (b) $E[X \mid Y = 1]$, (c) $E[X \mid Y = 5]$.
+\end{exercise}
+
+\solution{
+\textbf{(a)} $X$ is a geometric random variable with success probability $p = 1/6$. Therefore:
+\[
+E[X] = \frac{1}{p} = 6
+\]
+
+\textbf{(b)} Given $Y = 1$, the first roll is a 5. Since it cannot be a 6, by the memoryless property of successive independent rolls, we start looking for a 6 from the second roll onwards. Thus:
+\[
+E[X \mid Y = 1] = 1 + E[X] = 1 + 6 = 7
+\]
+
+\textbf{(c)} Given $Y = 5$, the first four rolls are not 5, and the fifth roll is 5. We partition based on whether a 6 occurred in the first four rolls:
+\begin{itemize}
+    \item The probability that a 6 occurs on roll $x$ (for $x \le 4$) given that no 5 occurs in the first 4 trials is $\frac{1}{5}\left(\frac{4}{5}\right)^{x-1}$.
+    \item If no 6 occurs in the first 4 rolls (which happens with probability $\left(\frac{4}{5}\right)^4$), the fifth roll is 5 (not 6), so we must wait an additional expected 6 rolls. The total rolls will be $5 + 6 = 11$.
+\end{itemize}
+Using the properties of the geometric series:
+\[
+E[X \mid Y = 5] = \sum_{x=1}^{4} x \frac{1}{5}\left(\frac{4}{5}\right)^{x-1} + 11 \left(\frac{4}{5}\right)^4 = 5 + 2\left(\frac{4}{5}\right)^4 = 5 + 2\left(\frac{256}{625}\right) = \frac{3637}{625} = 5.8192
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-9}
+Show in the discrete case that if $X$ and $Y$ are independent, then $E[X \mid Y = y] = E[X]$ for all $y$.
+\end{exercise}
+
+\solution{
+For $p_Y(y)>0$ and integrable $X$, by definition of conditional expectation:
+\[
+E[X \mid Y = y] = \sum_x x p_{X|Y}(x|y)
+\]
+Since $X$ and $Y$ are independent, $p_{X|Y}(x|y) = p_X(x)$ for all $x$ and all $y$ with $p_Y(y)>0$. Substituting this into the sum yields:
+\[
+E[X \mid Y = y] = \sum_x x p_X(x) = E[X]
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-10}
+Suppose $X$ and $Y$ are independent continuous random variables. Show that $E[X \mid Y = y] = E[X]$ for all $y$.
+\end{exercise}
+
+\solution{
+Where $f_Y(y)>0$ (and almost everywhere for conditional expectations), for integrable $X$:
+\[
+E[X \mid Y = y] = \int_{-\infty}^{\infty} x f_{X|Y}(x|y) \, dx
+\]
+Since $X$ and $Y$ are independent, the conditional density satisfies $f_{X|Y}(x|y) = f_X(x)$. Thus:
+\[
+E[X \mid Y = y] = \int_{-\infty}^{\infty} x f_X(x) \, dx = E[X]
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-11}
+The joint density of $X$ and $Y$ is
+\[
+f(x,y) = \frac{y^2 - x^2}{8} e^{-y}, \quad 0 < y < \infty, \quad -y \le x \le y
+\]
+Show that $E[X \mid Y = y] = 0$.
+\end{exercise}
+
+\solution{
+The conditional density is given by $f_{X|Y}(x|y) = \frac{f(x,y)}{f_Y(y)}$. Note that for any fixed $y$, the joint density function $f(x,y)$ is an \textbf{even} function with respect to $x$, because:
+\[
+f(-x,y) = \frac{y^2 - (-x)^2}{8} e^{-y} = \frac{y^2 - x^2}{8} e^{-y} = f(x,y)
+\]
+Since the domain of $x$ given $Y=y$ is $[-y, y]$, which is symmetric about 0, $f_{X|Y}(x|y)$ is also an even function of $x$.
+
+When computing the conditional expectation:
+\[
+E[X \mid Y = y] = \int_{-y}^{y} x f_{X|Y}(x|y) \, dx
+\]
+The integrand $x f_{X|Y}(x|y)$ is the product of an odd function ($x$) and an even function ($f_{X|Y}$), making the entire integrand an \textbf{odd} function. The integral of an odd function over a symmetric interval $[-y, y]$ is identically $0$. Thus, $E[X \mid Y = y] = 0$.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-12}
+The joint density of $X$ and $Y$ is given by
+\[
+f(x,y) = \frac{e^{-x/y}e^{-y}}{y}, \quad 0 < x < \infty, \quad 0 < y < \infty
+\]
+Show $E[X \mid Y = y] = y$.
+\end{exercise}
+
+\solution{
+First, compute the marginal density $f_Y(y)$ by integrating over $x$:
+\[
+f_Y(y) = \int_{0}^{\infty} \frac{e^{-x/y}e^{-y}}{y} \, dx = \frac{e^{-y}}{y} \int_{0}^{\infty} e^{-x/y} \, dx = \frac{e^{-y}}{y} \left[ -y e^{-x/y} \right]_{0}^{\infty} = \frac{e^{-y}}{y} (0 - (-y)) = e^{-y}
+\]
+Next, find the conditional density $f_{X|Y}(x|y)$:
+\[
+f_{X|Y}(x|y) = \frac{f(x,y)}{f_Y(y)} = \frac{\frac{e^{-x/y}e^{-y}}{y}}{e^{-y}} = \frac{1}{y} e^{-x/y}, \quad x > 0
+\]
+This is the probability density function of an exponential random variable with mean parameters $\mu = y$. Therefore:
+\[
+E[X \mid Y = y] = \int_{0}^{\infty} x \left(\frac{1}{y} e^{-x/y}\right) \, dx = y
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-13}
+Let $X$ be exponential with mean $1/\lambda$; that is,
+\[
+f_X(x) = \lambda e^{-\lambda x}, \quad 0 < x < \infty
+\]
+Find $E[X \mid X > 1]$.
+\end{exercise}
+
+\solution{
+By the memoryless property of the exponential distribution, given that $X > 1$, the excess value $X - 1$ follows the exact same exponential distribution as $X$ itself. That is:
+\[
+E[X - 1 \mid X > 1] = E[X] = \frac{1}{\lambda}
+\]
+Using the linearity of expectation:
+\[
+E[X \mid X > 1] - 1 = \frac{1}{\lambda} \implies E[X \mid X > 1] = 1 + \frac{1}{\lambda}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-14}
+Let $X$ be uniform over $(0, 1)$. Find $E\left[X \mid X < \frac{1}{2}\right]$.
+\end{exercise}
+
+\solution{
+Given that $X < \frac{1}{2}$, the random variable $X$ is restricted to the sub-interval $\left(0, \frac{1}{2}\right)$ and remains uniformly distributed over this new range.
+
+The expected value of a uniform continuous distribution over an interval $(a, b)$ is simply its midpoint $\frac{a+b}{2}$. Setting $a = 0$ and $b = \frac{1}{2}$:
+\[
+E\left[X \mid X < \frac{1}{2}\right] = \frac{0 + 1/2}{2} = \frac{1}{4}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-15}
+The joint density of $X$ and $Y$ is given by
+\[
+f(x,y) = \frac{e^{-y}}{y}, \quad 0 < x < y, \quad 0 < y < \infty
+\]
+Compute $E[X^2 \mid Y = y]$.
+\end{exercise}
+
+\solution{
+First, compute the marginal density $f_Y(y)$ by integrating over the allowed range of $x$, which is $(0, y)$:
+\[
+f_Y(y) = \int_{0}^{y} \frac{e^{-y}}{y} \, dx = \frac{e^{-y}}{y} [x]_{0}^{y} = \frac{e^{-y}}{y} \cdot y = e^{-y}
+\]
+Now find the conditional density $f_{X|Y}(x|y)$:
+\[
+f_{X|Y}(x|y) = \frac{f(x,y)}{f_Y(y)} = \frac{\frac{e^{-y}}{y}}{e^{-y}} = \frac{1}{y}, \quad 0 < x < y
+\]
+This shows that given $Y = y$, $X$ is uniformly distributed over the interval $(0, y)$.
+
+We can now compute the conditional expectation of $X^2$:
+\[
+E[X^2 \mid Y = y] = \int_{0}^{y} x^2 f_{X|Y}(x|y) \, dx = \int_{0}^{y} x^2 \frac{1}{y} \, dx = \frac{1}{y} \left[ \frac{x^3}{3} \right]_{0}^{y} = \frac{y^3}{3y} = \frac{y^2}{3}
+\]
+}
+
+\setcounter{exercise}{18}
+\begin{exercise}
+\label{ex:conditioning-expectation-19}
+Prove that if $X$ and $Y$ are jointly continuous, then
+\[
+E[X] = \int_{-\infty}^{\infty} E[X \mid Y = y] f_Y(y) \, dy
+\]
+\end{exercise}
+
+\solution{
+By definition, the conditional expectation of $X$ given $Y=y$ is:
+\[
+E[X \mid Y = y] = \int_{-\infty}^{\infty} x f_{X|Y}(x|y) \, dx
+\]
+Substituting this definition into the integral on the right-hand side gives:
+\[
+\int_{-\infty}^{\infty} E[X \mid Y = y] f_Y(y) \, dy = \int_{-\infty}^{\infty} \left( \int_{-\infty}^{\infty} x f_{X|Y}(x|y) \, dx \right) f_Y(y) \, dy
+\]
+Since $f_{X|Y}(x|y) f_Y(y) = f(x,y)$, where $f(x,y)$ is the joint probability density function of $X$ and $Y$, we can simplify the inner expression:
+\[
+= \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} x f(x,y) \, dx \, dy
+\]
+Assuming $E[|X|]<\infty$, Fubini's theorem allows us to interchange the order of integration:
+\[
+= \int_{-\infty}^{\infty} x \left( \int_{-\infty}^{\infty} f(x,y) \, dy \right) dx
+\]
+Since $\int_{-\infty}^{\infty} f(x,y) \, dy = f_X(x)$ represents the marginal density function of $X$, the equation becomes:
+\[
+= \int_{-\infty}^{\infty} x f_X(x) \, dx = E[X]
+\]
+Thus, the identity is verified.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-20}
+An individual whose level of exposure to a certain pathogen is $x$ will contract the disease caused by this pathogen with probability $P(x)$. If the exposure level of a randomly chosen member of the population has probability density function $f$, determine the conditional probability density of the exposure level of that member given that he or she
+\begin{enumerate}
+    \item[(a)] has the disease.
+    \item[(b)] does not have the disease.
+    \item[(c)] Show that when $P(x)$ increases in $x$, then the ratio of the density of part (a) to that of part (b) also increases in $x$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let $D$ denote the event that the individual contracts the disease. We are given the conditional probability $P(D \mid X = x) = P(x)$ and the marginal density of exposure $f_X(x) = f(x)$.
+
+\textbf{(a)} By Bayes' theorem for continuous random variables, the conditional density of $X$ given that the individual has the disease is:
+\[
+f_{X|D}(x) = \frac{P(D \mid X = x) f(x)}{P(D)} = \frac{P(x) f(x)}{\int_{-\infty}^{\infty} P(t) f(t) \, dt}
+\]
+
+\textbf{(b)} The probability of not contracting the disease given exposure level $x$ is $P(D^c \mid X = x) = 1 - P(x)$. Thus, the conditional density given that the individual is healthy is:
+\[
+f_{X|D^c}(x) = \frac{P(D^c \mid X = x) f(x)}{P(D^c)} = \frac{(1 - P(x)) f(x)}{\int_{-\infty}^{\infty} (1 - P(t)) f(t) \, dt}
+\]
+
+\textbf{(c)} Let us find the ratio of the conditional density from part (a) to that of part (b):
+\[
+\frac{f_{X|D}(x)}{f_{X|D^c}(x)} = \frac{\frac{P(x) f(x)}{P(D)}}{\frac{(1 - P(x)) f(x)}{P(D^c)}} = \frac{P(D^c)}{P(D)} \cdot \frac{P(x)}{1 - P(x)}
+\]
+The fraction $\frac{P(D^c)}{P(D)}$ is a constant value with respect to $x$. Therefore, the variation of the ratio depends entirely on the function:
+\[
+g(x) = \frac{P(x)}{1 - P(x)}
+\]
+If $P(x)$ is an increasing function of $x$, then as $x$ increases, the numerator $P(x)$ increases and the denominator $1 - P(x)$ decreases. Consequently, $g(x)$ is nondecreasing when $P(x)$ is nondecreasing (and strictly increasing when $P(x)$ is strictly increasing), on points where the density ratio is defined. Assume $0<P(D)<1$ and restrict the ratio to the common positive support. This proves that the ratio of the densities also increases in $x$.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-21}
+A miner is trapped in a mine with three doors. Door 1 leads to safety in 2 hours; doors 2 and 3 return the miner to the starting point after 3 and 5 hours, respectively. At each return, the miner independently chooses each door with probability $1/3$. Let $N$ denote the total number of doors selected before the miner reaches safety. Also, let $T_i$ denote the travel time corresponding to the $i$th choice, $i \ge 1$. Let $X$ denote the time when the miner reaches safety.
+\begin{enumerate}
+    \item[(a)] Give an identity that relates $X$ to $N$ and the $T_i$.
+    \item[(b)] What is $E[N]$?
+    \item[(c)] What is $E[T_N]$?
+    \item[(d)] What is $E[\sum_{i=1}^N T_i \mid N = n]$?
+    \item[(e)] Using the preceding, what is $E[X]$?
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textit{Setup:} A miner is trapped with 3 doors. Door 1 leads to safety in 2 hours; Door 2 returns him to the mine after 3 hours; Door 3 returns him to the mine after 5 hours. Each door is chosen at random with equal probability $1/3$.
+
+\textbf{(a)} The total time $X$ required to escape is the sum of the travel times for all $N$ doors chosen sequentially:
+\[
+X = \sum_{i=1}^{N} T_i
+\]
+
+\textbf{(b)} On each independent attempt, the probability of selecting the safety door is $p = 1/3$. The total number of choices $N$ follows a geometric distribution with success parameter $p$. Thus:
+\[
+E[N] = \frac{1}{p} = 3
+\]
+
+\textbf{(c)} The final choice ($N$-th choice) must be the door that leads directly to safety. Based on the problem description, the travel time for the safety door is 2 hours. Thus:
+\[
+E[T_N] = 2
+\]
+
+\textbf{(d)} Given that $N = n$, we know that the first $n-1$ choices were incorrect doors (Door 2 or Door 3, each chosen with equal probability $1/2$), and the final $n$-th choice was the safety door (Door 1).
+The expected time for any of the first $n-1$ incorrect choices is $\frac{3 + 5}{2} = 4$ hours.
+The time for the last choice is 2 hours. By linearity of expectation:
+\[
+E\left[\sum_{i=1}^N T_i \;\middle|\; N = n\right] = \sum_{i=1}^{n-1} E[T_i \mid N=n] + E[T_n \mid N=n] = 4(n - 1) + 2 = 4n - 2
+\]
+
+\textbf{(e)} We use the law of total expectation, substituting $N$ into the conditional identity found in part (d):
+\[
+E[X] = E\left[E\left[\sum_{i=1}^N T_i \;\middle|\; N\right]\right] = E[4N - 2]
+\]
+Applying linearity of expectation:
+\[
+E[X] = 4E[N] - 2 = 4(3) - 2 = 12 - 2 = 10 \text{ hours}
+\]
+}
+
+\setcounter{exercise}{22}
+\begin{exercise}
+\label{ex:conditioning-expectation-23}
+A coin having probability $p$ of coming up heads is successively flipped until two of the most recent three flips are heads. Let $N$ denote the number of flips. (Note that if the first two flips are heads, then $N = 2$.) Find $E[N]$.
+\end{exercise}
+
+\solution{
+Let $q = 1-p$. We can find $E[N]$ by setting up a system of equations based on the states of the recent flips:
+\begin{itemize}
+    \item $E_S$: Expected additional flips from the start.
+    \item $E_H$: Expected additional flips when the last flip was $H$ (and the preceding was not $H$).
+    \item $E_T$: Expected additional flips when the last flip was $T$ (with no useful history).
+    \item $E_{HT}$: Expected additional flips when the last two flips were $H, T$.
+    \item $E_{TH}$: Expected additional flips when the last two flips were $T, H$.
+\end{itemize}
+
+From each state, the transitions give the following equations:
+\[
+E_S = 1 + p E_H + q E_T
+\]
+\[
+E_H = 1 + q E_{HT} \quad (\text{since an } H \text{ leads to } HH \text{ and stops})
+\]
+\[
+E_T = 1 + p E_{TH} + q E_T \implies p E_T = 1 + p E_{TH} \implies E_T = \frac{1}{p} + E_{TH}
+\]
+\[
+E_{HT} = 1 + q E_T \quad (\text{since an } H \text{ leads to } HTH \text{ and stops})
+\]
+\[
+E_{TH} = 1 + q E_{HT} \quad (\text{since an } H \text{ leads to } THH \text{ and stops})
+\]
+
+Notice that $E_H = E_{TH} = 1 + q E_{HT}$. Substituting this into the expression for $E_T$:
+\[
+E_T = \frac{1}{p} + E_H
+\]
+Now substitute $E_T$ into the expression for $E_{HT}$:
+\[
+E_{HT} = 1 + q\left(\frac{1}{p} + E_H\right) = 1 + \frac{q}{p} + q E_H
+\]
+Substitute $E_{HT}$ back into the equation for $E_H$:
+\[
+E_H = 1 + q\left(1 + \frac{q}{p} + q E_H\right) = 1 + q + \frac{q^2}{p} + q^2 E_H
+\]
+\[
+E_H(1 - q^2) = 1 + q + \frac{q^2}{p} \implies E_H \cdot p(1+q) = \frac{p+pq+q^2}{p} = \frac{p+q(p+q)}{p} = \frac{p+q}{p} = \frac{1}{p}
+\]
+\[
+E_H = \frac{1}{p^2(1+q)} = \frac{1}{p^2(2-p)}
+\]
+
+Finally, we compute $E_S$:
+\[
+E_S = 1 + p E_H + q \left(\frac{1}{p} + E_H\right) = 1 + \frac{q}{p} + (p+q)E_H = \frac{1}{p} + E_H
+\]
+\[
+E[N] = E_S = \frac{1}{p} + \frac{1}{p^2(2-p)} = \frac{p(2-p) + 1}{p^2(2-p)} = \frac{1 + 2p - p^2}{p^2(2-p)}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-24}
+A coin, having probability $p$ of landing heads, is continually flipped until at least one head and one tail have been flipped.
+\begin{enumerate}
+    \item[(a)] Find the expected number of flips needed.
+    \item[(b)] Find the expected number of flips that land on heads.
+    \item[(c)] Find the expected number of flips that land on tails.
+    \item[(d)] Repeat part (a) in the case where flipping is continued until a total of at least two heads and one tail have been flipped.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let $q = 1-p$.
+
+\textbf{(a)} Condition on the outcome of the first flip:
+\[
+E[N] = 1 + p E[\text{flips until T}] + q E[\text{flips until H}] = 1 + p\left(\frac{1}{q}\right) + q\left(\frac{1}{p}\right) = 1 + \frac{p}{q} + \frac{q}{p} = \frac{1}{pq} - 1
+\]
+
+\textbf{(b)} Let $H_N$ be the number of heads. Conditioning on the first flip:
+\begin{itemize}
+    \item If the first flip is $H$, we flip until the first $T$. The number of additional flips is Geometric($q$), which contains an expected $\frac{1}{q}-1$ heads. Thus, total expected heads is $1 + \frac{1}{q} - 1 = \frac{1}{q}$.
+    \item If the first flip is $T$, we flip until the first $H$, which yields exactly $1$ head.
+\end{itemize}
+\[
+E[H_N] = p\left(\frac{1}{q}\right) + q(1) = \frac{p + q^2}{q} = \frac{p + (1-p)^2}{q} = \frac{1 - p + p^2}{q} = 1 + \frac{p^2}{q}
+\]
+
+\textbf{(c)} By symmetric reasoning, swapping $p$ and $q$:
+\[
+E[T_N] = q\left(\frac{1}{p}\right) + p(1) = 1 + \frac{q^2}{p}
+\]
+
+\textbf{(d)} Let $N_{(2H,1T)}$ be the number of flips required. Condition on the first flip:
+\begin{itemize}
+    \item If the first is $T$ (prob $q$), we need $2$ more heads, requiring an expected $\frac{2}{p}$ additional flips.
+    \item If the first is $H$ (prob $p$), we condition on the second flip:
+    \begin{itemize}
+        \item Second is $H$ (prob $p$): we have $2H$, so we need $1T$, requiring $\frac{1}{q}$ additional flips.
+        \item Second is $T$ (prob $q$): we have $1H$ and $1T$, so we need $1H$, requiring $\frac{1}{p}$ additional flips.
+    \end{itemize}
+\end{itemize}
+Combining these cases:
+\[
+E[N_{(2H,1T)}] = q\left(1 + \frac{2}{p}\right) + p\left(1 + p\left(1 + \frac{1}{q}\right) + q\left(1 + \frac{1}{p}\right)\right) = 2 + \frac{2q}{p} + \frac{p^2}{q}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-25}
+Independent trials, resulting in one of the outcomes 1, 2, 3 with respective probabilities $p_1, p_2, p_3$, $\sum_{i=1}^3 p_i = 1$, are performed.
+\begin{enumerate}
+    \item[(a)] Let $N$ denote the number of trials needed until the initial outcome has occurred exactly 3 times. Find $E[N]$.
+    \item[(b)] Find the expected number of trials needed until both outcome 1 and outcome 2 have occurred.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Condition on the first outcome observed:
+\begin{itemize}
+    \item If the first outcome is $i$, then outcome $i$ is designated as the initial outcome. We require $2$ more occurrences of outcome $i$. The number of additional trials needed follows a Negative Binomial distribution with expected value $\frac{2}{p_i}$.
+\end{itemize}
+By the law of total expectation:
+\[
+E[N] = \sum_{i=1}^3 p_i \left(1 + \frac{2}{p_i}\right) = \sum_{i=1}^3 p_i + \sum_{i=1}^3 2 = 1 + 6 = 7
+\]
+
+\textbf{(b)} Let $M$ be the number of trials needed. Condition on the first trial:
+\begin{itemize}
+    \item First outcome is 1 (prob $p_1$): we only need outcome 2, which takes an expected $\frac{1}{p_2}$ additional steps.
+    \item First outcome is 2 (prob $p_2$): we only need outcome 1, which takes an expected $\frac{1}{p_1}$ additional steps.
+    \item First outcome is 3 (prob $p_3$): no progress is made towards either 1 or 2, resulting in a reset.
+\end{itemize}
+\[
+E[M] = p_1\left(1 + \frac{1}{p_2}\right) + p_2\left(1 + \frac{1}{p_1}\right) + p_3(1 + E[M])
+\]
+\[
+E[M](1 - p_3) = (p_1 + p_2 + p_3) + \frac{p_1}{p_2} + \frac{p_2}{p_1} \implies E[M](p_1 + p_2) = 1 + \frac{p_1^2 + p_2^2}{p_1 p_2}
+\]
+\[
+E[M] = \frac{1}{p_1 + p_2} + \frac{p_1^2 + p_2^2}{p_1 p_2 (p_1 + p_2)} = \frac{p_1 p_2 + p_1^2 + p_2^2}{p_1 p_2 (p_1 + p_2)}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-26}
+You have two opponents with whom you alternate play. Whenever you play $A$, you win with probability $p_A$; whenever you play $B$, you win with probability $p_B$, where $p_B > p_A$. If your objective is to minimize the expected number of games you need to play to win two in a row, should you start with $A$ or with $B$?
+\end{exercise}
+
+\solution{
+Assume independent games and $0<p_A<p_B\le1$; if $p_A=0$, two consecutive wins are impossible from either starting order. Let $q_A = 1 - p_A$ and $q_B = 1 - p_B$. Following the hint, we write the conditional equations for $E[N_A]$ and $E[N_B]$:
+\[
+E[N_A] = p_A [ p_B \cdot 2 + q_B(2 + E[N_A]) ] + q_A [ 1 + E[N_B] ] = 1 + p_A + p_A q_B E[N_A] + q_A E[N_B]
+\]
+By symmetry, swapping $A$ and $B$:
+\[
+E[N_B] = 1 + p_B + p_B q_A E[N_B] + q_B E[N_A]
+\]
+Subtracting the second equation from the first:
+\[
+E[N_A] - E[N_B] = p_A - p_B + p_A q_B E[N_A] - q_B E[N_A] + q_A E[N_B] - p_B q_A E[N_B]
+\]
+\[
+E[N_A] - E[N_B] = p_A - p_B + E[N_A] q_B(p_A - 1) + E[N_B] q_A(1 - p_B)
+\]
+Since $p_A - 1 = -q_A$ and $1 - p_B = q_B$:
+\[
+E[N_A] - E[N_B] = p_A - p_B - q_A q_B (E[N_A] - E[N_B])
+\]
+\[
+(E[N_A] - E[N_B])(1 + q_A q_B) = p_A - p_B \implies E[N_A] - E[N_B] = \frac{p_A - p_B}{1 + q_A q_B}
+\]
+Since we are given $p_B > p_A$, the numerator $p_A - p_B$ is negative, while the denominator is positive. Therefore, $E[N_A] - E[N_B] < 0$, meaning $E[N_A] < E[N_B]$. To minimize the expected number of games, you should \textbf{start with A}.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-27}
+A coin that comes up heads with probability $p$ is continually flipped until the pattern T, T, H appears. Let $X$ denote the number of flips made, and find $E[X]$.
+\end{exercise}
+
+\solution{
+Let $q = 1-p$. Let $E_0$ be the expected remaining flips from the start, $E_T$ after one $T$, and $E_{TT}$ after $TT$.
+\[
+E_0 = 1 + p E_0 + q E_T \implies q E_0 = 1 + q E_T \implies E_0 = \frac{1}{q} + E_T
+\]
+\[
+E_T = 1 + p E_0 + q E_{TT}
+\]
+\[
+E_{TT} = p(1) + q(1 + E_{TT}) \implies p E_{TT} = 1 \implies E_{TT} = \frac{1}{p}
+\]
+Substituting $E_{TT}$ into $E_T$:
+\[
+E_T = 1 + p E_0 + \frac{q}{p}
+\]
+Substituting $E_T$ into the simplified expression for $E_0$:
+\[
+E_0 = \frac{1}{q} + 1 + p E_0 + \frac{q}{p} \implies E_0(1-p) = \frac{1}{q} + 1 + \frac{q}{p}
+\]
+Since $1-p = q$:
+\[
+q E_0 = \frac{1}{q} + 1 + \frac{q}{p} \implies E[X] = E_0 = \frac{1}{q^2} + \frac{1}{q} + \frac{1}{p} = \frac{1}{(1-p)^2} + \frac{1}{1-p} + \frac{1}{p}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-28}
+Polya's urn model supposes that an urn initially contains $r$ red and $b$ blue balls. At each stage a ball is randomly selected from the urn and is then returned along with $m$ other balls of the same color. Let $X_k$ be the number of red balls drawn in the first $k$ selections.
+Find (a) $E[X_1]$, (b) $E[X_2]$, (c) $E[X_3]$. (d) Conjecture the value of $E[X_k]$ and verify it by conditioning. (e) Give an intuitive proof.
+\end{exercise}
+
+\solution{
+Let $I_j$ be the indicator variable that equals 1 if the $j$-th draw is red, and 0 otherwise.
+
+\textbf{(a)} $E[X_1] = P(I_1 = 1) = \frac{r}{r+b}$.
+
+\textbf{(b)} Conditioning on the first draw:
+\[
+P(I_2 = 1) = \frac{r+m}{r+b+m}\left(\frac{r}{r+b}\right) + \frac{r}{r+b+m}\left(\frac{b}{r+b}\right) = \frac{r(r+m+b)}{(r+b)(r+b+m)} = \frac{r}{r+b}
+\]
+Thus, $E[X_2] = E[I_1] + E[I_2] = \frac{2r}{r+b}$.
+
+\textbf{(c)} By the same expansion, $P(I_3 = 1) = \frac{r}{r+b}$, hence $E[X_3] = \frac{3r}{r+b}$.
+
+\textbf{(d) Conjecture:} $E[X_k] = \frac{kr}{r+b}$.
+\textit{Proof by induction:} Assume $P(I_j = 1) = \frac{r}{r+b}$ holds for the first $k$ trials under any starting configuration. Conditioning on the first draw's outcome:
+\[
+P(I_{k+1} = 1) = P(I_{k+1} = 1 \mid I_1 = 1) P(I_1 = 1) + P(I_{k+1} = 1 \mid I_1 = 0) P(I_1 = 0)
+\]
+By the induction hypothesis, the remaining $k$ trials behave like a fresh Polya urn sequence starting with parameters $(r+m, b)$ or $(r, b+m)$:
+\[
+P(I_{k+1} = 1) = \left(\frac{r+m}{r+b+m}\right)\frac{r}{r+b} + \left(\frac{r}{r+b+m}\right)\frac{b}{r+b} = \frac{r}{r+b}
+\]
+By linearity of expectation, $E[X_k] = \sum_{j=1}^k E[I_j] = \frac{kr}{r+b}$.
+
+\textbf{(e) Intuitive proof:} By indexing each initial ball uniquely, symmetry dictates that every initial ball has an equal probability of being the 'ancestor' of the lineage chosen at any arbitrary draw stage $j$. Since $\frac{r}{r+b}$ of the initial balls are red, the probability of selecting a red ball at any stage remains constant at $\frac{r}{r+b}$.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-29}
+Two players take turns shooting at a target, with each shot by player $i$ hitting the target with probability $p_i$, $i = 1, 2$. Shooting ends when two consecutive shots hit the target. Let $\mu_i$ denote the mean number of shots taken when player $i$ shoots first, $i = 1, 2$.
+Find (a) $\mu_1$ and $\mu_2$, (b) $h_1$ and $h_2$ (the mean number of hits).
+\end{exercise}
+
+\solution{
+Assume $p_1,p_2>0$ and independent shots.\par
+\textbf{(a)} Conditioning on the first results:
+\[
+\mu_1 = (1-p_1)(1 + \mu_2) + p_1 [ p_2 \cdot 2 + (1-p_2)(2 + \mu_1) ] = 1 + p_1 + p_1(1-p_2)\mu_1 + (1-p_1)\mu_2
+\]
+By symmetry, swapping indices 1 and 2:
+\[
+\mu_2 = 1 + p_2 + p_2(1-p_1)\mu_2 + (1-p_2)\mu_1
+\]
+Solving this linear system yields:
+\[
+\mu_1 = \frac{2 - p_1 p_2(1-p_1)}{p_1 p_2 [1 + (1-p_1)(1-p_2)]}, \quad \mu_2 = \frac{2 - p_1 p_2(1-p_2)}{p_1 p_2 [1 + (1-p_1)(1-p_2)]}
+\]
+
+\textbf{(b)} Let $h_i$ be the expected number of hits. Conditioning similarly:
+\[
+h_1 = (1-p_1)h_2 + p_1 [ p_2 \cdot 2 + (1-p_2)(1 + h_1) ] = p_1(1+p_2) + p_1(1-p_2)h_1 + (1-p_1)h_2
+\]
+\[
+h_2 = p_2(1+p_1) + p_2(1-p_1)h_2 + (1-p_2)h_1
+\]
+Solving this system yields:
+\[
+h_1 = \frac{p_1 + p_2 - p_1 p_2^2(1-p_1)}{p_1 p_2 [1 + (1-p_1)(1-p_2)]}, \quad h_2 = \frac{p_1 + p_2 - p_1^2 p_2(1-p_2)}{p_1 p_2 [1 + (1-p_1)(1-p_2)]}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-30}
+Let $X_i, i \ge 0$ be independent and identically distributed random variables with probability mass function $p(j) = P\{X_i = j\}, j = 1, \dots, m$. Find $E[N]$, where $N = \min\{n > 0 : X_n = X_0\}$.
+\end{exercise}
+
+\solution{
+Condition on $X_0=j$ only for values with $p(j)>0$. Then $N$ is
+geometric with mean $1/p(j)$, so
+\[
+E[N]=\sum_{j:p(j)>0}p(j)\frac1{p(j)}
+=\#\{j:p(j)>0\}.
+\]
+In particular, the answer is $m$ if all $m$ listed probabilities are
+positive. Zero-probability outcomes must not be counted.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-31}
+Each element in a sequence of binary data is either 1 with probability $p$ or 0 with probability $1 - p$. A maximal subsequence of consecutive values having identical outcomes is called a run. Find (a) the expected length of the first run, (b) the expected length of the second run.
+\end{exercise}
+
+\solution{
+Assume independent data bits and $0<p<1$.\par
+\textbf{(a)} Let $L_1$ be the length of the first run. Condition on the value of the first element:
+\begin{itemize}
+    \item If it is 1 (prob $p$), the run continues until the first 0 appears, which follows a Geometric($1-p$) distribution.
+    \item If it is 0 (prob $1-p$), the run continues until the first 1 appears, which follows a Geometric($p$) distribution.
+\end{itemize}
+\[
+E[L_1] = p\left(\frac{1}{1-p}\right) + (1-p)\left(\frac{1}{p}\right) = \frac{p}{1-p} + \frac{1-p}{p} = \frac{p^2 + (1-p)^2}{p(1-p)}
+\]
+
+\textbf{(b)} Let $L_2$ be the length of the second run. The second run is guaranteed to be composed of the opposite binary element compared to the first run. Conditioning on the first element of the sequence:
+\begin{itemize}
+    \item If the first element is 1, the second run consists entirely of 0s, terminating at the next 1 $\implies$ Expected length is $\frac{1}{p}$.
+    \item If the first element is 0, the second run consists entirely of 1s, terminating at the next 0 $\implies$ Expected length is $\frac{1}{1-p}$.
+\end{itemize}
+\[
+E[L_2] = p\left(\frac{1}{p}\right) + (1-p)\left(\frac{1}{1-p}\right) = 1 + 1 = 2
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-32}
+Independent trials, each resulting in success with probability $p$, are performed.
+\begin{enumerate}
+    \item[(a)] Find the expected number of trials needed for there to have been both at least $n$ successes and at least $m$ failures.
+    \item[(b)] Find the expected number of trials needed for there to have been either at least $n$ successes or at least $m$ failures.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Let $X$ be the number of trials until there are both at least $n$ successes and at least $m$ failures. Following the hint, let us look at the first $n+m$ trials. Let $S_{n+m}$ be the number of successes in these $n+m$ trials.
+\begin{itemize}
+    \item If $S_{n+m} \ge n$ and $(n+m) - S_{n+m} \ge m$ (which means $S_{n+m} = n$), then at trial $n+m$, we have exactly achieved both conditions.
+    \item If $S_{n+m} = k > n$, we reached the $n$-th success earlier, but we still need more failures to reach $m$ failures. By the memoryless property of independent trials, the additional number of trials needed to reach $m$ failures given we already have $(n+m)-k$ failures is the expected number of trials to get the remaining $m - (n+m-k) = k-n$ failures, which is $\frac{k-n}{1-p}$.
+    \item If $S_{n+m} = k < n$, we reached $m$ failures earlier, but we need more successes. The remaining successes needed are $n-k$, which takes an expected $\frac{n-k}{p}$ trials.
+\end{itemize}
+By the law of total expectation:
+\[
+E[X] = (n+m) + \sum_{k=n+1}^{n+m} \binom{n+m}{k} p^k (1-p)^{n+m-k} \frac{k-n}{1-p} + \sum_{k=0}^{n-1} \binom{n+m}{k} p^k (1-p)^{n+m-k} \frac{n-k}{p}
+\]
+
+\textbf{(b)} Let $Y$ be the number of trials until there are either at least $n$ successes or at least $m$ failures. This is the stopping time of a standard negative binomial race (Banach's matchbox-type problem). Notice that the total number of trials to achieve \textit{both} conditions ($X$) plus the number of trials to achieve the \textit{either} condition ($Y$) is equal to the sum of the two completion times (which are dependent): the time to get $n$ successes ($X_S$) and the time to get $m$ failures ($X_F$). Therefore, $X + Y = X_S + X_F$, which implies:
+\[
+E[Y] = E[X_S] + E[X_F] - E[X] = \frac{n}{p} + \frac{m}{1-p} - E[X]
+\]
+where $E[X]$ is the expression derived in part (a).
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-33}
+If $R_i$ denotes the random amount that is earned in period $i$, then $\sum_{i=1}^{\infty} \beta^{i-1}R_i$, where $0 < \beta < 1$ is a specified constant, is called the total discounted reward with discount factor $\beta$. Let $T$ be a geometric random variable with parameter $1 - \beta$ that is independent of the $R_i$. Show that the expected total discounted reward is equal to the expected total (undiscounted) reward earned by time $T$. That is, show that
+\[
+E\left[\sum_{i=1}^{\infty} \beta^{i-1}R_i\right] = E\left[\sum_{i=1}^{T} R_i\right]
+\]
+\end{exercise}
+
+\solution{
+Assume the rewards are nonnegative, or $\sum_i\beta^{i-1}E[|R_i|]<\infty$. These conditions justify the exchanges below by Tonelli or Fubini. We can express the sum on the right-hand side using indicator functions:
+\[
+\sum_{i=1}^{T} R_i = \sum_{i=1}^{\infty} R_i \mathbf{1}[T \ge i]
+\]
+Taking expectations on both sides and using the independence of $T$ and $R_i$:
+\[
+E\left[\sum_{i=1}^{T} R_i\right] = \sum_{i=1}^{\infty} E\left[R_i \mathbf{1}[T \ge i]\right] = \sum_{i=1}^{\infty} E[R_i] P\{T \ge i\}
+\]
+Since $T$ is a geometric random variable with parameter $1-\beta$, the probability that $T$ is at least $i$ is the probability of having $i-1$ initial failures:
+\[
+P\{T \ge i\} = \beta^{i-1}
+\]
+Substituting this back into the sum yields:
+\[
+E\left[\sum_{i=1}^{T} R_i\right] = \sum_{i=1}^{\infty} E[R_i] \beta^{i-1} = E\left[\sum_{i=1}^{\infty} \beta^{i-1}R_i\right]
+\]
+The identity is thus proved.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-34}
+A set of $n$ dice is thrown. All those that land on six are put aside, and the others are again thrown. This is repeated until all the dice have landed on six. Let $N$ denote the number of throws needed. Let $m_n = E[N]$.
+\begin{enumerate}
+    \item[(a)] Derive a recursive formula for $m_n$ and use it to calculate $m_i, i = 2, 3, 4$ and to show that $m_5 \approx 13.024$.
+    \item[(b)] Let $X_i$ denote the number of dice rolled on the $i$th throw. Find $E\left[\sum_{i=1}^N X_i\right]$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} On the first throw of $n$ dice, the number of dice that land on six, $K$, follows a Binomial distribution with parameters $n$ and $1/6$. Conditioning on $K$:
+\[
+m_n = 1 + \sum_{k=0}^{n} \binom{n}{k} \left(\frac{1}{6}\right)^k \left(\frac{5}{6}\right)^{n-k} m_{n-k}
+\]
+Isolating $m_n$ (the $k=0$ term contains $m_n$):
+\[
+m_n = 1 + \left(\frac{5}{6}\right)^n m_n + \sum_{k=1}^{n} \binom{n}{k} \left(\frac{1}{6}\right)^k \left(\frac{5}{6}\right)^{n-k} m_{n-k}
+\]
+\[
+m_n \left(1 - \left(\frac{5}{6}\right)^n\right) = 1 + \sum_{k=1}^{n} \binom{n}{k} \left(\frac{1}{6}\right)^k \left(\frac{5}{6}\right)^{n-k} m_{n-k}
+\]
+Starting with $m_0 = 0$:
+\begin{itemize}
+    \item For $n=1$: $m_1 (1 - 5/6) = 1 \implies m_1 = 6$.
+    \item For $n=2$: $m_2 (1 - 25/36) = 1 + \binom{2}{1}\frac{5}{36}m_1 + \binom{2}{2}\frac{1}{36}m_0 \implies m_2 \frac{11}{36} = 1 + \frac{60}{36} \implies m_2 = \frac{96}{11} \approx 8.727$.
+    \item Following this recursion for $m_3, m_4, m_5$, we find $m_3=10566/1001\approx10.555$, $m_4=728256/61061\approx11.927$, and $m_5 \approx 13.024$.
+\end{itemize}
+
+\textbf{(b)} Let $Y_j$ be the total number of throws required for die $j$ to land on six. Each $Y_j$ is independent and follows a Geometric($1/6$) distribution, so $\sum_{i=1}^N \mathbf{1}[\text{die } j \text{ is rolled in throw } i] = Y_j$. The total number of die rolls across all throws is $\sum_{i=1}^N X_i = \sum_{j=1}^n Y_j$. By linearity of expectation:
+\[
+E\left[\sum_{i=1}^N X_i\right] = \sum_{j=1}^n E[Y_j] = n \cdot 6 = 6n
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-35}
+Consider $n$ multinomial trials, where each trial independently results in outcome $i$ with probability $p_i$, $\sum_{i=1}^k p_i = 1$. With $X_i$ equal to the number of trials that result in outcome $i$, find $E[X_1 \mid X_2 > 0]$.
+\end{exercise}
+
+\solution{
+Assume $n\ge1$ and $0<p_2<1$. Given $X_2=j$, the remaining $n-j$
+trials have conditional type-$1$ probability $p_1/(1-p_2)$, so
+$E[X_1\mid X_2=j]=(n-j)p_1/(1-p_2)$.
+Also, $X_2\sim\operatorname{Binomial}(n,p_2)$ gives
+\[
+E[X_2\mid X_2>0]=\frac{np_2}{1-(1-p_2)^n}.
+\]
+Consequently
+\begin{align*}
+E[X_1\mid X_2>0]
+&=\frac{p_1}{1-p_2}\left(n-\frac{np_2}{1-(1-p_2)^n}\right)\\
+&=np_1\frac{1-(1-p_2)^{n-1}}{1-(1-p_2)^n}.
+\end{align*}
+If $p_2=1$, then $p_1=0$ and the answer is zero. If $p_2=0$ or $n=0$,
+the conditioning event has probability zero.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-36}
+Let $p_0 = P\{X = 0\}$ and suppose that $0 < p_0 < 1$. Let $\mu = E[X]$ and $\sigma^2 = \mathrm{Var}(X)$.
+\begin{enumerate}
+    \item[(a)] Find $E[X \mid X \neq 0]$.
+    \item[(b)] Find $\mathrm{Var}(X \mid X \neq 0)$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} Since $X$ is zero off the conditioning event,
+\[
+\mu=E[X\mid X\ne0](1-p_0),\qquad
+E[X\mid X\ne0]=\frac{\mu}{1-p_0}.
+\]
+\textbf{(b)} Similarly,
+$E[X^2\mid X\ne0]=(\sigma^2+\mu^2)/(1-p_0)$. Therefore
+\begin{align*}
+\operatorname{Var}(X\mid X\ne0)
+&=\frac{\sigma^2+\mu^2}{1-p_0}-\frac{\mu^2}{(1-p_0)^2}\\
+&=\frac{\sigma^2}{1-p_0}-\frac{\mu^2p_0}{(1-p_0)^2}.
+\end{align*}
+The second term has a minus sign. For a Bernoulli variable, conditioning
+on a nonzero value makes it constant and the formula gives variance zero.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-37}
+A manuscript is sent to a typing firm consisting of typists A, B, and C. If it is typed by A, then the number of errors made is a Poisson random variable with mean 2.6; if typed by B, then the number of errors is a Poisson random variable with mean 3; and if typed by C, then it is a Poisson random variable with mean 3.4. Let $X$ denote the number of errors in the typed manuscript. Assume that each typist is equally likely to do the work. Find (a) $E[X]$, (b) $\mathrm{Var}(X)$.
+\end{exercise}
+
+\solution{
+Let $Y$ denote the typist chosen, with $P(A) = P(B) = P(C) = 1/3$.
+
+\textbf{(a)} By the law of total expectation:
+\[
+E[X] = E[E[X|Y]] = \frac{1}{3}(2.6 + 3.0 + 3.4) = \frac{9}{3} = 3
+\]
+
+\textbf{(b)} We use the conditional variance formula $\mathrm{Var}(X) = E[\mathrm{Var}(X|Y)] + \mathrm{Var}(E[X|Y])$.
+Since $X|Y$ is Poisson, its conditional variance equals its conditional mean: $\mathrm{Var}(X|Y) = E[X|Y]$. Thus, $E[\mathrm{Var}(X|Y)] = E[E[X|Y]] = 3$.
+Next, compute $\mathrm{Var}(E[X|Y])$ where $E[X|Y]$ takes values 2.6, 3, 3.4 with probability 1/3:
+\[
+\mathrm{Var}(E[X|Y]) = \frac{1}{3}\left[(2.6-3)^2 + (3-3)^2 + (3.4-3)^2\right] = \frac{0.16 + 0 + 0.16}{3} = \frac{0.32}{3} \approx 0.1067
+\]
+Combining the parts:
+\[
+\mathrm{Var}(X) = 3 + \frac{0.32}{3} = \frac{9.32}{3} \approx 3.1067
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-38}
+Let $U$ be a uniform $(0, 1)$ random variable. Suppose that $n$ trials are to be performed and that conditional on $U = u$ these trials will be independent with a common success probability $u$. Compute the mean and variance of the number of successes that occur in these trials.
+\end{exercise}
+
+\solution{
+Let $X$ be the number of successes. Given $U=u$, $X \mid U=u \sim \text{Binomial}(n, u)$. Thus, $E[X \mid U] = nU$ and $\mathrm{Var}(X \mid U) = nU(1-U)$.
+
+\textbf{Mean:}
+\[
+E[X] = E[E[X \mid U]] = E[nU] = n E[U] = n\left(\frac{1}{2}\right) = \frac{n}{2}
+\]
+
+\textbf{Variance:}
+Using the conditional variance formula:
+\[
+\mathrm{Var}(X) = E[\mathrm{Var}(X \mid U)] + \mathrm{Var}(E[X \mid U]) = E[nU(1-U)] + \mathrm{Var}(nU)
+\]
+We know that for a Uniform(0,1) variable, $E[U] = 1/2$, $E[U^2] = 1/3$, and $\mathrm{Var}(U) = 1/12$.
+\[
+E[nU(1-U)] = n(E[U] - E[U^2]) = n\left(\frac{1}{2} - \frac{1}{3}\right) = \frac{n}{6}
+\]
+\[
+\mathrm{Var}(nU) = n^2 \mathrm{Var}(U) = \frac{n^2}{12}
+\]
+Thus:
+\[
+\mathrm{Var}(X) = \frac{n}{6} + \frac{n^2}{12} = \frac{2n + n^2}{12} = \frac{n(n+2)}{12}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-39}
+A deck of \textit{n} cards, numbered $1$ through \textit{n}, is randomly shuffled so that all $n!$ possible
+permutations are equally likely. The cards are then turned over one at a time until card number $1$ appears. These upturned cards constitute the first cycle. We now determine (by looking at the upturned cards) the lowest numbered card that has not yet appeared, and we continue to turn the cards face up until that card appears.
+This new set of cards represents the second cycle. We again determine the lowest numbered of the remaining cards and turn the cards until it appears, and so on until
+all cards have been turned over. Let $m_n$ denote the mean number of cycles.
+\begin{enumerate}
+    \item[(a)] Derive a recursive formula for $m_n$ in terms of $m_k, k = 1, \ldots, n - 1$.
+    \item[(b)] Starting with $m_0 = 0$, find $m_1, m_2, m_3$, and $m_4$.
+    \item[(c)] Conjecture a general formula for $m_n$.
+    \item[(d)] Prove your formula by induction on $n$.
+    \item[(e)] Let $X_i = 1$ if a cycle ends with card $i$, 0 otherwise. Express cycles using $X_i$.
+    \item[(f)] Use part (e) to determine $m_n$.
+    \item[(g)] Are the random variables $X_1, \ldots, X_n$ independent? Explain.
+    \item[(h)] Find the variance of the number of cycles.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} The position of card $1$ is uniform on $\{1,\ldots,n\}$.
+After its cycle ends in position $k$, the relative order of the remaining
+$n-k$ cards is uniform. Consequently
+\[
+m_n=1+\frac1n\sum_{j=0}^{n-1}m_j,\qquad m_0=0.
+\]
+\textbf{(b)} This gives $m_1=1$, $m_2=3/2$, $m_3=11/6$, and $m_4=25/12$.
+
+\textbf{(c)--(d)} Subtract the recurrence multiplied by $n-1$ at size
+$n-1$ from the recurrence multiplied by $n$ at size $n$. The result is
+$n(m_n-m_{n-1})=1$. Induction gives $m_n=H_n=\sum_{i=1}^n1/i$.
+
+\textbf{(e)--(f)} A cycle ends at card $i$ exactly when card $i$ occurs
+\emph{after every card with a smaller label}. Thus the number of cycles
+is $\sum_iX_i$, and symmetry in the relative order of cards $1,\ldots,i$
+gives $P(X_i=1)=1/i$. Hence the mean is again $H_n$.
+
+\textbf{(g)} Construct a uniform permutation by inserting card $i$
+uniformly into one of the $i$ positions among cards $1,\ldots,i-1$,
+independently for each $i$. The event $X_i=1$ occurs exactly when card
+$i$ is inserted at the end. Later insertions do not change its order
+relative to smaller cards. The indicators $X_i$ are therefore mutually
+independent.
+
+\textbf{(h)} It follows that
+\[
+\operatorname{Var}\left(\sum_iX_i\right)
+=\sum_{i=1}^n\frac1i\left(1-\frac1i\right)
+=H_n-\sum_{i=1}^n\frac1{i^2}.
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-40}
+A prisoner is trapped in a cell containing three doors. The first door leads to a
+tunnel that returns him to his cell after two days of travel. The second leads to a
+tunnel that returns him to his cell after three days of travel. The third door leads
+immediately to freedom.
+\begin{enumerate}
+    \item[(a)] Assuming that the prisoner will always select doors $1$, $2$, and $3$ with prob-
+abilities $0.5$, $0.3$, $0.2$, what is the expected number of days until he reaches freedom?
+    \item[(b)] Assuming that the prisoner is always equally likely to choose among those
+doors that he has not used, what is the expected number of days until he reaches freedom? (In this version, for instance, if the prisoner initially tries
+door 1, then when he returns to the cell, he will now select only from doors $2$ and $3$.)
+    \item[(c)] For parts (a) and (b) find the variance of the number of days until the prisoner reaches freedom.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+Let $m=E[X]$ and $v=E[X^2]$.
+\textbf{(a)} With repeated independent door choices,
+\[
+m=0.5(2+m)+0.3(3+m),\qquad m=9.5\text{ days}.
+\]
+\textbf{(b)} Without reusing a door, the possible total times and
+probabilities are $0$ with probability $1/3$, $2$ and $3$ with
+probability $1/6$ each, and $5$ with probability $1/3$.
+Their mean is $2.5$ days.
+
+\textbf{(c)} For the repeated-choice policy, expanding the squared
+first-step recurrence gives
+\[
+v=0.5(4+4m+v)+0.3(9+6m+v)=4.7+3.8m+0.8v.
+\]
+Thus $v=204$ and $\operatorname{Var}(X)=204-9.5^2=113.75$ days squared.
+For the no-reuse policy, the distribution in (b) gives
+\[
+E[X^2]=\frac{2^2+3^2}{6}+\frac{5^2}{3}=10.5,
+\qquad \operatorname{Var}(X)=10.5-2.5^2=4.25.
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-41}
+A rat is trapped in a maze. Initially it has to choose one of two directions. If it goes to the right, then it will wander around in the maze for three minutes and will
+then return to its initial position. If it goes to the left, then with probability $\frac{1}{3}$ it will depart the maze after two minutes of traveling, and with probability $\frac{2}{3}$ it will return to its initial position after five minutes of traveling. Assuming that the rat is at all times equally likely to go to the left or the right, what is the expected number of minutes that it will be trapped in the maze?
+\end{exercise}
+
+\solution{
+Let $E[T]$ be the expected time to escape. Conditioning on the initial choice (Left or Right with probability 1/2):
+\[
+E[T] = \frac{1}{2} E[T \mid \text{Right}] + \frac{1}{2} E[T \mid \text{Left}]
+\]
+where:
+\[
+E[T \mid \text{Right}] = 3 + E[T]
+\]
+\[
+E[T \mid \text{Left}] = \frac{1}{3}(2) + \frac{2}{3}(5 + E[T]) = 4 + \frac{2}{3}E[T]
+\]
+Substituting these into the main relation:
+\[
+E[T] = \frac{1}{2}(3 + E[T]) + \frac{1}{2}\left(4 + \frac{2}{3}E[T]\right) = \frac{7}{2} + \left(\frac{1}{2} + \frac{1}{3}\right)E[T] = \frac{7}{2} + \frac{5}{6}E[T]
+\]
+\[
+\left(1 - \frac{5}{6}\right) E[T] = \frac{7}{2} \implies \frac{1}{6} E[T] = \frac{7}{2} \implies E[T] = 21 \text{ minutes}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-42}
+If $X_i$, $i = 1, \ldots, n$, are independent normal random variables, with $X_i$ having mean $\mu_i$ and variance $1$, then the random variable
+\[
+\sum_{i=1}^{n} X_i^2
+\]
+is said to be a \emph{noncentral chi-squared} random variable.
+
+\begin{enumerate}
+    \item[(a)] If $X$ is a normal random variable having mean $\mu$ and variance $1$, show that, for $|t|<\frac12$, the moment generating function of $X^2$ is
+    \[
+    M_{X^2}(t)
+    =
+    (1-2t)^{-1/2}
+    \exp\!\left(\frac{t\mu^2}{1-2t}\right).
+    \]
+
+    \item[(b)] Derive the moment generating function of the noncentral chi-squared random variable
+    \[
+    \sum_{i=1}^{n} X_i^2,
+    \]
+    and show that its distribution depends on the sequence of means $\mu_1,\ldots,\mu_n$ only through the sum of their squares. As a result, show that
+    \[
+    \sum_{i=1}^{n} X_i^2
+    \]
+    is a noncentral chi-squared random variable with parameters $
+    n
+    ~\text{and}~
+    \theta=\sum_{i=1}^{n}\mu_i^2.$
+
+    \item[(c)] If all $\mu_i=0$, then
+    \[
+    \sum_{i=1}^{n} X_i^2
+    \]
+    is called a chi-squared random variable with $n$ degrees of freedom. Determine, by differentiating its moment generating function, its expected value and variance.
+
+    \item[(d)] Let $K$ be a Poisson random variable with mean $\theta/2$, and suppose that, conditional on $K=k$, the random variable $W$ has a chi-squared distribution with $n+2k$ degrees of freedom. Show, by computing its moment generating function, that $W$ is a noncentral chi-squared random variable with parameters $n$ and $\theta$.
+
+    \item[(e)] Find the expected value and variance of a noncentral chi-squared random variable with parameters $n$ and $\theta$.
+\end{enumerate}
+\end{exercise}
+
+\solution{
+\textbf{(a)} $M_{X^2}(t) = E[e^{tX^2}] = \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{tx^2} e^{-(x-\mu)^2/2} \, dx$. Completing the square in the exponent leads directly to the given formula: $(1-2t)^{-1/2}\exp\left(\frac{t\mu^2}{1-2t}\right)$.
+
+\textbf{(b)} By independence, the MGF of the sum is the product of the individual MGFs:
+\[
+M_{\sum X_i^2}(t) = \prod_{i=1}^n (1-2t)^{-1/2} e^{\frac{t\mu_i^2}{1-2t}} = (1-2t)^{-n/2} e^{\frac{t \sum \mu_i^2}{1-2t}} = (1-2t)^{-n/2} e^{\frac{t\theta}{1-2t}}
+\]
+This depends only on $n$ and $\theta = \sum \mu_i^2$.
+
+\textbf{(c)} For $\mu_i = 0 \implies \theta = 0$, $M(t) = (1-2t)^{-n/2}$.
+$M'(t) = n(1-2t)^{-n/2-1} \implies E[W] = M'(0) = n$.
+$M''(t) = n(n+2)(1-2t)^{-n/2-2} \implies E[W^2] = n(n+2) \implies \mathrm{Var}(W) = n(n+2) - n^2 = 2n$.
+
+\textbf{(d)} Given $K=k$, $W \sim \chi^2_{n+2k}$, so $E[e^{tW} \mid K=k] = (1-2t)^{-(n+2k)/2}$.
+\[
+\begin{aligned}
+M_W(t)&=E[E[e^{tW}\mid K]]\\
+&=(1-2t)^{-n/2}e^{-\theta/2}
+\sum_{k=0}^{\infty}\frac{[\theta/(2(1-2t))]^k}{k!}.
+\end{aligned}
+\]
+\[
+= (1-2t)^{-n/2} e^{-\theta/2} e^{\frac{\theta}{2(1-2t)}} = (1-2t)^{-n/2} e^{\frac{\theta}{2}\left(\frac{1}{1-2t}-1\right)} = (1-2t)^{-n/2} e^{\frac{t\theta}{1-2t}}
+\]
+This matches the noncentral chi-squared MGF perfectly.
+
+\textbf{(e)} Using conditional formulas with $K \sim \text{Poisson}(\theta/2)$:
+\[
+E[W] = E[E[W \mid K]] = E[n + 2K] = n + 2(\theta/2) = n + \theta
+\]
+\[
+\begin{aligned}
+\operatorname{Var}(W)&=E[\operatorname{Var}(W\mid K)]+\operatorname{Var}(E[W\mid K])\\
+&=2n+4E[K]+4\operatorname{Var}(K)=2n+4\theta.
+\end{aligned}
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-43}
+The density function of a chi-squared random variable having $n$ degrees of freedom can be shown to be
+\[
+f(x)
+=
+\frac{\frac12 e^{-x/2}(x/2)^{n/2-1}}
+{\Gamma(n/2)},
+\qquad x>0,
+\]
+where the gamma function is defined by
+\[
+\Gamma(t)
+=
+\int_0^\infty e^{-x}x^{t-1}\,dx,
+\qquad t>0.
+\]
+
+Integration by parts can be employed to show that
+\[
+\Gamma(t)=(t-1)\Gamma(t-1),
+\qquad t>1.
+\]
+
+If $Z$ and $\chi_n^2$ are independent random variables with $Z$ having a standard normal distribution and $\chi_n^2$ having a chi-squared distribution with $n$ degrees of freedom, then the random variable
+\[
+T
+=
+\frac{Z}{\sqrt{\chi_n^2/n}}
+\]
+is said to have a $t$-distribution with $n$ degrees of freedom.
+
+Compute the mean and variance of $T$ when $n>2$.
+\end{exercise}
+
+\solution{
+\textbf{Mean:}
+Using conditional expectation, conditioning on $\chi^2_n$:
+\[
+E[T] = E\left[ E\left[ \frac{Z}{\sqrt{\chi^2_n / n}} \;\middle|\; \chi^2_n \right] \right] = E\left[ \frac{1}{\sqrt{\chi^2_n / n}} E[Z \mid \chi^2_n] \right]
+\]
+Since $Z$ is independent of $\chi^2_n$, $E[Z \mid \chi^2_n] = E[Z] = 0$. Therefore, $E[T] = 0$.
+
+\textbf{Variance:}
+Since $E[T] = 0$, $\mathrm{Var}(T) = E[T^2]$.
+\[
+E[T^2] = E\left[ \frac{Z^2}{\chi^2_n / n} \right] = n E[Z^2] E\left[ \frac{1}{\chi^2_n} \right]
+\]
+Since $Z \sim N(0,1)$, $E[Z^2] = 1$. Now compute $E\left[\frac{1}{\chi^2_n}\right]$ using the density given in the text:
+\[
+E\left[ \frac{1}{\chi^2_n} \right] = \int_{0}^{\infty} \frac{1}{x} \frac{1}{2} \frac{e^{-x/2} (x/2)^{n/2 - 1}}{\Gamma(n/2)} \, dx = \frac{1}{2} \int_{0}^{\infty} \frac{e^{-x/2} (x/2)^{n/2 - 2} \cdot \frac{1}{2}}{\Gamma(n/2)} \, dx
+\]
+Substitute $u = x/2 \implies dx = 2du$:
+\[
+= \frac{1}{2} \int_{0}^{\infty} \frac{e^{-u} u^{n/2 - 2}}{\Gamma(n/2)} \, du = \frac{1}{2} \frac{\Gamma(n/2 - 1)}{\Gamma(n/2)}
+\]
+Using the recursive property $\Gamma(t) = (t-1)\Gamma(t-1)$, we have $\Gamma(n/2) = (n/2 - 1)\Gamma(n/2 - 1)$:
+\[
+= \frac{1}{2} \frac{1}{n/2 - 1} = \frac{1}{2} \frac{2}{n - 2} = \frac{1}{n - 2}
+\]
+Substituting this back into the formula for $E[T^2]$:
+\[
+\mathrm{Var}(T) = n \cdot 1 \cdot \frac{1}{n - 2} = \frac{n}{n - 2}
+\]
+}
+
+\setcounter{exercise}{45}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-46}
+    (a) Show that
+    \[
+    \text{Cov}(X, Y) = \text{Cov}(X, E[Y \mid X])
+    \]
+    (b) Suppose that, for constants $a$ and $b$,
+    \[
+    E[Y \mid X] = a + bX
+    \]
+    Show that
+    \[
+    b = \text{Cov}(X, Y) / \text{Var}(X)
+    \]
+\end{exercise}
+
+\solution{
+    (a) By the definition of covariance, we know that:
+    \[
+    \text{Cov}(X, Y) = E[XY] - E[X]E[Y]
+    \]
+    Using the Law of Total Expectation, we can write $E[Y]$ as:
+    \[
+    E[Y] = E[E[Y \mid X]]
+    \]
+    Similarly, applying the conditioning property of total expectation to the term $E[XY]$, and recalling that given $X$, the variable $X$ acts as a constant and can be pulled out of the conditional expectation, we get:
+    \[
+    E[XY] = E[E[XY \mid X]] = E[X E[Y \mid X]]
+    \]
+    Substituting these two relationships into the initial covariance formula yields:
+    \[
+    \text{Cov}(X, Y) = E[X E[Y \mid X]] - E[X]E[E[Y \mid X]]
+    \]
+    The expression on the right matches exactly the definition of the covariance between $X$ and the random variable $E[Y \mid X]$. Consequently:
+    \[
+    \text{Cov}(X, Y) = \text{Cov}(X, E[Y \mid X])
+    \]
+
+    (b) Leveraging the result proven in part (a), we substitute the assumption $E[Y \mid X] = a + bX$ into the covariance:
+    \[
+    \text{Cov}(X, Y) = \text{Cov}(X, a + bX)
+    \]
+    Using the linearity properties of covariance, we know that adding a constant $a$ does not affect the covariance, and multiplicative coefficients can be pulled out:
+    \[
+    \text{Cov}(X, a + bX) = \text{Cov}(X, bX) = b\,\text{Cov}(X, X)
+    \]
+    Since the covariance of a variable with itself is its variance ($\text{Cov}(X, X) = \text{Var}(X)$), we get:
+    \[
+    \text{Cov}(X, Y) = b\,\text{Var}(X)
+    \]
+    Isolating the parameter $b$ (assuming $\text{Var}(X) > 0$), we arrive at the thesis:
+    \[
+    b = \frac{\text{Cov}(X, Y)}{\text{Var}(X)}
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-47}
+    If $E[Y \mid X] = 1$, show that
+    \[
+    \text{Var}(X Y) \geqslant \text{Var}(X)
+    \]
+\end{exercise}
+
+\solution{
+    We use the Law of Total Variance, which states that for any two random variables, the variance can be decomposed as:
+    \[
+    \text{Var}(XY) = E[\text{Var}(XY \mid X)] + \text{Var}(E[XY \mid X])
+    \]
+    Let us analyze the two terms on the right-hand side individually:
+    \begin{enumerate}
+        \item For the second term, given $X$, the variable $X$ acts as a constant within the conditional expectation, so:
+        \[
+        E[XY \mid X] = X E[Y \mid X]
+        \]
+        Since by hypothesis $E[Y \mid X] = 1$, the term reduces to:
+        \[
+        E[XY \mid X] = X \cdot 1 = X
+        \]
+        Consequently, the variance of this term is:
+        \[
+        \text{Var}(E[XY \mid X]) = \text{Var}(X)
+        \]
+
+        \item For the first term, since the variance of any random variable (even conditional) is always non-negative, the expectation of its value will also be non-negative:
+        \[
+        E[\text{Var}(XY \mid X)] \geqslant 0
+        \]
+    \end{enumerate}
+    Substituting these elements back into the initial decomposition formula, we get:
+    \[
+    \text{Var}(XY) = E[\text{Var}(XY \mid X)] + \text{Var}(X)
+    \]
+    Since $E[\text{Var}(XY \mid X)] \geqslant 0$, we can conclude that:
+    \[
+    \text{Var}(XY) \geqslant \text{Var}(X)
+    \]
+}
+
+\setcounter{exercise}{50}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-51}
+    If $X$ is geometric with parameter $p$, find the probability that $X$ is even.
+\end{exercise}
+
+\solution{
+    For $p=1$, $X=1$ and the probability of an even value is $0$. Assume $0<p<1$ for the following computation. A geometric random variable $X$ with parameter $p$ has a probability mass function given by $P(X = n) = (1-p)^{n-1}p$ for $n = 1, 2, \dots$. We want to find the probability that $X$ takes an even value ($X = 2k$ for $k = 1, 2, \dots$):
+    \[
+    P(X \text{ is even}) = \sum_{k=1}^{\infty} P(X = 2k) = \sum_{k=1}^{\infty} (1-p)^{2k-1}p
+    \]
+    We can rewrite the summation term by factoring out common terms:
+    \[
+    P(X \text{ is even}) = \frac{p}{1-p} \sum_{k=1}^{\infty} \left((1-p)^2\right)^k
+    \]
+    Using the formula for the sum of an infinite geometric series $\sum_{k=1}^{\infty} q^k = \frac{q}{1-q}$ with $q = (1-p)^2$:
+    \[
+    P(X~ \text {is even}) = \frac{p}{1-p} \cdot \frac{(1-p)^2}{1 - (1-p)^2} = \frac{p(1-p)}{1 - (1 - 2p + p^2)} = \frac{p(1-p)}{2p - p^2} = \frac{1-p}{2-p}
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-52}
+    Suppose that $X$ and $Y$ are independent random variables with probability density functions $f_X$ and $f_Y$. Determine a one-dimensional integral expression for $P\{X + Y < x\}$.
+\end{exercise}
+
+\solution{
+    Since $X$ and $Y$ are continuous and independent random variables, their joint density is the product of their individual densities, namely $f(s, t) = f_X(s)f_Y(t)$. The required probability is given by the double integral over the region $s + t < x$:
+    \[
+    P\{X + Y < x\} = \int_{-\infty}^{\infty} \int_{-\infty}^{x-s} f_X(s)f_Y(t) \, dt \, ds
+    \]
+    We can express this as a single one-dimensional integral by integrating with respect to $s$, where the inner integrand corresponds to the cumulative distribution function of $Y$ evaluated at $x-s$:
+    \[
+    P\{X + Y < x\} = \int_{-\infty}^{\infty} f_X(s) F_Y(x-s) \, ds
+    \]
+    Alternatively, integrating first with respect to $s$:
+    \[
+    P\{X + Y < x\} = \int_{-\infty}^{\infty} f_Y(t) F_X(x-t) \, dt
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-53}
+    *Suppose $X$ is a Poisson random variable with mean $\lambda$. The parameter $\lambda$ is itself a random variable whose distribution is exponential with mean 1. Show that $P\{X = n\} = \left(\frac{1}{2}\right)^{n+1}$.
+\end{exercise}
+
+\solution{
+    We use the Law of Total Probability by conditioning on the parameter $\Lambda$:
+    \[
+    P\{X = n\} = \int_{0}^{\infty} P\{X = n \mid \Lambda = \lambda\} f_{\Lambda}(\lambda) \, d\lambda
+    \]
+    We know that $X \mid \Lambda = \lambda \sim \text{Poisson}(\lambda)$ and that $\Lambda \sim \text{Exponential}(1)$, so $f_{\Lambda}(\lambda) = e^{-\lambda}$ for $\lambda > 0$. Substituting the densities, we get:
+    \[
+    P\{X = n\} = \int_{0}^{\infty} \frac{e^{-\lambda} \lambda^n}{n!} e^{-\lambda} \, d\lambda = \frac{1}{n!} \int_{0}^{\infty} \lambda^n e^{-2\lambda} \, d\lambda
+    \]
+    We perform the change of variable $u = 2\lambda$, which gives $\lambda = u/2$ and $d\lambda = du/2$:
+    \[
+    P\{X = n\} = \frac{1}{n!} \int_{0}^{\infty} \left(\frac{u}{2}\right)^n e^{-u} \frac{du}{2} = \frac{1}{n! \, 2^{n+1}} \int_{0}^{\infty} u^n e^{-u} \, du
+    \]
+    The integral corresponds to the definition of the Gamma function $\Gamma(n+1) = n!$. Consequently:
+    \[
+    P\{X = n\} = \frac{1}{n! \, 2^{n+1}} \cdot n! = \frac{1}{2^{n+1}} = \left(\frac{1}{2}\right)^{n+1}
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-54}
+    A coin is randomly selected from a group of ten coins, the $n$th coin having a probability $n/10$ of coming up heads. The coin is then repeatedly flipped until a head appears. Let $N$ denote the number of flips necessary. What is the probability distribution of $N$? Is $N$ a geometric random variable? When would $N$ be a geometric random variable; that is, what would have to be done differently?
+\end{exercise}
+
+\solution{
+    Let $P_h$ be the probability of getting heads for the chosen coin. Conditioning on the choice of the $n$-th coin (chosen uniformly with probability $1/10$ for $n=1,\dots,10$):
+    \[
+    P\{N = k\} = \sum_{n=1}^{10} P\{N = k \mid \text{coin } n\} \cdot P(\text{coin } n) = \sum_{n=1}^{10} \left(1 - \frac{n}{10}\right)^{k-1} \left(\frac{n}{10}\right) \cdot \frac{1}{10}
+    \]
+    Solving numerically or leaving it in closed form, this is the probability mass function of $N$.
+
+    \textbf{Answers to the questions:}
+    \par\noindent\textbullet\enspace $N$ \textbf{is not} a geometric random variable because its final distribution is a mixture of geometric distributions, which does not result in a pure geometric distribution (it lacks the memoryless property globally).
+    \par\noindent\textbullet\enspace $N$ would be a geometric random variable if a coin were randomly chosen \textbf{afresh before each individual flip}, instead of repeatedly flipping the same single coin drawn at the very beginning.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-55}
+    You are invited to a party. Suppose the times at which invitees arrive are independent uniform $(0,1)$ random variables. Suppose that, aside from yourself, the number of other people who are invited is a Poisson random variable with mean 10.
+    (a) Find the expected number of people who arrive before you.
+    (b) Find the probability that you are the $n$th person to arrive.
+\end{exercise}
+
+\solution{
+    Let $Y$ be the number of other invited people ($Y \sim \text{Poisson}(10)$) and let $T_0$ be your arrival time, with $T_0 \sim U(0,1)$. Each of the other guests arrives at a time $T_i \sim U(0,1)$.
+
+    (a) Conditioning on your arrival time $T_0 = t$, each other person has an independent probability equal to $t$ of arriving before you. The number of people $X$ arriving before you, given $Y=y$ and $T_0=t$, is binomial $B(y, t)$. By the properties of the Poisson distribution, removing the conditioning on $Y$, we find that $X \mid T_0 = t \sim \text{Poisson}(10t)$. The conditional expectation is $E[X \mid T_0] = 10T_0$. Using the Law of Multiple Expectations:
+    \[
+    E[X] = E[E[X \mid T_0]] = E[10T_0] = 10 \cdot E[T_0] = 10 \cdot \frac{1}{2} = 5
+    \]
+
+    (b) Being the $n$-th person to arrive means that exactly $n-1$ people arrive before you. We compute the total probability by integrating against the density of $T_0$:
+    \[
+    P\{X = n-1\} = \int_{0}^{1} P\{X = n-1 \mid T_0 = t\} \, dt = \int_{0}^{1} \frac{e^{-10t} (10t)^{n-1}}{(n-1)!} \, dt
+    \]
+    Setting $u = 10t$, which gives $dt = du/10$:
+    \[
+    P\{X = n-1\} = \frac{1}{10 \cdot (n-1)!} \int_{0}^{10} e^{-u} u^{n-1} \, du
+    \]
+    This integral represents the lower incomplete Gamma function $\gamma(n, 10)$.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-56}
+    Data indicate that the number of traffic accidents in Berkeley on a rainy day is a Poisson random variable with mean 9, whereas on a dry day it is a Poisson random variable with mean 3. Let $X$ denote the number of traffic accidents tomorrow. If it will rain tomorrow with probability 0.6, find
+    (a) $E[X]$;
+    (b) $P\{X = 0\}$;
+    (c) $\text{Var}(X)$.
+\end{exercise}
+
+\solution{
+Let $R$ be the rain indicator, with $P(R=1)=0.6$. The conditional
+Poisson mean and variance are both $\Lambda=3+6R$.
+\textbf{(a)} $E[X]=E[\Lambda]=3+6(0.6)=6.6$.
+\textbf{(b)} Conditioning on $R$ gives
+$P(X=0)=0.6e^{-9}+0.4e^{-3}$.
+\textbf{(c)} The conditional variance formula gives
+\[
+\operatorname{Var}(X)=E[\Lambda]+\operatorname{Var}(\Lambda)
+=6.6+36(0.6)(0.4)=15.24.
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-57}
+    The number of storms in the upcoming rainy season is Poisson distributed but with a parameter value that is uniformly distributed over $(0,5)$. That is, $\Lambda$ is uniformly distributed over $(0,5)$, and given that $\Lambda = \lambda$, the number of storms is Poisson with mean $\lambda$. Find the probability there are at least three storms this season.
+\end{exercise}
+
+\solution{
+    We want to compute $P\{X \geqslant 3\} = 1 - P\{X = 0\} - P\{X = 1\} - P\{X = 2\}$, knowing that $X \mid \Lambda = \lambda \sim \text{Poisson}(\lambda)$ and $\Lambda \sim U(0,5)$ with density $f_{\Lambda}(\lambda) = 1/5$ for $\lambda \in (0,5)$.
+    We compute the general term $P\{X = k\}$ by integration:
+    \[
+    P\{X = k\} = \int_{0}^{5} \frac{e^{-\lambda}\lambda^k}{k!} \cdot \frac{1}{5} \, d\lambda = \frac{1}{5 \cdot k!} \int_{0}^{5} \lambda^k e^{-\lambda} \, d\lambda
+    \]
+    Let us evaluate the individual cases for $k=0,1,2$:
+    \par\noindent\textbullet\enspace For $k=0$: $P\{X=0\} = \frac{1}{5}\int_{0}^{5} e^{-\lambda}d\lambda = \frac{1}{5}(1 - e^{-5})$.
+    \par\noindent\textbullet\enspace For $k=1$: $P\{X=1\} = \frac{1}{5}\int_{0}^{5} \lambda e^{-\lambda}d\lambda = \frac{1}{5}[-e^{-\lambda}(\lambda+1)]_0^5 = \frac{1}{5}(1 - 6e^{-5})$.
+    \par\noindent\textbullet\enspace For $k=2$: $P\{X=2\} = \frac{1}{10}\int_{0}^{5} \lambda^2 e^{-\lambda}d\lambda = \frac{1}{10}[-e^{-\lambda}(\lambda^2+2\lambda+2)]_0^5 = \frac{1}{10}(2 - 37e^{-5}) = \frac{1}{5}(1 - 18.5e^{-5})$.
+
+    Summing the three probabilities:
+    \[
+    P\{X \leqslant 2\} = \frac{1}{5}\left[(1 - e^{-5}) + (1 - 6e^{-5}) + (1 - 18.5e^{-5})\right] = \frac{1}{5}(3 - 25.5e^{-5}) = 0.6 - 5.1e^{-5}
+    \]
+    Therefore, the required probability is:
+    \[
+    P\{X \geqslant 3\} = 1 - (0.6 - 5.1e^{-5}) = 0.4 + 5.1e^{-5}
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-58}
+    A collection of $n$ coins is flipped. The outcomes are independent, and the $i$th coin comes up heads with probability $\alpha_i, i = 1, \dots, n$. Suppose that for some value of $j, 1 \leqslant j \leqslant n, \alpha_j = \frac{1}{2}$. Find the probability that the total number of heads to appear on the $n$ coins is an even number.
+\end{exercise}
+
+\solution{
+    We condition on the outcomes of all coins except coin $j$. Let $Y$ be the total number of heads obtained from the remaining $n-1$ coins. The total number of heads $X$ will be even if:
+    \par\noindent\textbf{1.}\enspace $Y$ is even and coin $j$ shows tails (probability $1 - \alpha_j = 1/2$).
+    \par\noindent\textbf{2.}\enspace $Y$ is odd and coin $j$ shows heads (probability $\alpha_j = 1/2$).
+
+    Using the Law of Total Probability by conditioning on $Y$:
+    \[
+    P(X \text{ is even}) = P(X \text{ is even} \mid Y \text{ is even})P(Y \text{ is even}) + P(X \text{ is even} \mid Y \text{ is odd})P(Y \text{ is odd})
+    \]
+    \[
+    P(X \text{ is even}) = \frac{1}{2} P(Y \text{ is even}) + \frac{1}{2} P(Y \text{ is odd})
+    \]
+    Since the sum of the probabilities that $Y$ is even or odd must equal 1 ($P(Y \text{ is even}) + P(Y \text{ is odd}) = 1$), we conclude that:
+    \[
+    P(X \text{ is even}) = \frac{1}{2} (1) = \frac{1}{2}
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-59}
+    Suppose each new coupon collected is, independent of the past, a type $i$ coupon with probability $p_i$. A total of $n$ coupons is to be collected. Let $A_i$ be the event that there is at least one type $i$ in this set. For $i \neq j$, compute $P(A_i A_j)$ by
+    (a) conditioning on $N_i$, the number of type $i$ coupons in the set of $n$ coupons;
+    (b) conditioning on $F_i$, the first time a type $i$ coupon is collected;
+    (c) using the identity $P(A_i \cup A_j) = P(A_i) + P(A_j) - P(A_i A_j)$.
+\end{exercise}
+
+\solution{
+    We first note that $P(A_i) = 1 - (1-p_i)^n$ and $P(A_i \cup A_j) = 1 - (1-p_i-p_j)^n$ (the complement event is that no coupon of type $i$ or $j$ is collected).
+
+    (a) Conditioning on $N_i \sim \text{Binomial}(n, p_i)$:
+    \[
+    P(A_i A_j) = \sum_{k=1}^{n} P(A_j \mid N_i = k) P(N_i = k)
+    \]
+    Given $N_i = k$ (where $k \geqslant 1$, meaning event $A_i$ has certainly occurred), there remain $n-k$ slots available, for which the relative probability of obtaining a type $j$ coupon versus non-$i$ types is $\frac{p_j}{1-p_i}$. Consequently, the conditional probability of getting no type $j$ coupons is $\left(1 - \frac{p_j}{1-p_i}\right)^{n-k}$. Thus:
+    \[
+    P(A_i A_j) = \sum_{k=1}^{n} \left[1 - \left(1 - \frac{p_j}{1-p_i}\right)^{n-k}\right] \binom{n}{k} p_i^k (1-p_i)^{n-k}
+    \]
+
+    (b) Conditioning on the time of the first success $F_i = m$ ($m = 1, \dots, n$):
+    If $F_i = m$, it means that type $i$ did not appear in the first $m-1$ trials. The event $A_i A_j$ occurs if at least one type $j$ is collected overall across all $n$ trials.
+    \[
+    P(A_i A_j) = \sum_{m=1}^{n} P(A_j \mid F_i = m) P(F_i = m)
+    \]
+    where $P(F_i = m) = (1-p_i)^{m-1}p_i$, and $P(A_j \mid F_i = m) = 1 - \left(1-\frac{p_j}{1-p_i}\right)^{m-1}(1-p_j)^{n-m}$.
+
+    (c) Using the set identity, we isolate the intersection term:
+    \[
+    P(A_i A_j) = P(A_i) + P(A_j) - P(A_i \cup A_j)
+    \]
+    Substituting the respective known complement probabilities:
+    \[
+    P(A_i A_j) = \left[1 - (1-p_i)^n\right] + \left[1 - (1-p_j)^n\right] - \left[1 - (1-p_i-p_j)^n\right]
+    \]
+    \[
+    P(A_i A_j) = 1 - (1-p_i)^n - (1-p_j)^n + (1-p_i-p_j)^n
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-60}
+    *Two players alternate flipping a coin that comes up heads with probability $p$. The first player to obtain a head is declared the winner. We are interested in the probability that the first player to flip is the winner. Before determining this probability, which we will call $f(p)$, answer the following questions.
+    (a) Do you think that $f(p)$ is a monotone function of $p$? If so, is it increasing or decreasing?
+    (b) What do you think is the value of $\lim_{p \to 1} f(p)$?
+    (c) What do you think is the value of $\lim_{p \to 0} f(p)$?
+    (d) Find $f(p)$.
+\end{exercise}
+
+\solution{
+Assume $0<p\le1$ and independent flips.
+\textbf{(a)} The first-player winning probability is increasing in $p$:
+a larger success probability strengthens the advantage of the first turn.
+\textbf{(b)} Its limit as $p\to1$ is $1$.
+\textbf{(c)} Its limit as $p\downarrow0$ is $1/2$; at $p=0$ the game
+never ends, so this is a limit rather than a winning probability there.
+\textbf{(d)} Conditioning on the first flip gives
+\[
+f(p)=p+(1-p)[1-f(p)],\qquad f(p)=\frac1{2-p}.
+\]
+Thus $f\prime(p)=1/(2-p)^2>0$, confirming the monotonicity and limits.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-61}
+    Suppose in Exercise 29 that the shooting ends when the target has been hit twice. Let $m_i$ denote the mean number of shots needed for the first hit when player $i$ shoots first, $i = 1, 2$. Also, let $P_i, i = 1, 2$, denote the probability that the first hit is by player 1, when player $i$ shoots first.
+    (a) Find $m_1$ and $m_2$.
+    (b) Find $P_1$ and $P_2$.
+    For the remainder of the problem, assume that player 1 shoots first.
+    (c) Find the probability that the final hit was by 1.
+    (d) Find the probability that both hits were by 1.
+    (e) Find the probability that both hits were by 2.
+    (f) Find the mean number of shots taken.
+\end{exercise}
+
+\solution{
+Put $q_i=1-p_i$ and $d=1-q_1q_2$, and assume $d>0$.
+\textbf{(a)} First-step analysis gives
+$m_1=1+q_1m_2$ and $m_2=1+q_2m_1$, so
+\[
+m_1=\frac{1+q_1}{d},\qquad m_2=\frac{1+q_2}{d}.
+\]
+\textbf{(b)} Similarly $P_1=p_1+q_1P_2$ and $P_2=q_2P_1$ give
+\[
+P_1=\frac{p_1}{d},\qquad P_2=\frac{q_2p_1}{d}.
+\]
+After player $1$ makes the first hit, player $2$ shoots next; after
+player $2$ makes it, player $1$ shoots next. Restart the first-hit
+calculation from that new turn order.
+
+\textbf{(c)} The probability the final hit is by player $1$ is
+$P_1P_2+(1-P_1)P_1$.
+\textbf{(d)} The probability both hits are by player $1$ is $P_1P_2$.
+\textbf{(e)} The probability both hits are by player $2$ is
+$(1-P_1)^2$.
+\textbf{(f)} The mean total number of shots is
+\[
+m_1+P_1m_2+(1-P_1)m_1.
+\]
+These expressions also cover one player never hitting, provided $d>0$.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-62}
+    A, B, and C are evenly matched tennis players. Initially A and B play a set, and the winner then plays C. This continues, with the winner always playing the waiting player, until one of the players has won two sets in a row. That player is then declared the overall winner. Find the probability that A is the overall winner.
+\end{exercise}
+
+\solution{
+After the first set, let $c,h,w$ be A's winning probabilities when A is,
+respectively, the player who just won, the next challenger, or the waiting
+player. The other two players are interchangeable. Conditioning on the
+next set gives
+\[
+c=\tfrac12+\tfrac12w,\qquad h=\tfrac12c,\qquad w=\tfrac12h.
+\]
+A loss by a challenger ends the tournament, while a win makes that
+challenger the player with one consecutive win. Solving yields
+$c=4/7$, $h=2/7$, and $w=1/7$.
+In the first set A wins with probability $1/2$ and then has probability
+$c$; if B wins, A waits and has probability $w$. Thus
+\[
+P(\text{A wins})=\frac12c+\frac12w=\frac5{14}.
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-63}
+    Suppose there are $n$ types of coupons, and that the type of each new coupon obtained is independent of past selections and is equally likely to be any of the $n$ types. Suppose one continues collecting until a complete set of at least one of each type is obtained.
+    (a) Find the probability that there is exactly one type $i$ coupon in the final collection.
+    Hint: Condition on $T$, the number of types that are collected before the first type $i$ appears.
+    (b) Find the expected number of types that appear exactly once in the final collection.
+\end{exercise}
+
+\solution{
+\textbf{(a)} Let $T$ count the distinct types discovered before the
+first type $i$. By symmetry $T$ is uniform on $\{0,\ldots,n-1\}$.
+Conditional on $T=k$, there are $n-k-1$ missing types after that first
+$i$. For $i$ to occur exactly once, all those missing types must appear
+before the next $i$. Ignoring already collected types other than $i$,
+the discovery order of these $n-k$ relevant types is uniform. Type $i$
+must be last, which has probability $1/(n-k)$. Consequently
+\[
+P(\text{exactly one type }i)
+=\frac1n\sum_{k=0}^{n-1}\frac1{n-k}=\frac{H_n}{n}.
+\]
+Type $i$ need not be the last new type in the original collection:
+it can appear earlier and then never repeat before completion.
+
+\textbf{(b)} Summing the singleton-type indicators gives expected number
+$n(H_n/n)=H_n$.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-64}
+    $A$ and $B$ roll a pair of dice in turn, with $A$ rolling first. $A$'s objective is to obtain a sum of 6, and $B$'s is to obtain a sum of 7. The game ends when either player reaches his or her objective, and that player is declared the winner.
+    (a) Find the probability that $A$ is the winner.
+    (b) Find the expected number of rolls of the dice.
+    (c) Find the variance of the number of rolls of the dice.
+\end{exercise}
+
+\solution{
+Let $a=5/36$ and $b=1/6$ be the success probabilities for A and B,
+and let $q=(1-a)(1-b)=155/216$ be the probability a full round fails.
+\textbf{(a)} Renewal after a failed round gives
+\[
+P(\text{A wins})=\frac{a}{1-q}=\frac{30}{61}.
+\]
+\textbf{(b)} A round uses one roll with probability $a$, and otherwise
+uses two. First-step analysis yields
+\[
+E[N]=a+2(1-a)b+q(2+E[N]),
+\qquad E[N]=\frac{2-a}{1-q}=\frac{402}{61}.
+\]
+\textbf{(c)} Let $G$ be the number of failed full rounds before the
+successful round, and $D$ the number of rolls in that last round.
+Then $N=2G+D$, where $G$ and $D$ are independent,
+\[
+P(G=g)=q^g(1-q),\qquad P(D=1)=\frac{30}{61},\quad P(D=2)=\frac{31}{61}.
+\]
+The independence follows from
+$P(G=g,D=1)=q^g a$ and $P(G=g,D=2)=q^g(1-a)b$.
+Hence
+\[
+\operatorname{Var}(N)
+=\frac{4q}{(1-q)^2}+\frac{30\cdot31}{61^2}
+=\frac{134850}{3721}.
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-65}
+    The number of red balls in an urn that contains $n$ balls is a random variable that is equally likely to be any of the values $0, 1, \dots, n$. That is,
+    \[
+    P\{i \text{ red}, n - i \text{ non-red}\} = \frac{1}{n+1}, \quad i = 0, 1, \dots, n
+    \]
+    The $n$ balls are then randomly removed one at a time. Let $Y_k$ denote the number of red balls in the first $k$ selections, $k = 1, \dots, n$.
+    (a) Find $P\{Y_n = j\}, j = 0, \dots, n$.
+    (b) Find $P\{Y_{n-1} = j\}, j = 0, \dots, n-1$.
+    (c) What do you think is the value of $P\{Y_k = j\}, j = 0, \dots, k$?
+    (d) Verify your answer to part (c) by a backwards induction argument. That is, check that your answer is correct when $k = n$, and then show that whenever it is true for $k$ it is also true for $k - 1, k = 1, \dots, n$.
+\end{exercise}
+
+\solution{
+    (a) $Y_n$ represents the total number of red balls originally placed in the urn since all $n$ balls are eventually removed. Therefore, its probability distribution is identical to the prior distribution given:
+    \[
+    P\{Y_n = j\} = \frac{1}{n+1}, \quad j = 0, 1, \dots, n
+    \]
+
+    (b) We can condition on the total number of red balls $Y_n$:
+    \[
+    P\{Y_{n-1} = j\} = \sum_{i=0}^{n} P\{Y_{n-1} = j \mid Y_n = i\} P\{Y_n = i\}
+    \]
+    The conditional probability $P\{Y_{n-1} = j \mid Y_n = i\}$ is only non-zero if $i = j$ (the last ball removed was non-red) or $i = j+1$ (the last ball removed was red):
+    \[
+    P\{Y_{n-1} = j\} = \left(\frac{n-j}{n}\right)\left(\frac{1}{n+1}\right) + \left(\frac{j+1}{n}\right)\left(\frac{1}{n+1}\right) = \frac{n - j + j + 1}{n(n+1)} = \frac{n+1}{n(n+1)} = \frac{1}{n}
+    \]
+
+    (c) Following the pattern from parts (a) and (b), the distribution remains uniform for any sample size $k$:
+    \[
+    P\{Y_k = j\} = \frac{1}{k+1}, \quad j = 0, 1, \dots, k
+    \]
+
+    (d) \textbf{Proof by Backward Induction:}
+    \par\noindent\textbullet\enspace \textbf{Base Case ($k=n$):} As verified in part (a), $P\{Y_n = j\} = \frac{1}{n+1}$, which matches the formula.
+    \par\noindent\textbullet\enspace \textbf{Inductive Step:} Assume the hypothesis holds for $k$, meaning $P\{Y_k = m\} = \frac{1}{k+1}$. We show it must hold for $k-1$:
+    \[
+    P\{Y_{k-1} = j\} = P\{Y_{k-1} = j \mid Y_k = j\}P\{Y_k = j\} + P\{Y_{k-1} = j \mid Y_k = j+1\}P\{Y_k = j+1\}
+    \]
+    Given $Y_k$ balls containing $m$ red ones, the probability that the $k$-th ball removed was non-red is $\frac{k-j}{k}$, and the probability it was red is $\frac{j+1}{k}$:
+    \[
+    P\{Y_{k-1} = j\} = \left(\frac{k-j}{k}\right)\left(\frac{1}{k+1}\right) + \left(\frac{j+1}{k}\right)\left(\frac{1}{k+1}\right) = \frac{k - j + j + 1}{k(k+1)} = \frac{k+1}{k(k+1)} = \frac{1}{k}
+    \]
+    This matches our formula for $k-1$, completing the induction proof.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-66}
+    The opponents of soccer team A are of two types: either they are a class 1 or a class 2 team. The number of goals team A scores against a class $i$ opponent is a Poisson random variable with mean $\lambda_i$, where $\lambda_1 = 2, \lambda_2 = 3$. This weekend the team has two games against teams they are not very familiar with. Assuming that the first team they play is a class 1 team with probability 0.6 and the second is, independently of the class of the first team, a class 1 team with probability 0.3, determine
+    (a) the expected number of goals team A will score this weekend.
+    (b) the probability that team A will score a total of five goals.
+\end{exercise}
+
+\solution{
+    Let $X_1$ and $X_2$ be the number of goals scored in the first and second matches, respectively. The total goals scored is $X = X_1 + X_2$.
+
+    (a) Using the Law of Total Expectation for each match:
+    \[
+    E[X_1] = \lambda_1(0.6) + \lambda_2(0.4) = 2(0.6) + 3(0.4) = 1.2 + 1.2 = 2.4
+    \]
+    \[
+    E[X_2] = \lambda_1(0.3) + \lambda_2(0.7) = 2(0.3) + 3(0.7) = 0.6 + 2.1 = 2.7
+    \]
+    By linearity of expectation:
+    \[
+    E[X] = E[X_1] + E[X_2] = 2.4 + 2.7 = 5.1
+    \]
+
+    (b) We condition on the four independent combinations of opponent classes $(i, j)$ for the two games:
+    \begin{itemize}
+        \item Class (1,1) with prob $0.6 \times 0.3 = 0.18$. $X \sim \text{Poisson}(\lambda_1 + \lambda_1 = 4)$
+        \item Class (1,2) with prob $0.6 \times 0.7 = 0.42$. $X \sim \text{Poisson}(\lambda_1 + \lambda_2 = 5)$
+        \item Class (2,1) with prob $0.4 \times 0.3 = 0.12$. $X \sim \text{Poisson}(\lambda_2 + \lambda_1 = 5)$
+        \item Class (2,2) with prob $0.4 \times 0.7 = 0.28$. $X \sim \text{Poisson}(\lambda_2 + \lambda_2 = 6)$
+    \end{itemize}
+    Using the Poisson PMF $P(X = 5) = \frac{e^{-\lambda}\lambda^5}{5!}$:
+    \[
+    P(X = 5) = 0.18\left(\frac{e^{-4}4^5}{5!}\right) + (0.42 + 0.12)\left(\frac{e^{-5}5^5}{5!}\right) + 0.28\left(\frac{e^{-6}6^5}{5!}\right)
+    \]
+    \[
+    P(X = 5) = 0.18\left(\frac{1024 e^{-4}}{120}\right) + 0.54\left(\frac{3125 e^{-5}}{120}\right) + 0.28\left(\frac{7776 e^{-6}}{120}\right)
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-67}
+    *A coin having probability $p$ of coming up heads is continually flipped. Let $P_j(n)$ denote the probability that a run of $j$ successive heads occurs within the first $n$ flips.
+    (a) Argue that
+    \[
+    P_j(n) = P_j(n - 1) + p^j(1 - p)[1 - P_j(n - j - 1)]
+    \]
+    (b) By conditioning on the first non-head to appear, derive another equation relating $P_j(n)$ to the quantities $P_j(n - k), k = 1, \dots, j$.
+\end{exercise}
+
+\solution{
+    (a) The event that a run of $j$ successive heads occurs within the first $n$ flips can happen in two mutually exclusive ways:
+    \par\noindent\textbf{1.}\enspace It already occurred within the first $n-1$ flips, which has probability $P_j(n-1)$.
+    \par\noindent\textbf{2.}\enspace It occurs for the very first time ending exactly at the $n$-th flip. This requires that flips from $(n-j+1)$ to $n$ are all heads (probability $p^j$), the $(n-j)$-th flip is a tail (probability $1-p$), and no run of $j$ heads occurred in the first $n-j-1$ flips (probability $1 - P_j(n-j-1)$).
+    Adding these probabilities gives the recurrence for $n\ge j+1$. The boundary values are $P_j(n)=0$ for $n<j$ and $P_j(j)=p^j$.
+
+    (b) Let us condition on the position $k$ of the first tail (non-head) to appear ($k = 1, 2, \dots, j, \dots$):
+    \par\noindent\textbullet\enspace If the first tail occurs at step $k \leqslant j$ (with probability $p^{k-1}(1-p)$), the sequence resets and we need a run of $j$ heads in the remaining $n-k$ flips.
+    \par\noindent\textbullet\enspace If no tail occurs in the first $j$ flips (with probability $p^j$), the run of $j$ successive heads has already been achieved immediately.
+    Combining these scenarios by the Law of Total Probability yields:
+    \[
+    P_j(n) = \sum_{k=1}^{j} p^{k-1}(1-p)P_j(n-k) + p^j
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-68}
+    In a knockout tennis tournament of $2^n$ contestants, the players are paired and play a match. The losers depart, the remaining $2^{n-1}$ players are paired, and they play a match. This continues for $n$ rounds, after which a single player remains unbeaten and is declared the winner. Suppose that the contestants are numbered 1 through $2^n$, and that whenever two players contest a match, the lower numbered one wins with probability $p$. Also suppose that the pairings of the remaining players are always done at random so that all possible pairings for that round are equally likely.
+    (a) What is the probability that player 1 wins the tournament?
+    (b) What is the probability that player 2 wins the tournament?
+\end{exercise}
+
+\solution{
+Assume independent match outcomes conditional on the players.
+\textbf{(a)} Player $1$ is favoured against every opponent and must win
+$n$ matches, so the probability is $p^n$.
+
+\textbf{(b)} Let $b_n$ be player $2$'s winning probability with $2^n$
+players. Put $q=1-p$. For $n=1$, $b_1=q$. In round one, player $2$
+meets player $1$ with probability $1/(2^n-1)$. If that match is won,
+player $2$ is the best remaining player, with remaining winning
+probability $p^{n-1}$. Otherwise player $2$ wins the first match with
+probability $p$, and player $1$ independently survives with probability
+$p$. Thus, for $n\ge2$,
+\[
+b_n=\frac{q p^{n-1}}{2^n-1}
++\frac{2^n-2}{2^n-1}\,p\left(qp^{n-1}+p b_{n-1}\right).
+\]
+Induction simplifies this to
+\[
+b_n=p^n-\frac{p^{n-1}[(2p)^n-1]}{2^n-1}.
+\]
+In particular, for a two-player tournament this gives $1-p$, and for
+$p=1/2$ it gives $2^{-n}$, as required by symmetry.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-69}
+    In the match problem, say that $(i, j), i < j$, is a pair if $i$ chooses $j$'s hat and $j$ chooses $i$'s hat.
+    (a) Find the expected number of pairs.
+    (b) Let $Q_n$ denote the probability that there are no pairs, and derive a recursive formula for $Q_n$ in terms of $Q_j, j < n$.
+    (c) Use the recursion of part (b) to find $Q_8$.
+\end{exercise}
+
+\solution{
+\textbf{(a)} For $n\ge2$, a specified pair forms a two-cycle with
+probability $(n-2)!/n!=1/[n(n-1)]$. Summing over the $\binom n2$
+pairs gives expected number $1/2$. For $n=0,1$, the expectation is zero.
+
+\textbf{(b)} The length $j$ of the cycle containing person $1$ is
+uniform on $\{1,\ldots,n\}$: there are
+$\binom{n-1}{j-1}(j-1)!(n-j)!=(n-1)!$ permutations for each length.
+Length $2$ is forbidden; for any other length, the remaining $n-j$
+people must have no two-cycles. Therefore
+\[
+Q_0=1,\qquad
+Q_n=\frac1n\sum_{\substack{1\le j\le n\\j\ne2}}Q_{n-j}.
+\]
+\textbf{(c)} Recursion gives
+\[
+Q_1=1,\quad Q_2=Q_3=\frac12,\quad Q_4=Q_5=\frac58,
+\quad Q_6=Q_7=\frac{29}{48},\quad Q_8=\frac{233}{384}\approx0.606771.
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-70}
+    Let $N$ denote the number of cycles that result in the match problem.
+    (a) Let $M_n = E[N]$, and derive an equation for $M_n$ in terms of $M_1, \dots, M_{n-1}$.
+    (b) Let $C_j$ denote the size of the cycle that contains person $j$. Argue that
+    \[
+    N = \sum_{j=1}^{n} 1/C_j
+    \]
+    and use the preceding to determine $E[N]$.
+    (c) Find the probability that persons $1, 2, \dots, k$ are all in the same cycle.
+    (d) Find the probability that $1, 2, \dots, k$ is a cycle.
+\end{exercise}
+
+\solution{
+    (a) By conditioning on the size of the cycle containing person 1, which is equally likely to be of any length $k \in \{1, \dots, n\}$:
+    \[
+    M_n = 1 + \frac{1}{n} \sum_{i=1}^{n-1} M_i
+    \]
+
+    (b) Each cycle of length $L$ contributes exactly $L$ terms of value $1/L$ to the summation, which sums up to exactly $1$ for that cycle. Summing over all elements thus counts the total number of distinct cycles. Since $C_j$ is uniformly distributed over $\{1, \dots, n\}$, $E[1/C_j] = \frac{1}{n}\sum_{m=1}^{n}\frac{1}{m}$. Summing across all $n$ individuals yields the harmonic number:
+    \[
+    E[N] = \sum_{m=1}^{n} \frac{1}{m}
+    \]
+
+    (c) Delete all labels other than $1,\ldots,k$ from the cycle notation of a uniform permutation. The induced permutation on these $k$ labels is uniform, and the specified labels share a cycle exactly when that induced permutation is one cycle. There are $(k-1)!$ such permutations out of $k!$, giving:
+    \[
+    P(\text{All in same cycle}) = \frac{1}{k}
+    \]
+
+    (d) For the specific elements $1, 2, \dots, k$ to form their own isolated cycle of length $k$, they must permute among themselves into a single cycle (with $(k-1)!$ options), while the remaining $n-k$ elements can permute freely in $(n-k)!$ ways:
+    \[
+    P(\{1, \dots, k\} \text{ is a cycle}) = \frac{(k-1)!(n-k)!}{n!} = \frac{1}{k \binom{n}{k}}
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-71}
+Let $M_0=0$ and suppose that, for $n\ge1$,
+\[
+M_n=1+\frac1n\sum_{i=0}^{n-1}M_i.
+\]
+By subtracting suitable equations for $n$ and $n-1$, show that
+$M_n=\sum_{i=1}^n1/i$.
+\end{exercise}
+
+\solution{
+    Multiply the stated recurrence by $n$:
+    \[
+    n M_n = n + \sum_{i=1}^{n-1} M_i
+    \]
+    Next, we write down the equivalent relation for $n-1$:
+    \[
+    (n-1) M_{n-1} = (n-1) + \sum_{i=1}^{n-2} M_i
+    \]
+    Subtracting the second equation from the first isolates the final term of the summation:
+    \[
+    n M_n - (n-1) M_{n-1} = 1 + M_{n-1}
+    \]
+    \[
+    n M_n = n M_{n-1} + 1 \implies M_n = M_{n-1} + \frac{1}{n}
+    \]
+    Expanding this recurrence relation downwards directly yields the harmonic-number formula:
+    \[
+    M_n = \sum_{i=1}^{n} \frac{1}{i}
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-72}
+Let $U_1,U_2,\ldots$ be independent uniform random variables on $(0,1)$,
+and define
+\[
+N=\min\{n\ge2:U_n>U_{n-1}\},\qquad
+M=\min\{n\ge1:U_1+\cdots+U_n>1\}.
+\]
+For $0<y<1$, show that the conditional distribution of $N$ given
+$U_1=y$ equals that of $M$ given $U_1=1-y$, and show that both
+conditional expectations equal $1+e^y$.
+\end{exercise}
+
+\solution{
+Given $U_1=y$, for $n\ge1$ the event $N>n$ means
+$y>U_2>\cdots>U_n$, up to zero-probability ties. Its conditional
+probability is $y^{n-1}/(n-1)!$: all $n-1$ values lie below $y$,
+and one of their $(n-1)!$ orders is decreasing.
+Given $U_1=1-y$, the event $M>n$ means
+$U_2+\cdots+U_n\le y$. For $0\le y\le1$, this simplex has volume
+$y^{n-1}/(n-1)!$. Thus the two conditional survival functions agree,
+which proves equality of the conditional distributions. The tail sum gives
+\[
+E[N\mid U_1=y]=E[M\mid U_1=1-y]
+=1+\sum_{n=1}^{\infty}\frac{y^{n-1}}{(n-1)!}=1+e^y.
+\]
+}
+
+\setcounter{exercise}{75}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-76}
+    Consider a gambler who on each bet either wins 1 with probability 18/38 or loses 1 with probability 20/38. (These are the probabilities if the bet is that a roulette wheel will land on a specified color.) The gambler will quit either when he or she is winning a total of 5 or after 100 plays. What is the probability he or she plays exactly 15 times?
+\end{exercise}
+
+\solution{
+    For the gambler to stop playing exactly at the 15th play, one of the two stopping conditions must be reached at exactly $n = 15$. Since the 100 plays limit is far away, the game must end because the gambler reaches a total net gain of $+5$ for the very first time.
+
+    Let $W$ be the number of wins and $L$ be the number of losses in the 15 plays. We have the system of equations:
+    \[
+    \begin{cases}
+    W + L = 15 \\
+    W - L = 5
+    \end{cases}
+    \]
+    Adding the equations gives $2W = 20 \implies W = 10$, which implies $L = 5$.
+
+    For the target of $+5$ to be reached for the \textit{very first time} on the 15th play, the 15th play must be a win, and the gambler must never have reached a net profit of $+5$ during the first 14 plays.
+    \par\noindent\textbullet\enspace The first 14 plays must contain exactly 9 wins and 5 losses.
+    \par\noindent\textbullet\enspace By the reflection principle (or ballot problem argument), the number of valid path sequences that never touch the barrier $+5$ before step 15 is given by:
+    \[
+    \binom{14}{9} - \binom{14}{10} = 2002 - 1001 = 1001
+    \]
+    Each specific sequence of 10 wins and 5 losses has an independent probability of $p^{10} q^5$, where $p = \frac{18}{38} = \frac{9}{19}$ and $q = \frac{20}{38} = \frac{10}{19}$.
+
+    Therefore, the final probability is:
+    \[
+    P(\text{Plays exactly 15 times}) = 1001 \left(\frac{9}{19}\right)^{10} \left(\frac{10}{19}\right)^5
+    \]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-77}
+    Show that
+    (a) $E[XY \mid Y = y] = yE[X \mid Y = y]$
+    (b) $E[g(X, Y) \mid Y = y] = E[g(X, y) \mid Y = y]$
+    (c) $E[XY] = E[YE[X \mid Y]]$
+\end{exercise}
+
+\solution{
+    (a) Given the condition $Y = y$, the random variable $Y$ behaves deterministically as a constant value $y$ inside the conditional expectation space. By the linearity property of expectations, constants can be factored outside the operator:
+    \[
+    E[XY \mid Y = y] = E[X \cdot y \mid Y = y] = yE[X \mid Y = y]
+    \]
+
+    (b) Since we are evaluating the expectation restricted entirely to the subset where $Y$ takes the specific fixed value $y$, replacing the random variable argument $Y$ with its conditional numeric value $y$ inside the function $g(X,Y)$ preserves pointwise equivalence over the support:
+    \[
+    E[g(X, Y) \mid Y = y] = E[g(X, y) \mid Y = y]
+    \]
+
+    (c) By applying the Law of Total Expectation (or Adam's Law), we can evaluate the global expectation of $XY$ by first conditioning on $Y$:
+    \[
+    E[XY] = E[\,E[XY \mid Y]\,]
+    \]
+    Using the pulling-out property established in part (a), where $E[XY \mid Y] = YE[X \mid Y]$ since $Y$ is known relative to itself, substituting this into the outer expectation yields:
+    \[
+    E[XY] = E[Y E[X \mid Y]]
+    \]
+}
+
+\setcounter{exercise}{78}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-79}
+    An urn contains $n$ white and $m$ black balls that are removed one at a time. If $n > m$, show that the probability that there are always more white than black balls in the urn (until, of course, the urn is empty) equals $(n - m)/(n + m)$. Explain why this probability is equal to the probability that the set of withdrawn balls always contains more white than black balls. (This latter probability is $(n - m)/(n + m)$ by the ballot problem.)
+\end{exercise}
+
+\solution{
+    Let us look at the sampling process in reverse order. Let the sequence of balls remaining in the urn be viewed from the final ball left to the full initial urn composition.
+
+    Equivalently, consider the sequence of removals backwards from step $(n+m)$ down to 1. If we reverse the timeline, the condition that "the urn always contains more white than black balls throughout the removal process" translates precisely to stating that if we count the balls added back into an empty urn one by one, the number of white balls added must strictly exceed the number of black balls added at every single step.
+
+    By reversing the sequence of extractions, the process maps directly onto Bertrand's ballot problem where:
+    \begin{itemize}
+        \item Candidate $A$ (White balls) receives a total of $n$ votes.
+        \item Candidate $B$ (Black balls) receives a total of $m$ votes.
+        \item Votes are drawn uniformly at random without replacement.
+    \end{itemize}
+    According to the classical Ballot Theorem, the probability that Candidate $A$ stays strictly ahead of Candidate $B$ throughout the entire counting sequence is:
+    \[
+    P = \frac{n - m}{n + m}
+    \]
+    Since every full removal path has a one-to-one symmetric mapping to a forward withdrawal sequence preserving the property structural inequality at each index, the probability that the set of withdrawn balls always contains more white than black balls is identically $(n-m)/(n+m)$.
+}
+
+\setcounter{exercise}{81}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-82}
+Let $X_1, X_2, \dots$ be independent continuous random variables with a common distribution function $F$ and density $f = F'$, and for $k \ge 1$ let
+\[
+N_k = \min\{n \ge k : X_n = k\text{th largest of } X_1, \dots, X_n\}
+\]
+(a) Show that $P\{N_k = n\} = \frac{k-1}{n(n-1)}$, $n \ge k$.\\
+(b) Argue that
+\[
+f_{X_{N_k}}(x) = f(x)(\bar{F}(x))^{k-1} \sum_{i=0}^{\infty} \binom{i+k-2}{i} (F(x))^i
+\]
+(c) Prove the following identity:
+\[
+a^{1-k} = \sum_{i=0}^{\infty} \binom{i+k-2}{i} (1-a)^i, \quad 0 < a < 1, \, k \ge 2
+\]
+\textbf{Hint:} Use induction. First prove it when $k = 2$, and then assume it for $k$. To prove it for $k + 1$, use the fact that
+\[
+\sum_{i=1}^{\infty} \binom{i+k-1}{i}(1-a)^i = \sum_{i=1}^{\infty} \binom{i+k-2}{i}(1-a)^i + \sum_{i=1}^{\infty} \binom{i+k-2}{i-1}(1-a)^i
+\]
+where the preceding used the combinatorial identity $\binom{m}{i} = \binom{m-1}{i} + \binom{m-1}{i-1}$. Now, use the induction hypothesis to evaluate the first term on the right side of the preceding equation.\\
+(d) Conclude that $X_{N_k}$ has distribution $F$.
+\end{exercise}
+
+\solution{
+For $k=1$, $N_1=1$ and the selected value has distribution $F$
+immediately. Assume $k\ge2$ below.
+
+\textbf{(a)} In an i.i.d. continuous sequence, the successive insertion
+ranks are independent, with the rank at time $j$ uniform on
+$\{1,\ldots,j\}$. This follows by inserting successive labels into a
+uniform random permutation. Therefore, for $n\ge k$,
+\[
+P(N_k=n)=\left[\prod_{j=k}^{n-1}\left(1-\frac1j\right)\right]\frac1n
+=\frac{k-1}{n(n-1)}.
+\]
+\textbf{(b)} The stopping event depends only on ranks and is independent
+of the ordered sample values. Conditional on $N_k=n$, $X_n$ is the
+$k$th largest of $n$ observations, with density
+\[
+\frac{n!}{(k-1)!(n-k)!}\,f(x)\overline F(x)^{k-1}F(x)^{n-k}.
+\]
+Multiplying by the probability in (a), summing over $n$, and writing
+$i=n-k$ gives
+\[
+f_{X_{N_k}}(x)=f(x)\overline F(x)^{k-1}
+\sum_{i=0}^{\infty}\binom{i+k-2}{i}F(x)^i.
+\]
+\textbf{(c)} Put $z=1-a$ and
+$S_k(z)=\sum_{i\ge0}\binom{i+k-2}{i}z^i$.
+For $k=2$ this is the geometric series $1/(1-z)=a^{-1}$.
+Pascal's identity and reindexing give
+$S_{k+1}(z)=S_k(z)+zS_{k+1}(z)$, so
+$S_{k+1}(z)=S_k(z)/(1-z)=a^{-k}$. The series converge absolutely for
+$0<z<1$ (their coefficients grow polynomially).
+
+\textbf{(d)} Substitute $a=\overline F(x)$ into (c). The factors cancel,
+leaving $f_{X_{N_k}}(x)=f(x)$ almost everywhere, hence distribution $F$.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-83}
+An urn contains $n$ balls, with ball $i$ having weight $w_i, i = 1, \dots, n$. The balls are withdrawn from the urn one at a time according to the following scheme: When $S$ is the set of balls that remains, ball $i, i \in S$, is the next ball withdrawn with probability $w_i / \sum_{j \in S} w_j$. Find the expected number of balls that are withdrawn before ball $i, i = 1, \dots, n$.
+\end{exercise}
+
+\solution{
+For each pair of balls $j \neq i$, let us define an indicator variable $I_j$ which takes the value 1 if ball $j$ is withdrawn before ball $i$, and 0 otherwise. The total number of balls selected before ball $i$ is represented by the random variable $X = \sum_{j \neq i} I_j$.
+By the linearity of expectation, we have $E[X] = \sum_{j \neq i} E[I_j] = \sum_{j \neq i} P\{\text{ball } j \text{ is withdrawn before ball } i\}$.
+
+Looking at the isolated subset $\{i, j\}$, the relative probability that $j$ is chosen before $i$ at any point during the sampling process depends solely on their respective weights scaled to their partial sum:
+\[
+P\{\text{ball } j \text{ is withdrawn before ball } i\} = \frac{w_j}{w_i + w_j}
+\]
+Consequently, the expected number of balls removed from the urn before encountering ball $i$ is equal to:
+\[
+E[\text{Number of balls before } i] = \sum_{j \neq i} \frac{w_j}{w_i + w_j}
+\]
+}
+
+\setcounter{exercise}{85}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-86}
+On five labelled vertices, each vertex independently chooses one of the five vertices uniformly as its directed-arc destination; self-loops are allowed. A component means a weakly connected component of this random mapping. Compute the probability distribution of the number of components and verify your solution by using it to compute $E[C]$ and then comparing your solution with
+\[
+E[C] = \sum_{k=1}^{5} \binom{5}{k} \frac{(k-1)!}{5^k}
+\]
+\end{exercise}
+
+\solution{
+The stated model is a uniform random mapping on five
+labelled vertices, allowing self-loops: each vertex independently
+chooses one of the five vertices as its destination. Components are weak
+components, each containing one directed cycle.
+
+Let $c_j$ be the number of connected mappings on $j$ labelled vertices.
+Choose the length $\ell$ of the unique cycle. The cycle can be chosen
+and ordered in $\binom j\ell(\ell-1)!$ ways; the remaining vertices
+form a forest rooted on that cycle, with $\ell j^{j-\ell-1}$ choices
+when $\ell<j$, and one choice when $\ell=j$. This gives
+\[
+(c_1,c_2,c_3,c_4,c_5)=(1,3,17,142,1569).
+\]
+For $r$ components, sum $\prod_B c_{|B|}$ over set partitions into $r$
+blocks. The resulting counts for $r=1,\ldots,5$ are
+\[
+1569,\quad
+5(142)+10(3)(17)=1220,\quad
+10(17)+15(3^2)=305,\quad
+10(3)=30,\quad1.
+\]
+They sum to $5^5=3125$. Therefore
+\[
+P(C=r)=\frac1{3125}
+\begin{cases}1569,&r=1,\\1220,&r=2,\\305,&r=3,\\30,&r=4,\\1,&r=5.\end{cases}
+\]
+The expectation is
+\[
+E[C]=\frac{1569+2(1220)+3(305)+4(30)+5}{3125}
+=\frac{5049}{3125}=1.61568.
+\]
+The proposed check gives exactly
+\[
+\sum_{j=1}^5\binom5j\frac{(j-1)!}{5^j}
+=1+\frac25+\frac4{25}+\frac6{125}+\frac{24}{3125}
+=\frac{5049}{3125}.
+\]
+}
+
+\setcounter{exercise}{90}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-91}
+Find the expected number of flips of a coin, which comes up heads with probability $p$, that are necessary to obtain the pattern $h, t, h, h, t, h, t, h$.
+\end{exercise}
+
+\solution{
+Let $A$ be the target sequence $h, t, h, h, t, h, t, h$, with length $k = 8$. Let $q = 1-p$ denote the probability of getting tails. To find the expected number of trials $E[M]$ to observe this pattern, we apply the renewal theoretic method of overlapping patterns (or Markov chain embedding via martingale optional stopping).
+
+We check all possible overlaps of the prefix of $A$ with its suffix:
+\begin{itemize}
+    \item Overlap of length 1: $h = h$ $\implies$ Valid overlap.
+    \item Overlap of length 3: $h, t, h = h, t, h$ $\implies$ Valid overlap.
+    \item Overlap of length 8: The entire string matches itself $\implies$ Always valid.
+\end{itemize}
+No other shifts yield a valid overlap match. Summing the reciprocal probabilities of the valid overlapping prefixes, we obtain:
+\[
+E[M] = \frac{1}{p^5 q^3} + \frac{1}{p^2 q} + \frac{1}{p}
+\]
+where $p^5 q^3$ corresponds to the full sequence (5 heads, 3 tails), $p^2 q$ corresponds to the suffix of length 3 ($h,t,h$), and $p$ corresponds to the suffix of length 1 ($h$).
+}
+
+\setcounter{exercise}{92}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-93}
+Consider a sequence of independent trials, each of which is equally likely to result in any of the outcomes $0, 1, \dots, m$. Say that a round begins with the first trial, and that a new round begins each time outcome $0$ occurs. Let $N$ denote the number of trials that it takes until all of the outcomes $1, \dots, m-1$ have occurred in the same round. Assume $m\ge2$. Outcome $m$ is neutral. Let $T_j$ denote the number of trials until $j$ distinct outcomes from $\{0,\ldots,m-1\}$ have occurred, and let $I_j$ be the $j$th distinct outcome from that relevant set. Neutral trials count toward elapsed time, but not toward discoveries.
+(a) Argue that the random vectors $(I_1, \dots, I_m)$ and $(T_1, \dots, T_m)$ are independent.\\
+(b) Define $X$ by letting $X = j$ if outcome $0$ is the $j$th distinct outcome to occur. Derive an equation for $E[N]$ in terms of $E[T_j], j = 1, \dots, m-1$ by conditioning on $X$.\\
+(c) Determine $E[T_j], j = 1, \dots, m-1$.\\
+(d) Find $E[N]$.
+\end{exercise}
+
+\solution{
+Outcome $m$ is neutral: it neither supplies a required type nor starts
+a new round. In this solution, use $T_j$ and $I_j$ for the times and
+identities of the $j$ distinct \emph{relevant} outcomes from
+$\{0,\ldots,m-1\}$; neutral trials still count toward elapsed time.
+This makes explicit the interpretation needed for the requested
+conditioning argument. Assume $m\ge2$.
+
+\textbf{(a)} The order of relevant discoveries is a uniform permutation.
+After $i-1$ discoveries, the probability of a new relevant outcome on
+the next trial is $(m-i+1)/(m+1)$, independent of the identities already
+seen. Conditional on a new relevant discovery, its identity is uniform
+among the unseen relevant outcomes, independently of its waiting time.
+Thus the discovery order and waiting-time vector are independent.
+
+\textbf{(b)} The rank $X$ of outcome $0$ among the $m$ relevant types is
+uniform on $\{1,\ldots,m\}$. If $X=j<m$, a reset occurs at time $T_j$.
+If $X=m$, success occurs at $T_{m-1}$, before $0$ is observed. Hence
+\[
+E[N]=\frac1mE[T_{m-1}]
++\frac1m\sum_{j=1}^{m-1}(E[T_j]+E[N]),
+\]
+so $E[N]=E[T_{m-1}]+\sum_{j=1}^{m-1}E[T_j]$.
+
+\textbf{(c)} Summing geometric waiting times gives
+\[
+E[T_j]=(m+1)\sum_{r=m-j+1}^m\frac1r,\qquad1\le j\le m-1.
+\]
+\textbf{(d)} Substitution and reversing the finite sum yield
+\[
+E[N]=(m+1)\sum_{r=2}^m\frac{(r-1)+1}{r}
+=(m+1)(m-1).
+\]
+For $m=1$, no types are required and the natural convention is $N=0$.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-94}
+Let $N$ be a hypergeometric random variable having the distribution of the number of white balls in a random sample of size $r$ from a set of $w$ white and $b$ blue balls.
+That is,
+
+\[
+P\{ N =n\} = \frac{\binom{w}{n} \binom{b}{r-n}}{\binom{w+b}{r}}
+\]
+where we use the convention $\binom{m}{j}=0 ~\text{if either}~ j<0 ~~or~~j>m. $
+
+Assume $w\ge1$, $b\ge0$, and $1\le r\le w+b$. Consider $S_N=\sum_{i=1}^N X_i$, where the $X_i$ are i.i.d. positive integer-valued random variables, independent of $N$, with $\alpha_j = P\{X_i = j\}$.\\
+(a) Define $M$ by the size-biased law $P(M=n)=nP(N=n)/E[N]$. Find the distribution of $M-1$.\\
+(b) Suppressing its dependence on $b$, let $P_{w,r}(k) = P\{S_N = k\}$, and derive a recursion equation for $P_{w,r}(k)$.\\
+(c) Use the recursion of (b) to find $P_{w,r}(2)$.
+\end{exercise}
+
+\solution{
+Assume the $X_i$ are i.i.d. and independent of $N$. Write
+$p_n=P(N=n)$ and $h=E[N]=rw/(w+b)$.
+\textbf{(a)} Under the size-biased definition
+$P(M=n)=np_n/h$, we have
+\[
+P(M-1=j)
+=\frac{\binom{w-1}{j}\binom b{r-1-j}}
+{\binom{w+b-1}{r-1}}.
+\]
+Thus $M-1$ is hypergeometric with sample size $r-1$ from $w-1$ white
+and $b$ blue balls. This follows by using
+$n\binom wn=w\binom{w-1}{n-1}$ in the size-biased mass function.
+
+\textbf{(b)} The dependence on $b$ must be restored for a first-draw
+recursion. Put $P_{w,b,r}(k)=P(S_N=k)$. Then, for $r\ge1$,
+\[
+P_{w,b,r}(k)=\frac{w}{w+b}\sum_{j=1}^{k}\alpha_jP_{w-1,b,r-1}(k-j)
++\frac{b}{w+b}P_{w,b-1,r-1}(k).
+\]
+The boundary value is $P_{w,b,0}(k)=\mathbf1_{\{k=0\}}$; terms whose
+coefficient is zero are omitted. In particular,
+$P_{w,b,r}(0)=\binom b r/\binom{w+b}r$.
+
+\textbf{(c)} Since summands are positive integers, $S_N=2$ arises only
+from $N=1,X_1=2$ or $N=2,X_1=X_2=1$. Therefore
+\[
+P_{w,b,r}(2)
+=\frac{w\binom b{r-1}\alpha_2+
+\binom w2\binom b{r-2}\alpha_1^2}{\binom{w+b}r}.
+\]
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-95}
+Let $X_1,X_2,\ldots$ be i.i.d. integer-valued steps with $X_i\ge-1$ and $-\infty<E[X_i]<0$, and let $S_0=0$, $S_n=\sum_{i=1}^n X_i$. Define $\beta = P\{S_n \le 0 \text{ for all } n\}$ be the probability that the walk is never positive. Find $\beta$ when $E[X_i] < 0$.
+\end{exercise}
+
+\solution{
+Assume the steps are i.i.d. integer-valued, $X_i\ge-1$, and
+$-\infty<E[X_i]<0$. Put $v=-E[X_i]$ and $q=P(X_i=-1)>0$.
+The answer is
+\[
+\beta=\frac vq=\frac{-E[X_i]}{P(X_i=-1)}.
+\]
+To prove it, let $A_n=\{S_1<0,\ldots,S_n<0\}$. The cyclic ballot
+lemma for integer steps bounded below by $-1$ gives
+\[
+P(A_n\mid S_n=-k)=\frac kn,\qquad k=1,\ldots,n.
+\]
+Indeed, among the $n$ cyclic starting positions of such a sequence,
+exactly $k$ have all partial sums strictly negative; i.i.d. sequences
+are invariant under these cyclic shifts. Consequently
+\[
+P(A_n)=E\left[\left(-\frac{S_n}{n}\right)^+\right].
+\]
+By the strong law, $S_n/n\to-v$ almost surely. Also
+$0\le(-S_n/n)^+\le1$, so bounded convergence gives
+$P(S_j<0\text{ for all }j\ge1)=v$.
+To be strictly negative forever, the first step must be $-1$.
+Thereafter, from position $-1$, the independent remaining walk must
+never exceed $0$ relative to its own starting level. This has probability
+$\beta$, so $v=q\beta$.
+
+A left skip-free walk can jump over state $1$ on an upward move;
+``ever positive'' cannot in general be replaced by ``ever hits $1$''.
+}
+
+\begin{exercise}
+\label{ex:conditioning-expectation-96}
+Consider a large population of families, and suppose that the number of children in the different families are independent Poisson random variables with mean $\lambda$. Show that the number of siblings of a randomly chosen child is also Poisson distributed with mean $\lambda$.
+\end{exercise}
+
+\solution{
+Let $X$ be the number of children in a randomly chosen family, so $P\{X = n\} = \frac{e^{-\lambda}\lambda^n}{n!}$ for $n \ge 0$.
+Sampling a child at random biases the selection towards larger families. The probability that a chosen child comes from a family of size $n$ is proportional to $n \cdot P\{X = n\}$. Normalizing by the expected family size $E[X] = \lambda$, the size of the chosen child's family, $Y$, has the distribution:
+\[
+P\{Y = n\} = \frac{n P\{X = n\}}{E[X]} = \frac{n \frac{e^{-\lambda}\lambda^n}{n!}}{\lambda} = \frac{e^{-\lambda}\lambda^{n-1}}{(n-1)!}, \quad n \ge 1
+\]
+
+The number of siblings of this child is given by $S = Y - 1$. Let us find the distribution of $S$ by substituting $k = n - 1$:
+\[
+P\{S = k\} = P\{Y = k + 1\} = \frac{e^{-\lambda}\lambda^{(k+1)-1}}{((k+1)-1)!} = \frac{e^{-\lambda}\lambda^k}{k!}, \quad k \ge 0
+\]
+This expression is identically the probability mass function of a Poisson random variable with mean $\lambda$. Thus, the number of siblings of a randomly chosen child is also Poisson distributed with mean $\lambda$.
+}
