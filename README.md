@@ -1,6 +1,6 @@
 # Stochastic Methods — Exercises and Solutions
 
-By **Pietro Forni and Riccardo Visconti**, based on *Introduction to Probability Models* by **Sheldon M. Ross**. These are unofficial study notes containing **306 exercises**, with independently written solutions.
+By **Pietro Forni and Riccardo Visconti**, based on *Introduction to Probability Models* by **Sheldon M. Ross**. These are unofficial study notes containing **306 exercises**, with independently written solutions to prepare for the Stochastic Methods exam at USI.
 
 ## Study purpose
 
