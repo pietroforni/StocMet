@@ -36,3 +36,4 @@ Corrections are welcome: identify the topic and exercise number and explain the 
 The authors' original solutions and LaTeX material are licensed under the [MIT License](LICENSE). Attribution to Ross's textbook is retained; this license does not grant rights to third-party textbook material.
 
 The MIT license and textbook attribution do not establish permission to republish the book’s exercise statements. The collection’s educational purpose alone does not establish public-distribution rights.
+ 
